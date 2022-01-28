@@ -4,7 +4,10 @@
 
     <div class="profile">
       <img src="@/assets/profile.jpg" alt="Perfil" />
-      <p><span>Mariana Ribeiro</span><br />Administrador</p>
+      <div>
+        <span class="subtitle">Olá, Mariana!</span><br />
+        <p>Administrador</p>
+      </div>
     </div>
   </header>
 </template>
@@ -16,14 +19,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/style/variaveis.scss";
+
 header {
-  padding: 16px 32px;
+  padding: 16px 0px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid $gray-200;
 }
 
 h1 {
+  font-size: 2.4rem;
+  font-weight: 600;
   display: flex;
   align-items: center;
 
@@ -32,7 +40,7 @@ h1 {
     display: block;
     width: 5px;
     height: 33px;
-    background: red;
+    background: $primary;
     margin-right: 16px;
   }
 }
@@ -46,8 +54,8 @@ h1 {
     margin-right: 16px;
   }
 
-  span {
-    font-weight: 500;
+  p {
+    color: $gray;
   }
 }
 </style>
