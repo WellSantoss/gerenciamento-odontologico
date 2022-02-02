@@ -1,5 +1,8 @@
 <template>
   <header>
+    <button class="toggle-menu">
+      <img src="@/assets/menu.svg" alt="Menu" />
+    </button>
     <h1>Header</h1>
 
     <div class="profile">
@@ -27,6 +30,17 @@ header {
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid $gray-200;
+  position: relative;
+
+  .toggle-menu {
+    position: absolute;
+    background: transparent;
+    padding: 5px;
+    border: none;
+    cursor: pointer;
+    display: none;
+    left: 0px;
+  }
 }
 
 h1 {
@@ -56,6 +70,18 @@ h1 {
 
   p {
     color: $gray;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  header {
+    .toggle-menu {
+      display: block;
+    }
+  }
+
+  h1 {
+    margin-left: 46px;
   }
 }
 </style>

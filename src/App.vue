@@ -19,6 +19,14 @@ export default {
     Header,
     Menu,
   },
+  mounted() {
+    const toggleMenu = document.querySelector("button.toggle-menu");
+    const menu = document.querySelector(".menu");
+
+    toggleMenu.addEventListener("click", () => {
+      menu.classList.toggle("active");
+    });
+  },
 };
 </script>
 
@@ -51,5 +59,11 @@ main {
 .subtitle {
   font-size: 1.8rem;
   font-weight: 600;
+}
+
+@media screen and (max-width: 991px) {
+  main {
+    display: block;
+  }
 }
 </style>
