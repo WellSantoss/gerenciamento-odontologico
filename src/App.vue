@@ -1,18 +1,23 @@
 <template>
   <div id="app">
     <main>
-      <Header />
-      <router-view />
+      <Menu />
+      <div class="container">
+        <Header />
+        <router-view />
+      </div>
     </main>
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header.vue";
+import Menu from "@/components/Menu.vue";
 
 export default {
   components: {
     Header,
+    Menu,
   },
 };
 </script>
@@ -35,7 +40,12 @@ body {
 }
 
 main {
-  padding: 0px 32px 16px 32px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+
+  .container {
+    padding: 0px 32px;
+  }
 }
 
 .subtitle {
