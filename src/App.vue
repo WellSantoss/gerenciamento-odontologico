@@ -3,7 +3,7 @@
     <main>
       <Menu />
       <div class="container">
-        <Header />
+        <Header :titulo="titulo" />
         <router-view />
       </div>
     </main>
@@ -18,6 +18,11 @@ export default {
   components: {
     Header,
     Menu,
+  },
+  data() {
+    return {
+      titulo: "Início",
+    };
   },
   mounted() {
     const toggleMenu = document.querySelector("button.toggle-menu");

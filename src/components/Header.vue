@@ -3,7 +3,7 @@
     <button class="toggle-menu">
       <img src="@/assets/menu.svg" alt="Menu" />
     </button>
-    <h1>Header</h1>
+    <h1>{{ titulo }}</h1>
 
     <div class="profile">
       <img src="@/assets/profile.jpg" alt="Perfil" />
@@ -18,6 +18,7 @@
 <script>
 export default {
   name: "Header",
+  props: ["titulo"],
 };
 </script>
 
