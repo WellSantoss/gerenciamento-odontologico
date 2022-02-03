@@ -44,22 +44,6 @@ header {
   }
 }
 
-h1 {
-  font-size: 2.4rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-
-  &::before {
-    content: "";
-    display: block;
-    width: 5px;
-    height: 33px;
-    background: $primary;
-    margin-right: 16px;
-  }
-}
-
 .profile {
   display: flex;
   align-items: center;
