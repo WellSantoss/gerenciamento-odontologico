@@ -1,29 +1,11 @@
 <template>
   <div id="app">
-    <main>
-      <Menu />
-      <div class="container">
-        <Header :titulo="titulo" />
-        <router-view />
-      </div>
-    </main>
+    <router-view />
   </div>
 </template>
 
 <script>
-import Header from "@/components/Header.vue";
-import Menu from "@/components/Menu.vue";
-
 export default {
-  components: {
-    Header,
-    Menu,
-  },
-  data() {
-    return {
-      titulo: "Início",
-    };
-  },
   mounted() {
     const toggleMenu = document.querySelector("button.toggle-menu");
     const menu = document.querySelector(".menu");
