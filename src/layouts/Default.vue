@@ -3,6 +3,9 @@
     <Menu />
     <div class="container">
       <Header :titulo="'Início'" />
+      <transition mode="out-in">
+        <router-view />
+      </transition>
     </div>
   </main>
 </template>

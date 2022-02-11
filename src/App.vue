@@ -5,16 +5,7 @@
 </template>
 
 <script>
-export default {
-  mounted() {
-    const toggleMenu = document.querySelector("button.toggle-menu");
-    const menu = document.querySelector(".menu");
-
-    toggleMenu.addEventListener("click", () => {
-      menu.classList.toggle("active");
-    });
-  },
-};
+export default {};
 </script>
 
 <style lang="scss">
@@ -33,6 +24,21 @@ textarea {
 
 body {
   background: $gray-100;
+}
+
+.v-enter,
+.v-leave-to {
+  opacity: 0;
+}
+.v-enter {
+  transform: translate3d(-32px, 0, 0);
+}
+.v-leave-to {
+  transform: translate3d(-32px, 0, 0);
+}
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.3s;
 }
 
 h1 {
