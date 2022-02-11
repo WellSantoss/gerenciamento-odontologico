@@ -106,12 +106,70 @@ main {
 
   .container {
     padding: 0px 32px;
+
+    .content {
+      padding: 32px 0px;
+    }
   }
 }
 
 .subtitle {
   font-size: 1.8rem;
   font-weight: 600;
+}
+
+.table {
+  overflow-x: auto;
+  width: 100%;
+}
+
+table {
+  text-align: left;
+  width: 100%;
+  border-spacing: 0 16px;
+
+  thead {
+    font-weight: 600;
+
+    th:first-child {
+      padding-left: 16px;
+    }
+  }
+
+  td {
+    color: $gray;
+    background-color: $white;
+    border-top: 1px solid $gray-200;
+    border-bottom: 1px solid $gray-200;
+    padding: 16px 0px;
+
+    &:first-child {
+      border-left: 1px solid $gray-200;
+      padding-left: 16px;
+      border-radius: 8px 0 0 8px;
+    }
+
+    &:last-child {
+      border-right: 1px solid $gray-200;
+      padding-right: 16px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    &.icon img {
+      margin: 0 auto;
+    }
+
+    &.profile {
+      display: flex;
+      align-items: center;
+
+      img {
+        width: 28px;
+        border-radius: 50%;
+        margin-right: 16px;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 991px) {
