@@ -102,7 +102,7 @@ form {
 
 main {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 300px repeat(auto-fit, minmax(100px, auto));
 
   .container {
     padding: 0px 32px;
@@ -121,6 +121,21 @@ main {
 .table {
   overflow-x: auto;
   width: 100%;
+
+  &::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $primary;
+    border-top: 4px solid $white;
+    border-bottom: 4px solid $white;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $white;
+  }
 }
 
 table {
@@ -175,6 +190,11 @@ table {
     padding-left: 16px;
   }
 }
+
+// .table::after,
+// table::before {
+//   content: "";
+// }
 
 @media screen and (max-width: 991px) {
   main {
