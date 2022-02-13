@@ -4,8 +4,8 @@
       <table>
         <thead>
           <tr>
-            <th>Nome</th>
             <th>Ativo</th>
+            <th>Nome</th>
             <th>Cargo</th>
             <th>Usuário</th>
             <th></th>
@@ -14,11 +14,11 @@
         </thead>
         <tbody>
           <tr v-for="(user, index) in users" :key="index">
+            <td>{{ user.active ? "Sim" : "Não" }}</td>
             <td class="profile">
               <img :src="require(`@/assets/${user.image}`)" alt="Editar" />
-              {{ user.name }}
+              <p>{{ user.name }}</p>
             </td>
-            <td>{{ user.active ? "Sim" : "Não" }}</td>
             <td>{{ user.position }}</td>
             <td>{{ user.user }}</td>
             <td class="icon">

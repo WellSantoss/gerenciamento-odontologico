@@ -124,16 +124,13 @@ main {
 }
 
 table {
+  overflow-x: auto;
   text-align: left;
   width: 100%;
   border-spacing: 0 16px;
 
   thead {
     font-weight: 600;
-
-    th:first-child {
-      padding-left: 16px;
-    }
   }
 
   td {
@@ -145,7 +142,6 @@ table {
 
     &:first-child {
       border-left: 1px solid $gray-200;
-      padding-left: 16px;
       border-radius: 8px 0 0 8px;
     }
 
@@ -156,12 +152,15 @@ table {
     }
 
     &.icon img {
+      width: 20px;
+      max-width: inherit;
       margin: 0 auto;
     }
 
     &.profile {
       display: flex;
       align-items: center;
+      min-width: 150px;
 
       img {
         width: 28px;
@@ -169,6 +168,11 @@ table {
         margin-right: 16px;
       }
     }
+  }
+  th,
+  td {
+    padding-left: 16px;
+    padding-left: 16px;
   }
 }
 
