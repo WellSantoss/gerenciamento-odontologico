@@ -10,7 +10,7 @@
       <nav>
         <ul>
           <li>
-            <router-link to="/home">
+            <router-link to="/inicio">
               <img src="@/assets/home.svg" alt="Início" />
               <span>Início</span>
             </router-link>
@@ -19,7 +19,7 @@
         <ul>
           <p>Pessoas</p>
           <li>
-            <router-link to="/users">
+            <router-link to="/usuarios">
               <img src="@/assets/people.svg" alt="Usuários" />
               <span>Usuários</span>
             </router-link>
@@ -96,7 +96,7 @@
             </router-link>
           </li>
           <li>
-            <router-link to="/sair">
+            <router-link to="/login">
               <img src="@/assets/logout.svg" alt="Sair" />
               <span>Sair</span>
             </router-link>

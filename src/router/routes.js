@@ -1,12 +1,12 @@
 export const routes = [
   {
-    path: "/home",
-    name: "Home",
+    path: "/inicio",
+    name: "inicio",
     component: () => import("@/views/Home.vue"),
   },
   {
-    path: "/users",
-    name: "Users",
+    path: "/usuarios",
+    name: "usuarios",
     component: () => import("@/views/users/Users.vue"),
   },
 ];

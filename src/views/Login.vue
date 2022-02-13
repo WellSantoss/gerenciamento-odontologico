@@ -10,7 +10,7 @@
         <input type="text" name="user" id="user" />
         <label for="password">Senha</label>
         <input type="password" name="password" id="password" />
-        <router-link to="/home">
+        <router-link to="/inicio">
           <button>Entrar</button>
         </router-link>
       </form>

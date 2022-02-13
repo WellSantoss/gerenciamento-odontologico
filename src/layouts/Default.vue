@@ -2,7 +2,7 @@
   <main>
     <Menu />
     <div class="container">
-      <Header :titulo="'Início'" />
+      <Header :titulo="routeName" />
       <transition mode="out-in">
         <router-view />
       </transition>
@@ -19,6 +19,11 @@ export default {
   components: {
     Header,
     Menu,
+  },
+  computed: {
+    routeName() {
+      return this.$route.name;
+    },
   },
   mounted() {
     const toggleMenu = document.querySelector("button.toggle-menu");
