@@ -27,4 +27,12 @@ const router = new VueRouter({
   ],
 });
 
+router.beforeEach((to, from, next) => {
+  if (to.fullPath == "/") {
+    next({ name: "inicio" });
+  } else {
+    next();
+  }
+});
+
 export default router;

@@ -41,6 +41,13 @@ body {
   transition: all 0.3s;
 }
 
+.modal.v-enter {
+  transform: translate3d(0, 0, 0);
+}
+.modal.v-leave-to {
+  transform: translate3d(0, 0, 0);
+}
+
 h1 {
   font-size: 2.4rem;
   font-weight: 600;
@@ -57,7 +64,13 @@ h1 {
   }
 }
 
-label {
+h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+label,
+.label {
   display: block;
   color: $gray;
   font-size: 1.2rem;
@@ -73,30 +86,56 @@ input {
   border-radius: 8px;
   padding: 8px 16px;
   outline: none;
+}
+input:not([type="radio"]):focus {
+  border: 1px solid $gray-200;
+  box-shadow: 0px 0px 0px 1px $gray-200;
+}
 
-  &:focus {
-    border: 1px solid $gray-200;
-    box-shadow: 0px 0px 0px 1px $gray-200;
+button {
+  background: $primary;
+  color: $white;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+
+  &:hover {
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    transform: scale(1.1);
+  }
+}
+
+.buttons {
+  button {
+    display: inline-block;
+
+    & + button {
+      margin-left: 16px;
+    }
+  }
+
+  button.close {
+    display: inline-block;
+    background: $red;
   }
 }
 
 form {
-  button {
-    background: $primary;
-    color: $white;
-    border: none;
-    cursor: pointer;
-    padding: 8px 16px;
-    border-radius: 8px;
-    display: block;
-    margin: 0 auto;
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s;
+  input[type="radio"] {
+    width: auto;
+    accent-color: $primary;
+  }
 
-    &:hover {
-      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-      transform: scale(1.1);
-    }
+  label.radio {
+    display: inline-block;
+    color: $gray;
+    font-size: 1.6rem;
+    margin: 0 16px 0 8px;
   }
 }
 
@@ -167,9 +206,15 @@ table {
     }
 
     &.icon img {
+      cursor: pointer;
       width: 20px;
       max-width: inherit;
       margin: 0 auto;
+      transition: all 0.3s;
+
+      &:hover {
+        transform: scale(1.1);
+      }
     }
 
     &.profile {
@@ -191,10 +236,40 @@ table {
   }
 }
 
-// .table::after,
-// table::before {
-//   content: "";
-// }
+.modal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  background: $overlay;
+
+  p {
+    margin-bottom: 32px;
+  }
+
+  & > div {
+    background: $gray-100;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+    padding: 32px;
+    margin: 64px auto;
+    max-height: 80%;
+    overflow-y: auto;
+  }
+
+  .title {
+    border-left: 5px solid $primary;
+    padding: 0px 16px;
+    margin-bottom: 32px;
+  }
+}
+
+.modal.alert > div {
+  max-width: 400px;
+}
 
 @media screen and (max-width: 991px) {
   main {
