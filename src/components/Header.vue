@@ -41,6 +41,7 @@ header {
     cursor: pointer;
     display: none;
     left: 0px;
+    box-shadow: none;
   }
 }
 

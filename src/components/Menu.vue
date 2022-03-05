@@ -176,6 +176,7 @@ export default {
     cursor: pointer;
     display: none;
     right: -0px;
+    box-shadow: none;
   }
 
   &::-webkit-scrollbar {

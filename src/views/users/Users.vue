@@ -94,10 +94,10 @@
           </form>
         </div>
       </div>
-      <div class="modal alert" @click="cliqueModal" v-if="modalDelete">
+      <div class="modal alert" v-if="modalDelete">
         <div>
           <div class="title">
-            <h2>{{ currentUser.name }}</h2>
+            <h2>Atenção!</h2>
           </div>
 
           <p>
