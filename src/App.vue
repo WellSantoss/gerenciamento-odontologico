@@ -29,11 +29,6 @@ body {
 .v-enter,
 .v-leave-to {
   opacity: 0;
-}
-.v-enter {
-  transform: translate3d(-32px, 0, 0);
-}
-.v-leave-to {
   transform: translate3d(-32px, 0, 0);
 }
 .v-enter-active,
@@ -244,6 +239,9 @@ table {
   bottom: 0;
   z-index: 9999;
   background: $overlay;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   p {
     margin-bottom: 32px;

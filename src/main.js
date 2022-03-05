@@ -13,4 +13,9 @@ new Vue({
   render: (h) => h(App),
 }).$mount("#app");
 
-Vue.use(VueSweetalert2);
+const options = {
+  confirmButtonColor: "#6ebcb6",
+  cancelButtonColor: "#ee5253",
+};
+
+Vue.use(VueSweetalert2, options);

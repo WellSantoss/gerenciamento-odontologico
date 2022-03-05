@@ -30,7 +30,7 @@
             </td>
             <td class="icon">
               <img
-                @click="deleteUser"
+                @click="deleteUser(user.name)"
                 src="../../assets/trash.svg"
                 alt="Excluir"
               />
@@ -40,7 +40,7 @@
       </table>
     </div>
     <transition>
-      <div class="modal" v-if="modalEdit">
+      <div class="modal" @click="closeModal" v-if="modalEdit">
         <div>
           <div class="title">
             <h2>{{ currentUser.name }}</h2>
@@ -86,10 +86,10 @@
               :v-model="currentUser.user"
             />
             <div class="buttons">
+              <button @click.prevent="saveUser">Salvar</button>
               <button @click.prevent="modalEdit = !modalEdit" class="close">
                 Cancelar
               </button>
-              <button>Salvar</button>
             </div>
           </form>
         </div>
@@ -104,7 +104,6 @@ export default {
   data() {
     return {
       modalEdit: false,
-      modalDelete: false,
       currentUser: {
         name: "Mariana Ribeiro",
         image: "profile.jpg",
@@ -138,16 +137,38 @@ export default {
     };
   },
   methods: {
-    deleteUser() {
+    deleteUser(user) {
       this.$swal({
         icon: "warning",
         title: "Atenção!",
-        text: "Excluir o usuário selecionado?",
+        text: `Excluir o usuário "${user}"?`,
         footer: "*Está ação não poderá ser desfeita.",
         showCancelButton: true,
         cancelButtonText: "Cancelar",
         confirmButtonText: "Excluir",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$swal({
+            icon: "success",
+            title: "Excluído!",
+            text: "Usuário excluído com sucesso!",
+          });
+        }
       });
+    },
+    saveUser() {
+      this.modalEdit = !this.modalEdit;
+
+      this.$swal({
+        icon: "success",
+        title: "Alterado!",
+        text: "Usuário alterado com sucesso!",
+      });
+    },
+    closeModal(e) {
+      if (e.target === e.currentTarget) {
+        this.modalEdit = !this.modalEdit;
+      }
     },
   },
 };

@@ -52,6 +52,7 @@ header {
   img {
     border-radius: 50%;
     margin-right: 16px;
+    width: 45px;
   }
 
   p {
