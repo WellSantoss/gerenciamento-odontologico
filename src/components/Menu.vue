@@ -210,7 +210,7 @@ nav {
 
     p {
       text-transform: uppercase;
-      font-size: 1.2rem;
+      font-size: 0.75rem;
       margin-bottom: 8px;
     }
 

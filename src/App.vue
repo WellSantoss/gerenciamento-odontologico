@@ -18,7 +18,7 @@ input,
 button,
 textarea {
   font-family: "Open Sans", sans-serif;
-  font-size: 1.6rem;
+  font-size: 1rem;
   color: $black;
 }
 
@@ -49,7 +49,7 @@ body {
 }
 
 h1 {
-  font-size: 2.4rem;
+  font-size: 1.5rem;
   font-weight: 600;
   display: flex;
   align-items: center;
@@ -65,7 +65,7 @@ h1 {
 }
 
 h2 {
-  font-size: 1.8rem;
+  font-size: 1.125rem;
   font-weight: 600;
 }
 
@@ -73,7 +73,7 @@ label,
 .label {
   display: block;
   color: $gray;
-  font-size: 1.2rem;
+  font-size: 0.75rem;
   margin-bottom: 4px;
 }
 
@@ -134,7 +134,7 @@ form {
   label.radio {
     display: inline-block;
     color: $gray;
-    font-size: 1.6rem;
+    font-size: 1rem;
     margin: 0 16px 0 8px;
   }
 }
@@ -153,7 +153,7 @@ main {
 }
 
 .subtitle {
-  font-size: 1.8rem;
+  font-size: 1.125rem;
   font-weight: 600;
 }
 
