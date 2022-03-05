@@ -267,10 +267,6 @@ table {
   }
 }
 
-.modal.alert > div {
-  max-width: 400px;
-}
-
 @media screen and (max-width: 991px) {
   main {
     display: block;

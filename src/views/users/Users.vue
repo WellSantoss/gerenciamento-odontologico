@@ -30,7 +30,7 @@
             </td>
             <td class="icon">
               <img
-                @click="modalDelete = !modalDelete"
+                @click="deleteUser"
                 src="../../assets/trash.svg"
                 alt="Excluir"
               />
@@ -94,24 +94,6 @@
           </form>
         </div>
       </div>
-      <div class="modal alert" v-if="modalDelete">
-        <div>
-          <div class="title">
-            <h2>Atenção!</h2>
-          </div>
-
-          <p>
-            Excluir o usuário selecionado? Está ação não poderá ser desfeita.
-          </p>
-
-          <div class="buttons">
-            <button @click.prevent="modalDelete = !modalDelete">
-              Cancelar
-            </button>
-            <button class="close">Excluir</button>
-          </div>
-        </div>
-      </div>
     </transition>
   </div>
 </template>
@@ -154,6 +136,19 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    deleteUser() {
+      this.$swal({
+        icon: "warning",
+        title: "Atenção!",
+        text: "Excluir o usuário selecionado?",
+        footer: "*Está ação não poderá ser desfeita.",
+        showCancelButton: true,
+        cancelButtonText: "Cancelar",
+        confirmButtonText: "Excluir",
+      });
+    },
   },
 };
 </script>
