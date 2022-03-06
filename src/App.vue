@@ -103,6 +103,15 @@ button {
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
     transform: scale(1.1);
   }
+
+  &:disabled {
+    cursor: default;
+
+    &:hover {
+      box-shadow: none;
+      transform: scale(1);
+    }
+  }
 }
 
 .buttons {
@@ -170,63 +179,63 @@ main {
   &::-webkit-scrollbar-track {
     background: $white;
   }
-}
 
-table {
-  overflow-x: auto;
-  text-align: left;
-  width: 100%;
-  border-spacing: 0 16px;
+  table {
+    overflow-x: auto;
+    text-align: left;
+    width: 100%;
+    border-spacing: 0 16px;
 
-  thead {
-    font-weight: 600;
-  }
-
-  td {
-    color: $gray;
-    background-color: $white;
-    border-top: 1px solid $gray-200;
-    border-bottom: 1px solid $gray-200;
-    padding: 16px 0px;
-
-    &:first-child {
-      border-left: 1px solid $gray-200;
-      border-radius: 8px 0 0 8px;
+    thead {
+      font-weight: 600;
     }
 
-    &:last-child {
-      border-right: 1px solid $gray-200;
-      padding-right: 16px;
-      border-radius: 0 8px 8px 0;
-    }
+    td {
+      color: $gray;
+      background-color: $white;
+      border-top: 1px solid $gray-200;
+      border-bottom: 1px solid $gray-200;
+      padding: 16px 0px;
 
-    &.icon img {
-      cursor: pointer;
-      width: 20px;
-      max-width: inherit;
-      margin: 0 auto;
-      transition: all 0.3s;
+      &:first-child {
+        border-left: 1px solid $gray-200;
+        border-radius: 8px 0 0 8px;
+      }
 
-      &:hover {
-        transform: scale(1.1);
+      &:last-child {
+        border-right: 1px solid $gray-200;
+        padding-right: 16px;
+        border-radius: 0 8px 8px 0;
+      }
+
+      &.icon img {
+        cursor: pointer;
+        width: 20px;
+        max-width: inherit;
+        margin: 0 auto;
+        transition: all 0.3s;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+
+      &.profile {
+        display: flex;
+        align-items: center;
+        min-width: 150px;
+
+        img {
+          width: 28px;
+          border-radius: 50%;
+          margin-right: 16px;
+        }
       }
     }
-
-    &.profile {
-      display: flex;
-      align-items: center;
-      min-width: 150px;
-
-      img {
-        width: 28px;
-        border-radius: 50%;
-        margin-right: 16px;
-      }
+    th,
+    td {
+      padding-left: 16px;
     }
-  }
-  th,
-  td {
-    padding-left: 16px;
   }
 }
 
