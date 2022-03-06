@@ -90,12 +90,6 @@
         </ul>
         <ul>
           <li>
-            <router-link to="/trocar-senha">
-              <img src="@/assets/password.svg" alt="Trocar Senha" />
-              <span>Trocar Senha</span>
-            </router-link>
-          </li>
-          <li>
             <router-link to="/login">
               <img src="@/assets/logout.svg" alt="Sair" />
               <span>Sair</span>
@@ -196,7 +190,7 @@ export default {
 }
 
 .logo {
-  padding: 32px 0px;
+  padding: 23px 0px;
   border-bottom: 1px solid $gray-200;
 
   img {
