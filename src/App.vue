@@ -227,7 +227,6 @@ table {
   th,
   td {
     padding-left: 16px;
-    padding-left: 16px;
   }
 }
 
@@ -250,7 +249,7 @@ table {
   & > div {
     background: $gray-100;
     width: 80%;
-    max-width: 600px;
+    max-width: 500px;
     border-radius: 8px;
     padding: 32px;
     margin: 64px auto;

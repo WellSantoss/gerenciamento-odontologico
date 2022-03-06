@@ -1,5 +1,6 @@
 <template>
   <div class="content">
+    <Search />
     <div class="table">
       <table>
         <thead>
@@ -99,8 +100,13 @@
 </template>
 
 <script>
+import Search from "@/components/Search.vue";
+
 export default {
   name: "Users",
+  components: {
+    Search,
+  },
   data() {
     return {
       modalEdit: false,
