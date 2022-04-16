@@ -24,6 +24,10 @@ textarea {
 
 body {
   background: $gray-100;
+
+  &.hidden {
+    overflow: hidden;
+  }
 }
 
 .v-enter,

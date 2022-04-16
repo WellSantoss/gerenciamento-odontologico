@@ -1,11 +1,11 @@
 <template>
   <transition mode="out-in">
     <div class="menu">
-      <button @click="removeActive">
-        <img src="@/assets/close.svg" alt="Menu" />
-      </button>
       <div class="logo">
         <img src="@/assets/logo.svg" alt="Logo" />
+        <button @click="removeActive">
+          <img src="@/assets/close.svg" alt="Menu" />
+        </button>
       </div>
       <nav>
         <ul>
@@ -88,14 +88,6 @@
             </router-link>
           </li>
         </ul>
-        <ul>
-          <li>
-            <router-link to="/login">
-              <img src="@/assets/logout.svg" alt="Sair" />
-              <span>Sair</span>
-            </router-link>
-          </li>
-        </ul>
       </nav>
     </div>
   </transition>
@@ -118,6 +110,7 @@ export default {
       setTimeout(() => {
         menu.classList.remove("out");
         menu.classList.remove("active");
+        document.body.classList.remove("hidden");
       }, 300);
     },
   },
@@ -151,8 +144,8 @@ export default {
   height: 100vh;
   padding: 0px 32px 32px;
   overflow-y: auto;
-  position: relative;
-  z-index: 99;
+  position: sticky;
+  top: 0;
 
   &.active {
     animation: toRight 0.3s forwards;
@@ -163,14 +156,13 @@ export default {
   }
 
   button {
-    position: absolute;
     background: transparent;
     padding: 5px;
     border: none;
     cursor: pointer;
     display: none;
-    right: -0px;
     box-shadow: none;
+    margin: 0;
   }
 
   &::-webkit-scrollbar {
@@ -192,9 +184,11 @@ export default {
 .logo {
   padding: 23px 0px;
   border-bottom: 1px solid $gray-200;
+  display: flex;
+  justify-content: space-between;
 
   img {
-    margin: 0 auto;
+    margin: 0;
   }
 }
 
@@ -260,6 +254,7 @@ nav {
     max-width: 300px;
     position: absolute;
     display: none;
+    z-index: 99;
 
     button {
       display: block;

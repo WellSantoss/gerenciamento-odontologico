@@ -36,6 +36,12 @@
               <span>Trocar Senha</span>
             </router-link>
           </li>
+          <li>
+            <router-link to="/login">
+              <img src="@/assets/logout.svg" alt="Sair" />
+              <span>Sair</span>
+            </router-link>
+          </li>
         </ul>
       </div>
     </transition>

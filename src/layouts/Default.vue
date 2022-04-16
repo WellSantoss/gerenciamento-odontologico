@@ -30,7 +30,9 @@ export default {
     const menu = document.querySelector(".menu");
 
     toggleMenu.addEventListener("click", () => {
-      menu.classList.toggle("active");
+      menu.classList.add("active");
+      window.scrollTo(0, 0);
+      document.body.classList.add("hidden");
     });
   },
 };
