@@ -31,36 +31,30 @@ export default {
         events: [
           {
             title: "Restauração",
-            date: "2022-03-09 10:00:00",
+            date: "2022-04-09 10:00:00",
             backgroundColor: "#a55eea",
           },
           {
             title: "Manutenção",
-            date: "2022-03-09 12:00:00",
+            date: "2022-04-09 12:00:00",
             backgroundColor: "#fed330",
           },
           {
             title: "Canal",
-            date: "2022-03-09 14:00:00",
+            date: "2022-04-09 14:00:00",
             backgroundColor: "#fc5c65",
           },
         ],
-        eventClick: function (info) {
-          info.jsEvent.preventDefault(); // don't let the browser navigate
-
-          alert(info.event.title);
-
-          if (info.event.url) {
-            window.open(info.event.url);
-          }
-        },
       },
     };
   },
   methods: {
-    handleDateClick(arg) {
-      alert("date click! " + arg.dateStr);
-      console.log(arg);
+    handleDateClick(date) {
+      alert("date click! " + date.dateStr);
+      console.log(date);
+    },
+    handleEventClick(event) {
+      console.log(event);
     },
   },
 };

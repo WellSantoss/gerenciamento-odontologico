@@ -245,11 +245,12 @@ main {
   top: 0;
   right: 0;
   bottom: 0;
-  z-index: 9999;
+  z-index: 1020;
   background: $overlay;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: fixed;
 
   p {
     margin-bottom: 32px;
@@ -258,7 +259,7 @@ main {
   & > div {
     background: $gray-100;
     width: 80%;
-    max-width: 500px;
+    max-width: 600px;
     border-radius: 8px;
     padding: 32px;
     margin: 64px auto;
