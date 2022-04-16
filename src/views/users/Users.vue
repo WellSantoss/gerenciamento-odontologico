@@ -5,16 +5,30 @@
       <table>
         <thead>
           <tr>
+            <th></th>
+            <th></th>
             <th>Ativo?</th>
             <th>Nome</th>
             <th>Cargo</th>
             <th>Usuário</th>
-            <th></th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(user, index) in users" :key="index">
+            <td class="icon">
+              <img
+                @click="editUser(user.id)"
+                src="@/assets/edit.svg"
+                alt="Editar"
+              />
+            </td>
+            <td class="icon">
+              <img
+                @click="deleteUser(user.id)"
+                src="@/assets/trash.svg"
+                alt="Excluir"
+              />
+            </td>
             <td>{{ user.active ? "Sim" : "Não" }}</td>
             <td class="profile">
               <img :src="require(`@/assets/${user.image}`)" alt="Editar" />
@@ -22,20 +36,6 @@
             </td>
             <td>{{ user.position }}</td>
             <td>{{ user.user }}</td>
-            <td class="icon">
-              <img
-                @click="modalEdit = !modalEdit"
-                src="../../assets/edit.svg"
-                alt="Editar"
-              />
-            </td>
-            <td class="icon">
-              <img
-                @click="deleteUser(user.name)"
-                src="../../assets/trash.svg"
-                alt="Excluir"
-              />
-            </td>
           </tr>
         </tbody>
       </table>
@@ -111,6 +111,7 @@ export default {
     return {
       modalEdit: false,
       currentUser: {
+        id: 1,
         name: "Mariana Ribeiro",
         image: "profile.jpg",
         active: 1,
@@ -161,6 +162,9 @@ export default {
           });
         }
       });
+    },
+    editUser() {
+      this.modalEdit = !this.modalEdit;
     },
     saveUser() {
       this.modalEdit = !this.modalEdit;
