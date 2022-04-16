@@ -7,6 +7,7 @@
           <tr>
             <th></th>
             <th></th>
+            <th></th>
             <th>Ativo?</th>
             <th>Nome</th>
             <th>Cargo</th>
@@ -14,7 +15,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(user, index) in users" :key="index">
+          <tr v-for="user in users" :key="user.id">
+            <td class="icon">
+              <img
+                @click="viewUser(user.id)"
+                src="@/assets/search.svg"
+                alt="Visualizar"
+              />
+            </td>
             <td class="icon">
               <img
                 @click="editUser(user.id)"
@@ -41,7 +49,7 @@
       </table>
     </div>
     <transition>
-      <div class="modal" @click="closeModal" v-if="modalEdit">
+      <div class="modal" @click="closeModal" v-if="modalView">
         <div>
           <div class="title">
             <h2>{{ currentUser.name }}</h2>
@@ -51,6 +59,7 @@
             <input
               type="radio"
               value="1"
+              :disabled="!edit"
               v-model="currentUser.active"
               name="ativo"
               id="sim"
@@ -59,6 +68,7 @@
             <input
               type="radio"
               value="0"
+              :disabled="!edit"
               v-model="currentUser.active"
               name="ativo"
               id="nao"
@@ -75,6 +85,7 @@
               type="text"
               name="nome"
               id="nome"
+              :disabled="!edit"
               :value="currentUser.name"
               :v-model="currentUser.name"
             />
@@ -83,12 +94,14 @@
               type="text"
               name="user"
               id="user"
+              :disabled="!edit"
               :value="currentUser.user"
               :v-model="currentUser.user"
             />
             <div class="buttons">
-              <button @click.prevent="saveUser">Salvar</button>
-              <button @click.prevent="modalEdit = !modalEdit" class="close">
+              <button v-if="edit" @click.prevent="saveUser">Salvar</button>
+              <button v-else @click.prevent="edit = true">Editar</button>
+              <button @click.prevent="modalView = !modalView" class="close">
                 Cancelar
               </button>
             </div>
@@ -109,7 +122,8 @@ export default {
   },
   data() {
     return {
-      modalEdit: false,
+      modalView: false,
+      edit: false,
       currentUser: {
         id: 1,
         name: "Mariana Ribeiro",
@@ -120,6 +134,7 @@ export default {
       },
       users: [
         {
+          id: 1,
           name: "Mariana Ribeiro",
           image: "profile.jpg",
           active: true,
@@ -127,6 +142,7 @@ export default {
           user: "mariana_ribeiro@dentalweb.com",
         },
         {
+          id: 2,
           name: "Mariana Ribeiro",
           image: "profile.jpg",
           active: true,
@@ -134,6 +150,7 @@ export default {
           user: "mariana_ribeiro@dentalweb.com",
         },
         {
+          id: 3,
           name: "Mariana Ribeiro",
           image: "profile.jpg",
           active: true,
@@ -163,11 +180,16 @@ export default {
         }
       });
     },
+    viewUser() {
+      this.modalView = !this.modalView;
+      this.edit = false;
+    },
     editUser() {
-      this.modalEdit = !this.modalEdit;
+      this.modalView = !this.modalView;
+      this.edit = true;
     },
     saveUser() {
-      this.modalEdit = !this.modalEdit;
+      this.modalView = !this.modalView;
 
       this.$swal({
         icon: "success",
@@ -177,7 +199,7 @@ export default {
     },
     closeModal(e) {
       if (e.target === e.currentTarget) {
-        this.modalEdit = !this.modalEdit;
+        this.modalView = !this.modalView;
       }
     },
   },
