@@ -15,6 +15,7 @@ export default {};
 
 body,
 input,
+select,
 button,
 textarea {
   font-family: "Open Sans", sans-serif;
@@ -76,7 +77,8 @@ label,
   margin-bottom: 4px;
 }
 
-input {
+input,
+select {
   background: $white;
   border: 1px solid $gray-200;
   color: $gray;
@@ -86,7 +88,9 @@ input {
   padding: 8px 16px;
   outline: none;
 }
-input:not([type="radio"]):focus {
+
+input:not([type="radio"]):focus,
+select:focus {
   border: 1px solid $gray-200;
   box-shadow: 0px 0px 0px 1px $gray-200;
 }
@@ -269,6 +273,16 @@ main {
     margin: 64px auto;
     max-height: 80%;
     overflow-y: auto;
+  }
+
+  .duo {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+
+    & > div {
+      width: 100%;
+    }
   }
 
   .title {
