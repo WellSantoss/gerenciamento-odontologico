@@ -77,7 +77,7 @@
             <span class="label">Foto</span>
             <img
               style="margin-bottom: 16px"
-              src="../../assets/profile.jpg"
+              src="@/assets/profile.jpg"
               alt=""
             />
             <label for="nome">Nome</label>

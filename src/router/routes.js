@@ -7,6 +7,6 @@ export const routes = [
   {
     path: "/usuarios",
     name: "usuarios",
-    component: () => import("@/views/users/Users.vue"),
+    component: () => import("@/views/Users.vue"),
   },
 ];
