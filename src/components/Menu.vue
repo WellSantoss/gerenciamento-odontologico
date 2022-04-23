@@ -164,21 +164,6 @@ export default {
     box-shadow: none;
     margin: 0;
   }
-
-  &::-webkit-scrollbar {
-    width: 16px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: $primary;
-    border-left: 4px solid $gray-100;
-    border-right: 4px solid $gray-100;
-    border-radius: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: $gray-100;
-  }
 }
 
 .logo {

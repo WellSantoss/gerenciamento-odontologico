@@ -31,6 +31,25 @@ body {
   }
 }
 
+* {
+  scrollbar-width: auto;
+  scrollbar-color: $primary $gray-100;
+}
+
+*::-webkit-scrollbar {
+  width: 16px;
+}
+
+*::-webkit-scrollbar-track {
+  background: $gray-100;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: $primary;
+  border-radius: 10px;
+  border: 3px solid $gray-100;
+}
+
 .v-enter,
 .v-leave-to {
   opacity: 0;
@@ -173,21 +192,6 @@ main {
   overflow-x: auto;
   width: 100%;
 
-  &::-webkit-scrollbar {
-    width: 16px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: $primary;
-    border-top: 4px solid $white;
-    border-bottom: 4px solid $white;
-    border-radius: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: $white;
-  }
-
   table {
     overflow-x: auto;
     text-align: left;
@@ -278,6 +282,7 @@ main {
   .duo {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 20px;
 
     & > div {
