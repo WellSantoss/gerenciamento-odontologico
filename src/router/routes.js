@@ -9,4 +9,9 @@ export const routes = [
     name: "usuarios",
     component: () => import("@/views/Users.vue"),
   },
+  {
+    path: "/dentistas",
+    name: "dentistas",
+    component: () => import("@/views/Dentists.vue"),
+  },
 ];
