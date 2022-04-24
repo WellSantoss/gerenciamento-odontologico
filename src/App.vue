@@ -306,6 +306,7 @@ main {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 16px;
+  padding-top: 16px;
 
   h3 {
     border-bottom: 1px solid $gray-200;

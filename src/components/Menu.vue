@@ -17,7 +17,7 @@
           </li>
         </ul>
         <ul>
-          <p>Pessoas</p>
+          <p class="label">Pessoas</p>
           <li>
             <router-link to="/usuarios">
               <img src="@/assets/people.svg" alt="Usuários" />
@@ -38,7 +38,7 @@
           </li>
         </ul>
         <ul>
-          <p>Consultas</p>
+          <p class="label">Consultas</p>
           <li>
             <router-link to="/consultas">
               <img src="@/assets/schedule.svg" alt="Consultas" />
@@ -59,7 +59,7 @@
           </li>
         </ul>
         <ul>
-          <p>Produtos</p>
+          <p class="label">Produtos</p>
           <li>
             <router-link to="/fornecedores">
               <img src="@/assets/provider.svg" alt="Fornecedores" />
@@ -80,7 +80,7 @@
           </li>
         </ul>
         <ul>
-          <p>Finanças</p>
+          <p class="label">Finanças</p>
           <li>
             <router-link to="/financas">
               <img src="@/assets/finance.svg" alt="Finanças" />
@@ -181,10 +181,9 @@ nav {
   ul {
     margin-top: 32px;
 
-    p {
+    .label {
+      margin: 0px;
       text-transform: uppercase;
-      font-size: 0.75rem;
-      margin-bottom: 8px;
     }
 
     li {
