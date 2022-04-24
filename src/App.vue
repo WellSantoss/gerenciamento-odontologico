@@ -88,6 +88,11 @@ h2 {
   font-weight: 600;
 }
 
+h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
 label,
 .label {
   display: block;
@@ -294,6 +299,34 @@ main {
     border-left: 5px solid $primary;
     padding: 0px 16px;
     margin-bottom: 32px;
+  }
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+
+  h3 {
+    border-bottom: 1px solid $gray-200;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+  }
+
+  p {
+    margin-bottom: 16px;
+  }
+
+  span {
+    margin-bottom: 0px;
+  }
+
+  .card {
+    background: $white;
+    border: 1px solid $gray-200;
+    border-radius: 8px;
+    padding: 16px 16px 0px;
+    cursor: pointer;
   }
 }
 

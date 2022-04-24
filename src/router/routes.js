@@ -14,4 +14,9 @@ export const routes = [
     name: "dentistas",
     component: () => import("@/views/Dentists.vue"),
   },
+  {
+    path: "/consultas",
+    name: "consultas",
+    component: () => import("@/views/Consultas.vue"),
+  },
 ];
