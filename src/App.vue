@@ -124,7 +124,7 @@ button {
   color: $white;
   border: none;
   cursor: pointer;
-  padding: 8px 16px;
+  padding: 9px 16px;
   border-radius: 8px;
   display: block;
   margin: 0 auto;
@@ -292,6 +292,31 @@ main {
 
     & > div {
       width: 100%;
+    }
+  }
+
+  form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    justify-items: end;
+    align-items: end;
+
+    & > div {
+      width: 100%;
+    }
+
+    & > button {
+      margin: 0;
+    }
+
+    input,
+    select {
+      margin-bottom: 0px;
+    }
+
+    .buttons {
+      grid-column: span 2;
     }
   }
 

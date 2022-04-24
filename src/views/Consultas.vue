@@ -23,90 +23,78 @@
             <p>{{ consultaSelecionada.paciente }}</p>
           </div>
           <form action="/usuarios">
-            <div class="duo">
-              <div>
-                <label for="nome">Dentista</label>
-                <input
-                  :disabled="!edit"
-                  type="text"
-                  name="nome"
-                  id="nome"
-                  :value="consultaSelecionada.dentista"
-                  :v-model="consultaSelecionada.dentista"
-                />
-              </div>
-              <div>
-                <label for="nome">Paciente</label>
-                <input
-                  :disabled="!edit"
-                  type="text"
-                  name="nome"
-                  id="nome"
-                  :value="consultaSelecionada.paciente"
-                  :v-model="consultaSelecionada.paciente"
-                />
-              </div>
+            <div>
+              <label for="nome">Dentista</label>
+              <input
+                :disabled="!edit"
+                type="text"
+                name="nome"
+                id="nome"
+                :value="consultaSelecionada.dentista"
+                :v-model="consultaSelecionada.dentista"
+              />
             </div>
-            <div class="duo">
-              <div>
-                <label for="nome">Data</label>
-                <input
-                  :disabled="!edit"
-                  type="text"
-                  name="nome"
-                  id="nome"
-                  :value="consultaSelecionada.data"
-                  :v-model="consultaSelecionada.data"
-                />
-              </div>
-              <div>
-                <label for="nome">Hora</label>
-                <input
-                  :disabled="!edit"
-                  type="text"
-                  name="nome"
-                  id="nome"
-                  :value="consultaSelecionada.hora"
-                  :v-model="consultaSelecionada.hora"
-                />
-              </div>
+            <div>
+              <label for="nome">Paciente</label>
+              <input
+                :disabled="!edit"
+                type="text"
+                name="nome"
+                id="nome"
+                :value="consultaSelecionada.paciente"
+                :v-model="consultaSelecionada.paciente"
+              />
             </div>
-            <div class="duo">
-              <div>
-                <label for="nome">Valor</label>
-                <input
-                  :disabled="!edit"
-                  type="text"
-                  name="nome"
-                  id="nome"
-                  :value="valorFormatado"
-                  :v-model="consultaSelecionada.valor"
-                />
-              </div>
-              <div>
-                <label for="nome">Pago?</label>
-                <select
-                  v-model="consultaSelecionada.pago"
-                  name="pago"
-                  id="pago"
-                >
-                  <option value="false">Não</option>
-                  <option value="true">Sim</option>
-                </select>
-              </div>
+            <div>
+              <label for="nome">Data</label>
+              <input
+                :disabled="!edit"
+                type="text"
+                name="nome"
+                id="nome"
+                :value="consultaSelecionada.data"
+                :v-model="consultaSelecionada.data"
+              />
             </div>
-            <div class="duo">
-              <div>
-                <label for="nome">Status</label>
-                <input
-                  :disabled="!edit"
-                  type="text"
-                  name="nome"
-                  id="nome"
-                  :value="consultaSelecionada.status"
-                  :v-model="consultaSelecionada.status"
-                />
-              </div>
+            <div>
+              <label for="nome">Hora</label>
+              <input
+                :disabled="!edit"
+                type="text"
+                name="nome"
+                id="nome"
+                :value="consultaSelecionada.hora"
+                :v-model="consultaSelecionada.hora"
+              />
+            </div>
+            <div>
+              <label for="nome">Valor</label>
+              <input
+                :disabled="!edit"
+                type="text"
+                name="nome"
+                id="nome"
+                :value="valorFormatado"
+                :v-model="consultaSelecionada.valor"
+              />
+            </div>
+            <div>
+              <label for="nome">Pago?</label>
+              <select v-model="consultaSelecionada.pago" name="pago" id="pago">
+                <option value="false">Não</option>
+                <option value="true">Sim</option>
+              </select>
+            </div>
+            <div>
+              <label for="nome">Status</label>
+              <input
+                :disabled="!edit"
+                type="text"
+                name="nome"
+                id="nome"
+                :value="consultaSelecionada.status"
+                :v-model="consultaSelecionada.status"
+              />
             </div>
             <div class="buttons">
               <button v-if="edit" @click.prevent="saveUser">Salvar</button>

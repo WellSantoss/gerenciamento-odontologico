@@ -138,13 +138,11 @@
             <p>{{ currentDentist.name }}</p>
           </div>
           <form action="/usuarios">
-            <div class="duo">
-              <div>
-                <label for="nome">Especialidade</label>
-                <input type="text" name="especialidade" id="especialidade" />
-              </div>
-              <button @click.prevent>Adicionar</button>
+            <div>
+              <label for="nome">Especialidade</label>
+              <input type="text" name="especialidade" id="especialidade" />
             </div>
+            <button @click.prevent>Adicionar</button>
           </form>
           <div class="table">
             <table>
@@ -182,25 +180,23 @@
       >
         <div>
           <div class="title">
-            <h2>Especialidades</h2>
+            <h2>Horários de Atendimento</h2>
             <p>{{ currentDentist.name }}</p>
           </div>
           <form action="/usuarios">
-            <div class="duo">
-              <div>
-                <label for="dia">Dia</label>
-                <input type="text" name="dia" id="dia" />
-              </div>
-              <div>
-                <label for="inicio">Início</label>
-                <input type="text" name="inicio" id="inicio" />
-              </div>
-              <div>
-                <label for="final">Final</label>
-                <input type="text" name="final" id="final" />
-              </div>
-              <button @click.prevent>Adicionar</button>
+            <div>
+              <label for="dia">Dia</label>
+              <input type="text" name="dia" id="dia" />
             </div>
+            <div>
+              <label for="inicio">Início</label>
+              <input type="text" name="inicio" id="inicio" />
+            </div>
+            <div>
+              <label for="final">Final</label>
+              <input type="text" name="final" id="final" />
+            </div>
+            <button @click.prevent>Adicionar</button>
           </form>
           <div class="table">
             <table>
@@ -411,4 +407,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+form {
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: stretch;
+}
+</style>
