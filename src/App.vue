@@ -102,7 +102,8 @@ label,
 }
 
 input,
-select {
+select,
+textarea {
   background: $white;
   border: 1px solid $gray-200;
   color: $gray;
@@ -111,6 +112,10 @@ select {
   border-radius: 8px;
   padding: 8px 16px;
   outline: none;
+}
+
+textarea {
+  resize: none;
 }
 
 input:not([type="radio"]):focus,
@@ -315,7 +320,17 @@ main {
       margin-bottom: 0px;
     }
 
-    .buttons {
+    .procedimento {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .title {
+      margin: 32px 0px 16px;
+    }
+
+    .full {
       grid-column: span 2;
     }
   }

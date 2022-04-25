@@ -96,7 +96,50 @@
                 :v-model="consultaSelecionada.status"
               />
             </div>
-            <div class="buttons">
+            <div class="title full">
+              <h2>Procedimentos</h2>
+            </div>
+            <div class="full">
+              <div
+                v-for="procedimento in consultaSelecionada.procedimentos"
+                :key="procedimento.id"
+                class="procedimento"
+              >
+                <h3 class="full">{{ procedimento.procedimento }}</h3>
+                <div>
+                  <label for="nome">Finalizado?</label>
+                  <select
+                    v-model="procedimento.finalizado"
+                    name="pago"
+                    id="pago"
+                  >
+                    <option value="false">Não</option>
+                    <option value="true">Sim</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="nome">Dente</label>
+                  <input
+                    :disabled="!edit"
+                    type="text"
+                    name="nome"
+                    id="nome"
+                    :value="procedimento.dente"
+                    :v-model="procedimento.dente"
+                  />
+                </div>
+                <div class="full">
+                  <label for="nome">Observações</label>
+                  <textarea
+                    name="observacoes"
+                    id="observacoes"
+                    :value="procedimento.observacoes"
+                    :v-model="procedimento.observacoes"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="buttons full">
               <button v-if="edit" @click.prevent="saveUser">Salvar</button>
               <button v-else @click.prevent="edit = true">Editar</button>
               <button @click.prevent="modalView = !modalView" class="close">
@@ -133,6 +176,20 @@ export default {
           paciente: "José Carlos",
           valor: 90.8,
           pago: true,
+          procedimentos: [
+            {
+              finalizado: true,
+              procedimento: "Restauração",
+              dente: "Incisivo Central Decíduo Superior Direito",
+              observacoes: "teste",
+            },
+            {
+              finalizado: true,
+              procedimento: "Manutenção",
+              dente: "-",
+              observacoes: "",
+            },
+          ],
         },
         {
           id: 2,
@@ -143,6 +200,14 @@ export default {
           paciente: "José Carlos",
           valor: 90.8,
           pago: true,
+          procedimentos: [
+            {
+              finalizado: true,
+              procedimento: "Restauração",
+              dente: "Incisivo Central Decíduo Superior Direito",
+              observacoes: "",
+            },
+          ],
         },
         {
           id: 3,
@@ -153,6 +218,14 @@ export default {
           paciente: "José Carlos",
           valor: 90.8,
           pago: true,
+          procedimentos: [
+            {
+              finalizado: true,
+              procedimento: "Restauração",
+              dente: "Incisivo Central Decíduo Superior Direito",
+              observacoes: "",
+            },
+          ],
         },
         {
           id: 4,
@@ -163,6 +236,14 @@ export default {
           paciente: "José Carlos",
           valor: 90.8,
           pago: true,
+          procedimentos: [
+            {
+              finalizado: true,
+              procedimento: "Restauração",
+              dente: "Incisivo Central Decíduo Superior Direito",
+              observacoes: "",
+            },
+          ],
         },
         {
           id: 5,
@@ -173,6 +254,14 @@ export default {
           paciente: "José Carlos",
           valor: 90.8,
           pago: true,
+          procedimentos: [
+            {
+              finalizado: true,
+              procedimento: "Restauração",
+              dente: "Incisivo Central Decíduo Superior Direito",
+              observacoes: "",
+            },
+          ],
         },
         {
           id: 6,
@@ -183,6 +272,14 @@ export default {
           paciente: "José Carlos",
           valor: 90.8,
           pago: true,
+          procedimentos: [
+            {
+              finalizado: true,
+              procedimento: "Restauração",
+              dente: "Incisivo Central Decíduo Superior Direito",
+              observacoes: "",
+            },
+          ],
         },
         {
           id: 7,
@@ -193,6 +290,14 @@ export default {
           paciente: "José Carlos",
           valor: 90.8,
           pago: true,
+          procedimentos: [
+            {
+              finalizado: true,
+              procedimento: "Restauração",
+              dente: "Incisivo Central Decíduo Superior Direito",
+              observacoes: "",
+            },
+          ],
         },
         {
           id: 8,
@@ -203,6 +308,14 @@ export default {
           paciente: "José Carlos",
           valor: 90.8,
           pago: true,
+          procedimentos: [
+            {
+              finalizado: true,
+              procedimento: "Restauração",
+              dente: "Incisivo Central Decíduo Superior Direito",
+              observacoes: "",
+            },
+          ],
         },
       ],
     };
