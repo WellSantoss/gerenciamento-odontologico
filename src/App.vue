@@ -347,6 +347,14 @@ main {
   grid-template-columns: 1fr 1fr 1fr;
   gap: 16px;
   padding-top: 16px;
+}
+
+.card {
+  background: $white;
+  border: 1px solid $gray-200;
+  border-radius: 8px;
+  padding: 16px 16px 0px;
+  cursor: pointer;
 
   h3 {
     border-bottom: 1px solid $gray-200;
@@ -362,12 +370,37 @@ main {
     margin-bottom: 0px;
   }
 
-  .card {
-    background: $white;
-    border: 1px solid $gray-200;
-    border-radius: 8px;
-    padding: 16px 16px 0px;
-    cursor: pointer;
+  .title {
+    border-bottom: 1px solid $gray-200;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  h2 {
+    border-left: 5px solid $primary;
+    padding: 0px 16px;
+  }
+
+  .items {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+    flex-wrap: wrap;
+
+    p {
+      margin: 0;
+    }
+
+    span {
+      margin-bottom: 8px;
+    }
+
+    & > div {
+      min-width: 200px;
+    }
   }
 }
 

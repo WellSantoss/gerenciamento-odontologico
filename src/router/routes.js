@@ -1,22 +1,28 @@
 export const routes = [
   {
-    path: "/inicio",
     name: "inicio",
+    path: "/inicio",
     component: () => import("@/views/Home.vue"),
   },
   {
-    path: "/usuarios",
     name: "usuarios",
+    path: "/usuarios",
     component: () => import("@/views/Users.vue"),
   },
   {
-    path: "/dentistas",
     name: "dentistas",
+    path: "/dentistas",
     component: () => import("@/views/Dentists.vue"),
   },
   {
-    path: "/consultas",
     name: "consultas",
+    path: "/consultas",
     component: () => import("@/views/Consultas.vue"),
+  },
+  {
+    name: "paciente",
+    path: "/pacientes/:id",
+    props: true,
+    component: () => import("@/views/Paciente.vue"),
   },
 ];

@@ -5,22 +5,68 @@
         <img src="@/assets/logo.svg" alt="Logo" />
         <h1>Login</h1>
       </div>
-      <form action="">
-        <label for="user">Usuário</label>
-        <input type="text" name="user" id="user" />
-        <label for="password">Senha</label>
-        <input type="password" name="password" id="password" />
-        <router-link to="/inicio">
-          <button>Entrar</button>
-        </router-link>
+      <form @submit.prevent="login()">
+        <label for="usuario">Usuário</label>
+        <input
+          required
+          type="text"
+          name="usuario"
+          id="user"
+          v-model="data.usuario"
+        />
+        <label for="senha">Senha</label>
+        <input
+          required
+          type="password"
+          name="senha"
+          id="senha"
+          v-model="data.senha"
+        />
+        <button>Entrar</button>
       </form>
     </div>
   </main>
 </template>
 
 <script>
+// import axios from "axios";
+import api from "@/api.js";
+
 export default {
   name: "Login",
+  data() {
+    return {
+      data: {
+        usuario: null,
+        senha: null,
+      },
+    };
+  },
+  methods: {
+    login() {
+      api
+        .post("/usuario/login", this.data, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          const data = response.data.data;
+
+          this.$store.dispatch("setUsuario", data.usuario);
+          localStorage.setItem("token", data.token);
+
+          this.$router.push({ name: "inicio" });
+        })
+        .catch((response) => {
+          this.$swal({
+            icon: response.response.data.status,
+            title: "Atenção!",
+            text: response.response.data.data,
+          });
+        });
+    },
+  },
 };
 </script>
 

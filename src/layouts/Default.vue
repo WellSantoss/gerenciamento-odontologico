@@ -25,6 +25,11 @@ export default {
       return this.$route.name;
     },
   },
+  created() {
+    if (!this.$store.state.login) {
+      this.$store.dispatch("getUsuario", localStorage.getItem("token"));
+    }
+  },
   mounted() {
     const toggleMenu = document.querySelector("button.toggle-menu");
     const menu = document.querySelector(".menu");
