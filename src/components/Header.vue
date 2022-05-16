@@ -6,10 +6,13 @@
     <h1>{{ titulo }}</h1>
 
     <div class="profile" @click="handleModal">
-      <img src="@/assets/profile.jpg" alt="Perfil" />
+      <img
+        :src="`http://localhost/gerenciamento-odontologico-api/upload/${foto}`"
+        alt="Perfil"
+      />
       <div class="name">
-        <span class="subtitle">Olá, Mariana!</span><br />
-        <p>Administrador</p>
+        <span class="subtitle">Olá, {{ nome }}!</span><br />
+        <p>{{ cargo }}</p>
       </div>
     </div>
     <transition>
@@ -21,7 +24,7 @@
       >
         <div class="name">
           <span class="subtitle">Olá, Mariana!</span><br />
-          <p>Administrador</p>
+          <p>{{ cargo }}</p>
         </div>
         <ul>
           <li>
@@ -37,10 +40,10 @@
             </router-link>
           </li>
           <li>
-            <router-link to="/login">
+            <a @click="logout">
               <img src="@/assets/logout.svg" alt="Sair" />
               <span>Sair</span>
-            </router-link>
+            </a>
           </li>
         </ul>
       </div>
@@ -65,6 +68,29 @@ export default {
         this.modalInfoAtivo = false;
       } else {
         this.modalInfoAtivo = true;
+      }
+    },
+    logout() {
+      this.$store.dispatch("logout");
+      localStorage.removeItem("token");
+
+      this.$router.push({ name: "login" });
+    },
+  },
+  computed: {
+    nome() {
+      return this.$store.state.usuario.nome.replace(/ .*/, "");
+    },
+    foto() {
+      return this.$store.state.usuario.foto;
+    },
+    cargo() {
+      const usuario = this.$store.state.usuario;
+
+      if (usuario.administrador) {
+        return "Administrador";
+      } else {
+        return usuario.dentista ? "Dentista" : "Atendente";
       }
     },
   },
@@ -135,6 +161,7 @@ header {
   width: 200px;
   top: 80px;
   right: 0;
+  z-index: 99;
 
   .name {
     display: none;
@@ -151,6 +178,7 @@ header {
       position: relative;
       display: flex;
       align-items: center;
+      cursor: pointer;
 
       &:hover::before {
         content: "";
