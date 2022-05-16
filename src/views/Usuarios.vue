@@ -25,7 +25,7 @@
             </td>
             <td class="icon">
               <img
-                @click="editUser(usuario.id)"
+                @click="viewUser(usuario.id); edit = true"
                 src="@/assets/edit.svg"
                 alt="Editar"
               />
@@ -52,10 +52,10 @@
       </table>
     </div>
     <transition>
-      <div class="modal" @click="closeModal" v-if="modalView">
+      <div class="modal" @click="closeModal" v-if="usuarioSelecionado">
         <div>
           <div class="title">
-            <h2>{{ currentUser.nome }}</h2>
+            <h2>{{ usuarioSelecionado.nome }}</h2>
           </div>
           <form action="/usuarios">
             <span class="label">Ativo?</span>
@@ -63,7 +63,7 @@
               type="radio"
               value="1"
               :disabled="!edit"
-              v-model="currentUser.ativo"
+              v-model="usuarioSelecionado.ativo"
               name="ativo"
               id="sim"
             />
@@ -72,7 +72,7 @@
               type="radio"
               value="0"
               :disabled="!edit"
-              v-model="currentUser.ativo"
+              v-model="usuarioSelecionado.ativo"
               name="ativo"
               id="nao"
             />
@@ -89,8 +89,8 @@
               name="nome"
               id="nome"
               :disabled="!edit"
-              :value="currentUser.nome"
-              :v-model="currentUser.nome"
+              :value="usuarioSelecionado.nome"
+              :v-model="usuarioSelecionado.nome"
             />
             <label for="usuario">Usuário</label>
             <input
@@ -98,13 +98,13 @@
               name="usuario"
               id="usuario"
               :disabled="!edit"
-              :value="currentUser.usuario"
-              :v-model="currentUser.usuario"
+              :value="usuarioSelecionado.usuario"
+              :v-model="usuarioSelecionado.usuario"
             />
             <div class="buttons">
               <button v-if="edit" @click.prevent="saveUser">Salvar</button>
               <button v-else @click.prevent="edit = true">Editar</button>
-              <button @click.prevent="modalView = !modalView" class="close">
+              <button @click.prevent="usuarioSelecionado = null" class="close">
                 Cancelar
               </button>
             </div>
@@ -126,9 +126,8 @@ export default {
   },
   data() {
     return {
-      modalView: false,
       edit: false,
-      currentUser: {
+      usuarioSelecionado: {
         id: 1,
         nome: "Mariana Ribeiro",
         foto: "profile.jpg",
@@ -140,11 +139,14 @@ export default {
     };
   },
   created() {
-    api.get("/usuario/get").then((response) => {
-      this.usuarios = response.data.data;
-    });
+    getUsers();
   },
   methods: {
+    getUsers() {
+      api.get("/usuario/get").then((response) => {
+        this.usuarios = response.data.data;
+      });
+    },
     deleteUser(usuario) {
       this.$swal({
         icon: "warning",
@@ -156,25 +158,28 @@ export default {
         confirmButtonText: "Excluir",
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$swal({
-            icon: "success",
-            title: "Excluído!",
-            text: "Usuário excluído com sucesso!",
+          api.delete("/usuario/delete").then((response) => {
+            this.$swal({
+              icon: "success",
+              title: "Excluído!",
+              text: response.data.data,
+            });
+          }).catch((response) => {
+            this.$swal({
+              icon: "error",
+              title: "Erro!",
+              text: response.data.data,
+            });
           });
+
+          getUsers();
         }
       });
     },
-    viewUser() {
-      this.modalView = !this.modalView;
-      this.edit = false;
-    },
-    editUser() {
-      this.modalView = !this.modalView;
-      this.edit = true;
+    viewUser(id) {
+      this.usuarioSelecionado = this.usuarios.filter(this.usuarios.id == id);
     },
     saveUser() {
-      this.modalView = !this.modalView;
-
       this.$swal({
         icon: "success",
         title: "Alterado!",
@@ -183,7 +188,8 @@ export default {
     },
     closeModal(e) {
       if (e.target === e.currentTarget) {
-        this.modalView = !this.modalView;
+        this.edit = false;
+        this.usuarioSelecionado = null;
       }
     },
   },
