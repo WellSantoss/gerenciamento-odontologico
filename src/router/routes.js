@@ -7,7 +7,7 @@ export const routes = [
   {
     name: "usuarios",
     path: "/usuarios",
-    component: () => import("@/views/Users.vue"),
+    component: () => import("@/views/Usuarios.vue"),
   },
   {
     name: "dentistas",

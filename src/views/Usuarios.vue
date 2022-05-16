@@ -10,40 +10,43 @@
             <th></th>
             <th>Ativo?</th>
             <th>Nome</th>
-            <th>Cargo</th>
+            <!-- <th>Cargo</th> -->
             <th>Usuário</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="user in users" :key="user.id">
+          <tr v-for="usuario in usuarios" :key="usuario.id">
             <td class="icon">
               <img
-                @click="viewUser(user.id)"
+                @click="viewUser(usuario.id)"
                 src="@/assets/search.svg"
                 alt="Visualizar"
               />
             </td>
             <td class="icon">
               <img
-                @click="editUser(user.id)"
+                @click="editUser(usuario.id)"
                 src="@/assets/edit.svg"
                 alt="Editar"
               />
             </td>
             <td class="icon">
               <img
-                @click="deleteUser(user.id)"
+                @click="deleteUser(usuario.id)"
                 src="@/assets/trash.svg"
                 alt="Excluir"
               />
             </td>
-            <td>{{ user.active ? "Sim" : "Não" }}</td>
+            <td>{{ usuario.ativo ? "Sim" : "Não" }}</td>
             <td class="profile">
-              <img :src="require(`@/assets/${user.image}`)" alt="Editar" />
-              <p>{{ user.name }}</p>
+              <img
+                :src="`http://localhost/gerenciamento-odontologico-api/upload/${usuario.foto}`"
+                alt="Editar"
+              />
+              <p>{{ usuario.nome }}</p>
             </td>
-            <td>{{ user.position }}</td>
-            <td>{{ user.user }}</td>
+            <!-- <td>{{ usuario.position }}</td> -->
+            <td>{{ usuario.usuario }}</td>
           </tr>
         </tbody>
       </table>
@@ -52,7 +55,7 @@
       <div class="modal" @click="closeModal" v-if="modalView">
         <div>
           <div class="title">
-            <h2>{{ currentUser.name }}</h2>
+            <h2>{{ currentUser.nome }}</h2>
           </div>
           <form action="/usuarios">
             <span class="label">Ativo?</span>
@@ -60,7 +63,7 @@
               type="radio"
               value="1"
               :disabled="!edit"
-              v-model="currentUser.active"
+              v-model="currentUser.ativo"
               name="ativo"
               id="sim"
             />
@@ -69,7 +72,7 @@
               type="radio"
               value="0"
               :disabled="!edit"
-              v-model="currentUser.active"
+              v-model="currentUser.ativo"
               name="ativo"
               id="nao"
             />
@@ -86,17 +89,17 @@
               name="nome"
               id="nome"
               :disabled="!edit"
-              :value="currentUser.name"
-              :v-model="currentUser.name"
+              :value="currentUser.nome"
+              :v-model="currentUser.nome"
             />
-            <label for="user">Usuário</label>
+            <label for="usuario">Usuário</label>
             <input
               type="text"
-              name="user"
-              id="user"
+              name="usuario"
+              id="usuario"
               :disabled="!edit"
-              :value="currentUser.user"
-              :v-model="currentUser.user"
+              :value="currentUser.usuario"
+              :v-model="currentUser.usuario"
             />
             <div class="buttons">
               <button v-if="edit" @click.prevent="saveUser">Salvar</button>
@@ -114,9 +117,10 @@
 
 <script>
 import Search from "@/components/Search.vue";
+import api from "@/api.js";
 
 export default {
-  name: "Users",
+  name: "Usuarios",
   components: {
     Search,
   },
@@ -126,46 +130,26 @@ export default {
       edit: false,
       currentUser: {
         id: 1,
-        name: "Mariana Ribeiro",
-        image: "profile.jpg",
-        active: 1,
+        nome: "Mariana Ribeiro",
+        foto: "profile.jpg",
+        ativo: 1,
         position: "Administrador",
-        user: "mariana_ribeiro@dentalweb.com",
+        usuario: "mariana_ribeiro@dentalweb.com",
       },
-      users: [
-        {
-          id: 1,
-          name: "Mariana Ribeiro",
-          image: "profile.jpg",
-          active: true,
-          position: "Administrador",
-          user: "mariana_ribeiro@dentalweb.com",
-        },
-        {
-          id: 2,
-          name: "Mariana Ribeiro",
-          image: "profile.jpg",
-          active: true,
-          position: "Administrador",
-          user: "mariana_ribeiro@dentalweb.com",
-        },
-        {
-          id: 3,
-          name: "Mariana Ribeiro",
-          image: "profile.jpg",
-          active: true,
-          position: "Administrador",
-          user: "mariana_ribeiro@dentalweb.com",
-        },
-      ],
+      usuarios: null,
     };
   },
+  created() {
+    api.get("/usuario/get").then((response) => {
+      this.usuarios = response.data.data;
+    });
+  },
   methods: {
-    deleteUser(user) {
+    deleteUser(usuario) {
       this.$swal({
         icon: "warning",
         title: "Atenção!",
-        text: `Excluir o usuário "${user}"?`,
+        text: `Excluir o usuário "${usuario}"?`,
         footer: "*Está ação não poderá ser desfeita.",
         showCancelButton: true,
         cancelButtonText: "Cancelar",

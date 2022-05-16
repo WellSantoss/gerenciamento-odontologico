@@ -27,7 +27,7 @@ export default {
   },
   created() {
     if (!this.$store.state.login) {
-      this.$store.dispatch("getUsuario", localStorage.getItem("token"));
+      this.$store.dispatch("getUsuario");
     }
   },
   mounted() {

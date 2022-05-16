@@ -25,13 +25,9 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    getUsuario(context, payload) {
+    getUsuario(context) {
       api
-        .get("/auth/autentica", {
-          headers: {
-            Authorization: "Bearer " + payload,
-          },
-        })
+        .get("/auth/autentica")
         .then((response) => {
           context.commit("UPDATE_USUARIO", response.data.data);
           context.commit("UPDADE_LOGIN", true);
