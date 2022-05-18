@@ -16,6 +16,7 @@ new Vue({
 const options = {
   confirmButtonColor: "#6ebcb6",
   cancelButtonColor: "#ee5253",
+  closeOnClickOutside: false,
 };
 
 Vue.use(VueSweetalert2, options);
