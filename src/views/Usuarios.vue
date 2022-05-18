@@ -7,10 +7,9 @@
           <tr>
             <th></th>
             <th></th>
-            <th></th>
             <th>Ativo?</th>
+            <th>Administrador?</th>
             <th>Nome</th>
-            <!-- <th>Cargo</th> -->
             <th>Usuário</th>
           </tr>
         </thead>
@@ -18,26 +17,23 @@
           <tr v-for="usuario in usuarios" :key="usuario.id">
             <td class="icon">
               <img
-                @click="viewUser(usuario.id)"
-                src="@/assets/search.svg"
-                alt="Visualizar"
-              />
-            </td>
-            <td class="icon">
-              <img
-                @click="viewUser(usuario.id); edit = true"
+                @click="
+                  viewUser(usuario.id);
+                  edit = true;
+                "
                 src="@/assets/edit.svg"
                 alt="Editar"
               />
             </td>
             <td class="icon">
               <img
-                @click="deleteUser(usuario.id)"
+                @click="deleteUser(usuario.id, usuario.nome)"
                 src="@/assets/trash.svg"
                 alt="Excluir"
               />
             </td>
             <td>{{ usuario.ativo ? "Sim" : "Não" }}</td>
+            <td>{{ usuario.administrador ? "Sim" : "Não" }}</td>
             <td class="profile">
               <img
                 :src="`http://localhost/gerenciamento-odontologico-api/upload/${usuario.foto}`"
@@ -45,7 +41,6 @@
               />
               <p>{{ usuario.nome }}</p>
             </td>
-            <!-- <td>{{ usuario.position }}</td> -->
             <td>{{ usuario.usuario }}</td>
           </tr>
         </tbody>
@@ -57,52 +52,84 @@
           <div class="title">
             <h2>{{ usuarioSelecionado.nome }}</h2>
           </div>
-          <form action="/usuarios">
-            <span class="label">Ativo?</span>
-            <input
-              type="radio"
-              value="1"
-              :disabled="!edit"
-              v-model="usuarioSelecionado.ativo"
-              name="ativo"
-              id="sim"
-            />
-            <label class="radio" for="sim">Sim</label>
-            <input
-              type="radio"
-              value="0"
-              :disabled="!edit"
-              v-model="usuarioSelecionado.ativo"
-              name="ativo"
-              id="nao"
-            />
-            <label class="radio" for="nao">Não</label>
-            <span class="label">Foto</span>
-            <img
-              style="margin-bottom: 16px"
-              src="@/assets/profile.jpg"
-              alt=""
-            />
-            <label for="nome">Nome</label>
-            <input
-              type="text"
-              name="nome"
-              id="nome"
-              :disabled="!edit"
-              :value="usuarioSelecionado.nome"
-              :v-model="usuarioSelecionado.nome"
-            />
-            <label for="usuario">Usuário</label>
-            <input
-              type="text"
-              name="usuario"
-              id="usuario"
-              :disabled="!edit"
-              :value="usuarioSelecionado.usuario"
-              :v-model="usuarioSelecionado.usuario"
-            />
+          <form @submit.prevent="updateUsuario($event, usuarioSelecionado.id)">
+            <div>
+              <span class="label">Ativo?</span>
+              <input
+                type="radio"
+                value="1"
+                :disabled="!edit"
+                v-model="usuarioSelecionado.ativo"
+                name="ativo"
+                id="ativo-sim"
+              />
+              <label class="radio" for="ativo-sim">Sim</label>
+              <input
+                type="radio"
+                value="0"
+                :disabled="!edit"
+                v-model="usuarioSelecionado.ativo"
+                name="ativo"
+                id="ativo-nao"
+              />
+              <label class="radio" for="ativo-nao">Não</label>
+            </div>
+            <div>
+              <span class="label">Administrador?</span>
+              <input
+                type="radio"
+                value="1"
+                :disabled="!edit"
+                v-model="usuarioSelecionado.administrador"
+                name="administrador"
+                id="administrador-sim"
+              />
+              <label class="radio" for="administrador-sim">Sim</label>
+              <input
+                type="radio"
+                value="0"
+                :disabled="!edit"
+                v-model="usuarioSelecionado.administrador"
+                name="administrador"
+                id="administrador-nao"
+              />
+              <label class="radio" for="administrador-nao">Não</label>
+            </div>
+            <div class="full">
+              <!-- <span class="label">Foto</span> -->
+              <img
+                :src="`http://localhost/gerenciamento-odontologico-api/upload/${usuarioSelecionado.foto}`"
+                alt=""
+              />
+              <div>
+                <label for="foto">Foto</label>
+                <input type="file" name="foto" id="foto" :disabled="!edit" />
+              </div>
+            </div>
+            <div>
+              <label for="nome">Nome</label>
+              <input
+                type="text"
+                name="nome"
+                id="nome"
+                :disabled="!edit"
+                :value="usuarioSelecionado.nome"
+                :v-model="usuarioSelecionado.nome"
+              />
+            </div>
+            <div>
+              <label for="usuario">Usuário</label>
+              <input
+                type="text"
+                name="usuario"
+                id="usuario"
+                :disabled="!edit"
+                :value="usuarioSelecionado.usuario"
+                :v-model="usuarioSelecionado.usuario"
+              />
+            </div>
             <div class="buttons">
-              <button v-if="edit" @click.prevent="saveUser">Salvar</button>
+              <button v-if="edit">Salvar</button>
               <button v-else @click.prevent="edit = true">Editar</button>
               <button @click.prevent="usuarioSelecionado = null" class="close">
                 Cancelar
@@ -127,64 +154,86 @@ export default {
   data() {
     return {
       edit: false,
-      usuarioSelecionado: {
-        id: 1,
-        nome: "Mariana Ribeiro",
-        foto: "profile.jpg",
-        ativo: 1,
-        position: "Administrador",
-        usuario: "mariana_ribeiro@dentalweb.com",
-      },
+      usuarioSelecionado: null,
       usuarios: null,
     };
   },
   created() {
-    getUsers();
+    this.getUsers();
   },
   methods: {
+    updateUsuario(event, id) {
+      const formData = new FormData(event.target);
+
+      api
+        .post(`/usuario/update/${id}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          this.$swal({
+            icon: "success",
+            title: "Atualizado!",
+            text: response.data.data,
+          });
+
+          this.usuarioSelecionado = null;
+          this.getUsers();
+        })
+        .catch((response) => {
+          this.$swal({
+            icon: "error",
+            title: "Erro!",
+            text: response.data.data,
+          });
+        });
+    },
     getUsers() {
+      this.usuarios = null;
+
       api.get("/usuario/get").then((response) => {
         this.usuarios = response.data.data;
       });
     },
-    deleteUser(usuario) {
+    deleteUser(id, usuario) {
       this.$swal({
         icon: "warning",
         title: "Atenção!",
-        text: `Excluir o usuário "${usuario}"?`,
+        text: `Excluir o usuário '${usuario}'?`,
         footer: "*Está ação não poderá ser desfeita.",
         showCancelButton: true,
         cancelButtonText: "Cancelar",
         confirmButtonText: "Excluir",
       }).then((result) => {
         if (result.isConfirmed) {
-          api.delete("/usuario/delete").then((response) => {
-            this.$swal({
-              icon: "success",
-              title: "Excluído!",
-              text: response.data.data,
-            });
-          }).catch((response) => {
-            this.$swal({
-              icon: "error",
-              title: "Erro!",
-              text: response.data.data,
-            });
-          });
+          api
+            .delete(`/usuario/delete/${id}`)
+            .then((response) => {
+              this.$swal({
+                icon: "success",
+                title: "Excluído!",
+                text: response.data.data,
+              });
 
-          getUsers();
+              this.getUsers();
+            })
+            .catch((response) => {
+              this.$swal({
+                icon: "error",
+                title: "Erro!",
+                text: response.data.data,
+              });
+            });
         }
       });
     },
     viewUser(id) {
-      this.usuarioSelecionado = this.usuarios.filter(this.usuarios.id == id);
-    },
-    saveUser() {
-      this.$swal({
-        icon: "success",
-        title: "Alterado!",
-        text: "Usuário alterado com sucesso!",
+      const usuario = this.usuarios.filter((usuario) => {
+        return usuario.id == id;
       });
+
+      this.usuarioSelecionado = usuario[0];
     },
     closeModal(e) {
       if (e.target === e.currentTarget) {
@@ -196,4 +245,17 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.full {
+  display: flex;
+  gap: 16px;
+
+  img {
+    height: 63px;
+  }
+
+  & > div {
+    flex: 1;
+  }
+}
+</style>
