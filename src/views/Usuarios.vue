@@ -1,48 +1,51 @@
 <template>
   <div class="content">
     <Search @cadastrar="modalCadastrar = !modalCadastrar" />
-    <div class="table">
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th></th>
-            <th>Ativo?</th>
-            <th>Administrador?</th>
-            <th>Nome</th>
-            <th>Usuário</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="usuario in usuarios" :key="usuario.id">
-            <td class="icon">
-              <img
-                @click="viewUser(usuario.id)"
-                src="@/assets/edit.svg"
-                alt="Editar"
-              />
-            </td>
-            <td class="icon">
-              <img
-                @click="deleteUser(usuario.id, usuario.nome)"
-                src="@/assets/trash.svg"
-                alt="Excluir"
-              />
-            </td>
-            <td>{{ usuario.ativo ? "Sim" : "Não" }}</td>
-            <td>{{ usuario.administrador ? "Sim" : "Não" }}</td>
-            <td class="profile">
-              <img
-                :src="`http://localhost/gerenciamento-odontologico-api/upload/${usuario.foto}`"
-                alt="Editar"
-              />
-              <p>{{ usuario.nome }}</p>
-            </td>
-            <td>{{ usuario.usuario }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <transition mode="out-in">
+      <div v-if="usuarios" class="table">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+              <th>Ativo?</th>
+              <th>Administrador?</th>
+              <th>Nome</th>
+              <th>Usuário</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="usuario in usuarios" :key="usuario.id">
+              <td class="icon">
+                <img
+                  @click="viewUser(usuario.id)"
+                  src="@/assets/edit.svg"
+                  alt="Editar"
+                />
+              </td>
+              <td class="icon">
+                <img
+                  @click="deleteUser(usuario.id, usuario.nome)"
+                  src="@/assets/trash.svg"
+                  alt="Excluir"
+                />
+              </td>
+              <td>{{ usuario.ativo ? "Sim" : "Não" }}</td>
+              <td>{{ usuario.administrador ? "Sim" : "Não" }}</td>
+              <td class="profile">
+                <img
+                  :src="`http://localhost/gerenciamento-odontologico-api/upload/${usuario.foto}`"
+                  alt="Editar"
+                />
+                <p>{{ usuario.nome }}</p>
+              </td>
+              <td>{{ usuario.usuario }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <Loading v-else />
+    </transition>
     <transition>
       <CadastrarUsuario
         v-if="modalCadastrar"
@@ -59,6 +62,7 @@
 
 <script>
 import Search from "@/components/Search.vue";
+import Loading from "@/components/Loading.vue";
 import CadastrarUsuario from "@/components/usuarios/Cadastrar.vue";
 import EditarUsuario from "@/components/usuarios/Editar.vue";
 import api from "@/api.js";
@@ -67,6 +71,7 @@ export default {
   name: "Usuarios",
   components: {
     Search,
+    Loading,
     CadastrarUsuario,
     EditarUsuario,
   },
