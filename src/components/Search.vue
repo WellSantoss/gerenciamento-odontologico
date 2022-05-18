@@ -6,7 +6,7 @@
         <img src="@/assets/search.svg" alt="Pesquisar" />
       </button>
     </div>
-    <button>
+    <button @click="$emit('cadastrar')">
       <img src="@/assets/add.svg" alt="Cadastrar" /><span>Cadastrar</span>
     </button>
   </div>

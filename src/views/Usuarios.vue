@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <Search />
+    <Search @cadastrar="modalCadastrar = !modalCadastrar" />
     <div class="table">
       <table>
         <thead>
@@ -46,6 +46,12 @@
         </tbody>
       </table>
     </div>
+    <transition>
+      <CadastrarUsuario
+        v-if="modalCadastrar"
+        @close-modal-cadastrar="modalCadastrar = !modalCadastrar"
+      />
+    </transition>
     <transition>
       <div class="modal" @click="closeModal" v-if="usuarioSelecionado">
         <div>
@@ -144,16 +150,19 @@
 
 <script>
 import Search from "@/components/Search.vue";
+import CadastrarUsuario from "@/components/usuarios/Cadastrar.vue";
 import api from "@/api.js";
 
 export default {
   name: "Usuarios",
   components: {
     Search,
+    CadastrarUsuario,
   },
   data() {
     return {
       edit: false,
+      modalCadastrar: false,
       usuarioSelecionado: null,
       usuarios: null,
     };
