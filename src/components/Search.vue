@@ -39,7 +39,7 @@ export default {
           },
         });
       } else {
-        this.$router.replace({ name: "usuarios" });
+        this.$router.replace({ name: this.$route.name });
       }
     },
   },
