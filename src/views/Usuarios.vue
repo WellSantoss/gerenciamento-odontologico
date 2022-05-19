@@ -25,6 +25,7 @@
               </td>
               <td class="icon">
                 <img
+                  v-if="idUsuarioLogado != usuario.id"
                   @click="deleteUser(usuario.id, usuario.nome)"
                   src="@/assets/trash.svg"
                   alt="Excluir"
@@ -85,6 +86,11 @@ export default {
   },
   created() {
     this.getUsers();
+  },
+  computed: {
+    idUsuarioLogado() {
+      return this.$store.state.usuario.id;
+    },
   },
   methods: {
     closeModalCadastrar() {

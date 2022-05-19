@@ -53,10 +53,7 @@ export default {
         .then((response) => {
           const data = response.data.data;
 
-          this.$store.dispatch("setUsuario", {
-            usuario: data.usuario,
-            token: data.token,
-          });
+          this.$store.dispatch("setUsuario", data.usuario);
           localStorage.setItem("token", data.token);
 
           this.$router.push({ name: "inicio" });
