@@ -1,8 +1,8 @@
 <template>
   <div class="search">
     <div class="input">
-      <input type="text" />
-      <button>
+      <input type="text" v-model="busca" />
+      <button @click.prevent="buscar">
         <img src="@/assets/search.svg" alt="Pesquisar" />
       </button>
     </div>
@@ -15,6 +15,34 @@
 <script>
 export default {
   name: "Search",
+  data() {
+    return {
+      busca: this.query,
+    };
+  },
+  computed: {
+    query() {
+      return this.$route.query.q ? this.$route.query.q : "";
+    },
+  },
+  watch: {
+    query() {
+      this.busca = this.query;
+    },
+  },
+  methods: {
+    buscar() {
+      if (this.busca) {
+        this.$router.push({
+          query: {
+            q: this.busca,
+          },
+        });
+      } else {
+        this.$router.replace({ name: "usuarios" });
+      }
+    },
+  },
 };
 </script>
 

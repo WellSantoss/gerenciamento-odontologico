@@ -47,7 +47,7 @@
         </div>
         <div class="full">
           <label for="senha">Senha</label>
-          <input required type="text" name="senha" id="senha" />
+          <input required type="password" name="senha" id="senha" />
         </div>
         <div class="buttons">
           <button>Cadastrar</button>

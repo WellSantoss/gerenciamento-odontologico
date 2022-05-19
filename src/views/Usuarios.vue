@@ -45,6 +45,7 @@
           </tbody>
         </table>
       </div>
+      <p v-else-if="erro">{{ erro }}</p>
       <Loading v-else />
     </transition>
     <transition>
@@ -79,6 +80,7 @@ export default {
   data() {
     return {
       edit: false,
+      erro: null,
       modalCadastrar: false,
       usuarioSelecionado: null,
       usuarios: null,
@@ -90,6 +92,14 @@ export default {
   computed: {
     idUsuarioLogado() {
       return this.$store.state.usuario.id;
+    },
+    query() {
+      return this.$route.query.q ? `/${this.$route.query.q}` : "";
+    },
+  },
+  watch: {
+    query() {
+      this.getUsers();
     },
   },
   methods: {
@@ -104,9 +114,14 @@ export default {
     getUsers() {
       this.usuarios = null;
 
-      api.get("/usuario/get").then((response) => {
-        this.usuarios = response.data.data;
-      });
+      api
+        .get(`/usuario/get${this.query}`)
+        .then((response) => {
+          this.usuarios = response.data.data;
+        })
+        .catch((response) => {
+          this.erro = response.response.data.data;
+        });
     },
     deleteUser(id, usuario) {
       this.$swal({
