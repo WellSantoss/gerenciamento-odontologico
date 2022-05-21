@@ -9,6 +9,7 @@
               <th></th>
               <th></th>
               <th></th>
+              <th></th>
               <th>Nome</th>
               <th>Fornecedor</th>
               <th>Estoque</th>
@@ -19,15 +20,27 @@
             <tr v-for="produto in produtos" :key="produto.id">
               <td class="icon">
                 <img
+                  @click="
+                    retirarProduto = { id: produto.id, nome: produto.nome }
+                  "
+                  src="@/assets/used-product.svg"
+                  title="Retirar Estoque"
+                  alt="Retirar Estoque"
+                />
+              </td>
+              <td class="icon">
+                <img
                   @click="reporProduto = { id: produto.id, nome: produto.nome }"
                   src="@/assets/refund.svg"
-                  alt="Editar"
+                  title="Repor Estoque"
+                  alt="Repor Estoque"
                 />
               </td>
               <td class="icon">
                 <img
                   @click="viewProduto(produto.id)"
                   src="@/assets/edit.svg"
+                  title="Editar"
                   alt="Editar"
                 />
               </td>
@@ -35,6 +48,7 @@
                 <img
                   @click="deleteProduto(produto.id, produto.nome)"
                   src="@/assets/trash.svg"
+                  title="Excluir"
                   alt="Excluir"
                 />
               </td>
@@ -50,6 +64,11 @@
       <Loading v-else />
     </transition>
     <transition>
+      <RetirarProduto
+        :produto="retirarProduto"
+        v-if="retirarProduto"
+        @close-modal="closeModalRetirar"
+      />
       <ReporProduto
         :produto="reporProduto"
         v-if="reporProduto"
@@ -74,6 +93,7 @@ import Loading from "@/components/Loading.vue";
 import CadastrarProduto from "@/components/produtos/Cadastrar.vue";
 import EditarProduto from "@/components/produtos/Editar.vue";
 import ReporProduto from "@/components/produtos/Repor.vue";
+import RetirarProduto from "@/components/produtos/Retirar.vue";
 import api from "@/api.js";
 
 export default {
@@ -84,6 +104,7 @@ export default {
     CadastrarProduto,
     EditarProduto,
     ReporProduto,
+    RetirarProduto,
   },
   data() {
     return {
@@ -93,6 +114,7 @@ export default {
       produtoSelecionado: null,
       produtos: null,
       reporProduto: null,
+      retirarProduto: null,
     };
   },
   created() {
@@ -119,6 +141,10 @@ export default {
     },
     closeModalRepor() {
       this.reporProduto = null;
+      this.getProdutos();
+    },
+    closeModalRetirar() {
+      this.retirarProduto = null;
       this.getProdutos();
     },
     getProdutos() {

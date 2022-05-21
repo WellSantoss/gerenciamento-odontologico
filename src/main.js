@@ -40,6 +40,7 @@ new Vue({
 
 const options = {
   confirmButtonColor: "#6ebcb6",
+  denyButtonColor: "#6ebcb6",
   cancelButtonColor: "#ee5253",
   closeOnClickOutside: false,
 };
