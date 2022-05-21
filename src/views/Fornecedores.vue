@@ -42,12 +42,12 @@
     <transition>
       <CadastrarFornecedor
         v-if="modalCadastrar"
-        @close-modal-cadastrar="closeModalCadastrar"
+        @close-modal="closeModalCadastrar"
       />
       <EditarFornecedor
         :fornecedor="fornecedorSelecionado"
         v-if="fornecedorSelecionado"
-        @close-modal-editar="closeModalEditar"
+        @close-modal="closeModalEditar"
       />
     </transition>
   </div>

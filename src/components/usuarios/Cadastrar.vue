@@ -89,7 +89,7 @@ export default {
           this.$swal({
             icon: "error",
             title: "Erro!",
-            text: response.data.data,
+            text: response.response.data.data,
             onClose: this.closeModal(),
           }).then((result) => {
             if (result.isConfirmed) {
@@ -104,7 +104,7 @@ export default {
       }
     },
     closeModal() {
-      this.$emit("close-modal-cadastrar");
+      this.$emit("close-modal");
     },
   },
 };

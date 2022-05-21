@@ -97,7 +97,7 @@ export default {
       }
     },
     closeModal() {
-      this.$emit("close-modal-cadastrar");
+      this.$emit("close-modal");
     },
   },
 };

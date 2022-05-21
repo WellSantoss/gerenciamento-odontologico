@@ -107,7 +107,7 @@ export default {
       }
     },
     closeModal() {
-      this.$emit("close-modal-editar");
+      this.$emit("close-modal");
     },
   },
 };

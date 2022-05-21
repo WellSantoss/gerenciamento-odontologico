@@ -51,12 +51,12 @@
     <transition>
       <CadastrarUsuario
         v-if="modalCadastrar"
-        @close-modal-cadastrar="closeModalCadastrar"
+        @close-modal="closeModalCadastrar"
       />
       <EditarUsuario
         :usuario="usuarioSelecionado"
         v-if="usuarioSelecionado"
-        @close-modal-editar="closeModalEditar"
+        @close-modal="closeModalEditar"
       />
     </transition>
   </div>
