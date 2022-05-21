@@ -43,15 +43,17 @@ export default {
       quantidade: 1,
     };
   },
-  created() {
-    console.log(this.produto);
+  computed: {
+    idUsuario() {
+      return this.$store.state.usuario.id;
+    },
   },
   methods: {
     reporProduto() {
       api
         .post(
           `/produto/refound/${this.produto.id}`,
-          { quantidade: this.quantidade },
+          { quantidade: this.quantidade, usuario: this.idUsuario },
           {
             headers: {
               "Content-Type": "application/json",
