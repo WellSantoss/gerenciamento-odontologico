@@ -26,6 +26,12 @@ Vue.filter("formatCurrency", (valor) => {
   }
 });
 
+Vue.filter("formatDate", (data) => {
+  data = new Date(data);
+
+  return data.toLocaleDateString("pt-BR");
+});
+
 new Vue({
   router,
   store,

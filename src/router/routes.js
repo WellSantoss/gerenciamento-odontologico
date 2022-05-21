@@ -37,4 +37,10 @@ export const routes = [
     props: true,
     component: () => import("@/views/Produtos.vue"),
   },
+  {
+    name: "financas",
+    path: "/financas",
+    props: true,
+    component: () => import("@/views/Financas.vue"),
+  },
 ];

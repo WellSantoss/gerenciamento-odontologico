@@ -99,6 +99,14 @@ p.message {
   margin-top: 50px;
 }
 
+.red {
+  color: $red;
+}
+
+.blue {
+  color: $blue;
+}
+
 label,
 .label {
   display: block;
@@ -118,6 +126,10 @@ textarea {
   border-radius: 8px;
   padding: 8px 16px;
   outline: none;
+
+  &:disabled {
+    color: #aeaeae;
+  }
 }
 
 textarea {
