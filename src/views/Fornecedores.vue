@@ -19,6 +19,7 @@
                 <img
                   @click="viewFornecedor(fornecedor.id)"
                   src="@/assets/edit.svg"
+                  title="Editar"
                   alt="Editar"
                 />
               </td>
@@ -26,6 +27,7 @@
                 <img
                   @click="deleteFornecedor(fornecedor.id, fornecedor.nome)"
                   src="@/assets/trash.svg"
+                  title="Excluir"
                   alt="Excluir"
                 />
               </td>

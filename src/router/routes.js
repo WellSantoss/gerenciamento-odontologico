@@ -12,7 +12,7 @@ export const routes = [
   {
     name: "dentistas",
     path: "/dentistas",
-    component: () => import("@/views/Dentists.vue"),
+    component: () => import("@/views/Dentistas.vue"),
   },
   {
     name: "consultas",

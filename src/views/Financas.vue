@@ -37,6 +37,7 @@
                 <img
                   @click="viewTransacao(transacao.id)"
                   src="@/assets/edit.svg"
+                  title="Editar"
                   alt="Editar"
                 />
               </td>
@@ -44,6 +45,7 @@
                 <img
                   @click="deleteTransacao(transacao.id)"
                   src="@/assets/trash.svg"
+                  title="Excluir"
                   alt="Excluir"
                 />
               </td>

@@ -20,29 +20,25 @@
           <tr v-for="dentist in dentists" :key="dentist.id">
             <td class="icon">
               <img
-                @click="viewDentist(dentist.id)"
-                src="@/assets/view.svg"
-                alt="Visualizar"
-              />
-            </td>
-            <td class="icon">
-              <img
                 @click="modalSpecialty = true"
                 src="@/assets/new-job.svg"
-                alt="Editar"
+                title="Especialidades"
+                alt="Especialidades"
               />
             </td>
             <td class="icon">
               <img
                 @click="modalOpeningHours = true"
                 src="@/assets/meeting-time.svg"
-                alt="Excluir"
+                title="Horários de Atendimento"
+                alt="Horários de Atendimento"
               />
             </td>
             <td class="icon">
               <img
                 @click="editDentist(dentist.id)"
                 src="@/assets/edit.svg"
+                title="Editar"
                 alt="Editar"
               />
             </td>
@@ -50,6 +46,7 @@
               <img
                 @click="deleteDentist(dentist.id)"
                 src="@/assets/trash.svg"
+                title="Excluir"
                 alt="Excluir"
               />
             </td>

@@ -20,6 +20,7 @@
                 <img
                   @click="viewUser(usuario.id)"
                   src="@/assets/edit.svg"
+                  title="Editar"
                   alt="Editar"
                 />
               </td>
@@ -28,6 +29,7 @@
                   v-if="idUsuarioLogado != usuario.id"
                   @click="deleteUser(usuario.id, usuario.nome)"
                   src="@/assets/trash.svg"
+                  title="Excluir"
                   alt="Excluir"
                 />
               </td>
