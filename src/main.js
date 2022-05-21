@@ -13,6 +13,19 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 Vue.config.productionTip = false;
 
+Vue.filter("formatCurrency", (valor) => {
+  valor = Number(valor);
+
+  if (!isNaN(valor)) {
+    return valor.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+  } else {
+    return "";
+  }
+});
+
 new Vue({
   router,
   store,

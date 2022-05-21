@@ -2,37 +2,58 @@
   <div class="modal" @click="verificaCloseModal">
     <div>
       <div class="title">
-        <h2>Cadastrar Fornecedor</h2>
+        <h2>Cadastrar Produto</h2>
       </div>
-      <form @submit.prevent="sendFornecedor">
+      <form @submit.prevent="sendProduto">
         <div class="full">
           <label for="nome">Nome</label>
           <input
             required
             type="text"
-            v-model="fornecedor.nome"
+            v-model="produto.nome"
             name="nome"
             id="nome"
           />
         </div>
-        <div class="full">
-          <label for="telefone">Telefone</label>
+        <div v-if="fornecedores" class="full">
+          <label for="fornecedor">Fornecedor</label>
+          <select
+            required
+            v-model="produto.fornecedor"
+            name="fornecedor"
+            id="fornecedor"
+          >
+            <option
+              v-for="fornecedor in fornecedores"
+              :key="fornecedor.id"
+              :value="fornecedor.id"
+            >
+              {{ fornecedor.nome }}
+            </option>
+          </select>
+        </div>
+        <div>
+          <label for="estoque">Estoque</label>
           <input
             required
-            type="text"
-            v-model="fornecedor.telefone"
-            name="telefone"
-            id="telefone"
+            type="number"
+            step="1"
+            min="0"
+            v-model="produto.estoque"
+            name="estoque"
+            id="estoque"
           />
         </div>
-        <div class="full">
-          <label for="endereco">Endereço</label>
+        <div>
+          <label for="valor">Valor Unitário</label>
           <input
             required
-            type="text"
-            v-model="fornecedor.endereco"
-            name="endereco"
-            id="endereco"
+            type="number"
+            step="0.01"
+            min="0.01"
+            v-model="produto.valor"
+            name="valor"
+            id="valor"
           />
         </div>
         <div class="buttons">
@@ -48,20 +69,22 @@
 import api from "@/api.js";
 
 export default {
-  name: "CadastrarFornecedor",
+  name: "CadastrarProduto",
   data() {
     return {
-      fornecedor: {
-        nome: "",
-        telefone: "",
-        endereco: "",
+      produto: {
+        nome: null,
+        fornecedor: null,
+        estoque: 0,
+        valor: 0,
       },
+      fornecedores: null,
     };
   },
   methods: {
-    sendFornecedor() {
+    sendProduto() {
       api
-        .post("/fornecedor/send", this.fornecedor, {
+        .post("/produto/send", this.produto, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -79,6 +102,7 @@ export default {
           });
         })
         .catch((response) => {
+          console.log(response);
           this.$swal({
             icon: "error",
             title: "Erro!",
@@ -97,8 +121,13 @@ export default {
       }
     },
     closeModal() {
-      this.$emit("close-modal-cadastrar");
+      this.$emit("close-modal");
     },
+  },
+  created() {
+    api.get(`/fornecedor/get`).then((response) => {
+      this.fornecedores = response.data.data;
+    });
   },
 };
 </script>

@@ -2,41 +2,24 @@
   <div class="modal" @click="verificaCloseModal">
     <div>
       <div class="title">
-        <h2>Cadastrar Fornecedor</h2>
+        <h2>Repor Estoque</h2>
+        <p>{{ produto.nome }}</p>
       </div>
-      <form @submit.prevent="sendFornecedor">
+      <form @submit.prevent="reporProduto">
         <div class="full">
-          <label for="nome">Nome</label>
+          <label for="estoque">Quantidade</label>
           <input
             required
-            type="text"
-            v-model="fornecedor.nome"
-            name="nome"
-            id="nome"
-          />
-        </div>
-        <div class="full">
-          <label for="telefone">Telefone</label>
-          <input
-            required
-            type="text"
-            v-model="fornecedor.telefone"
-            name="telefone"
-            id="telefone"
-          />
-        </div>
-        <div class="full">
-          <label for="endereco">Endereço</label>
-          <input
-            required
-            type="text"
-            v-model="fornecedor.endereco"
-            name="endereco"
-            id="endereco"
+            type="number"
+            step="1"
+            min="1"
+            v-model="quantidade"
+            name="quantidade"
+            id="quantidade"
           />
         </div>
         <div class="buttons">
-          <button>Cadastrar</button>
+          <button>Salvar</button>
           <button @click.prevent="closeModal" class="close">Cancelar</button>
         </div>
       </form>
@@ -48,28 +31,37 @@
 import api from "@/api.js";
 
 export default {
-  name: "CadastrarFornecedor",
+  name: "ReporProduto",
+  props: {
+    produto: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
-      fornecedor: {
-        nome: "",
-        telefone: "",
-        endereco: "",
-      },
+      quantidade: 1,
     };
   },
+  created() {
+    console.log(this.produto);
+  },
   methods: {
-    sendFornecedor() {
+    reporProduto() {
       api
-        .post("/fornecedor/send", this.fornecedor, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
+        .post(
+          `/produto/refound/${this.produto.id}`,
+          { quantidade: this.quantidade },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
         .then((response) => {
           this.$swal({
             icon: "success",
-            title: "Cadastrado!",
+            title: "Atualizado!",
             text: response.data.data,
             onClose: this.closeModal(),
           }).then((result) => {
@@ -97,7 +89,7 @@ export default {
       }
     },
     closeModal() {
-      this.$emit("close-modal-cadastrar");
+      this.$emit("close-modal");
     },
   },
 };

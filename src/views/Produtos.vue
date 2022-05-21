@@ -2,36 +2,46 @@
   <div class="content">
     <Search @cadastrar="modalCadastrar = !modalCadastrar" />
     <transition mode="out-in">
-      <div v-if="fornecedores" class="table">
+      <div v-if="produtos" class="table">
         <table>
           <thead>
             <tr>
               <th></th>
               <th></th>
+              <th></th>
               <th>Nome</th>
-              <th>Telefone</th>
-              <th>Endereco</th>
+              <th>Fornecedor</th>
+              <th>Estoque</th>
+              <th>Valor</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="fornecedor in fornecedores" :key="fornecedor.id">
+            <tr v-for="produto in produtos" :key="produto.id">
               <td class="icon">
                 <img
-                  @click="viewFornecedor(fornecedor.id)"
+                  @click="reporProduto = { id: produto.id, nome: produto.nome }"
+                  src="@/assets/refund.svg"
+                  alt="Editar"
+                />
+              </td>
+              <td class="icon">
+                <img
+                  @click="viewProduto(produto.id)"
                   src="@/assets/edit.svg"
                   alt="Editar"
                 />
               </td>
               <td class="icon">
                 <img
-                  @click="deleteFornecedor(fornecedor.id, fornecedor.nome)"
+                  @click="deleteProduto(produto.id, produto.nome)"
                   src="@/assets/trash.svg"
                   alt="Excluir"
                 />
               </td>
-              <td>{{ fornecedor.nome }}</td>
-              <td>{{ fornecedor.telefone }}</td>
-              <td>{{ fornecedor.endereco }}</td>
+              <td>{{ produto.nome }}</td>
+              <td>{{ produto.fornecedor }}</td>
+              <td>{{ produto.estoque }}</td>
+              <td>{{ produto.valor_unitario | formatCurrency }}</td>
             </tr>
           </tbody>
         </table>
@@ -40,14 +50,19 @@
       <Loading v-else />
     </transition>
     <transition>
-      <CadastrarFornecedor
-        v-if="modalCadastrar"
-        @close-modal-cadastrar="closeModalCadastrar"
+      <ReporProduto
+        :produto="reporProduto"
+        v-if="reporProduto"
+        @close-modal="closeModalRepor"
       />
-      <EditarFornecedor
-        :fornecedor="fornecedorSelecionado"
-        v-if="fornecedorSelecionado"
-        @close-modal-editar="closeModalEditar"
+      <CadastrarProduto
+        v-if="modalCadastrar"
+        @close-modal="closeModalCadastrar"
+      />
+      <EditarProduto
+        :produto="produtoSelecionado"
+        v-if="produtoSelecionado"
+        @close-modal="closeModalEditar"
       />
     </transition>
   </div>
@@ -56,69 +71,73 @@
 <script>
 import Search from "@/components/Search.vue";
 import Loading from "@/components/Loading.vue";
-import CadastrarFornecedor from "@/components/fornecedores/Cadastrar.vue";
-import EditarFornecedor from "@/components/fornecedores/Editar.vue";
+import CadastrarProduto from "@/components/produtos/Cadastrar.vue";
+import EditarProduto from "@/components/produtos/Editar.vue";
+import ReporProduto from "@/components/produtos/Repor.vue";
 import api from "@/api.js";
 
 export default {
-  name: "Fornecedores",
+  name: "Produtos",
   components: {
     Search,
     Loading,
-    CadastrarFornecedor,
-    EditarFornecedor,
+    CadastrarProduto,
+    EditarProduto,
+    ReporProduto,
   },
   data() {
     return {
       edit: false,
       erro: null,
       modalCadastrar: false,
-      fornecedorSelecionado: null,
-      fornecedores: null,
+      produtoSelecionado: null,
+      produtos: null,
+      reporProduto: null,
     };
   },
   created() {
-    this.getFornecedores();
+    this.getProdutos();
   },
   computed: {
-    idFornecedorLogado() {
-      return this.$store.state.fornecedor.id;
-    },
     query() {
       return this.$route.query.q ? `/${this.$route.query.q}` : "";
     },
   },
   watch: {
     query() {
-      this.getFornecedores();
+      this.getProdutos();
     },
   },
   methods: {
     closeModalCadastrar() {
       this.modalCadastrar = !this.modalCadastrar;
-      this.getFornecedores();
+      this.getProdutos();
     },
     closeModalEditar() {
-      this.fornecedorSelecionado = null;
-      this.getFornecedores();
+      this.produtoSelecionado = null;
+      this.getProdutos();
     },
-    getFornecedores() {
-      this.fornecedores = null;
+    closeModalRepor() {
+      this.reporProduto = null;
+      this.getProdutos();
+    },
+    getProdutos() {
+      this.produtos = null;
 
       api
-        .get(`/fornecedor/get${this.query}`)
+        .get(`/produto/get${this.query}`)
         .then((response) => {
-          this.fornecedores = response.data.data;
+          this.produtos = response.data.data;
         })
         .catch((response) => {
           this.erro = response.response.data.data;
         });
     },
-    deleteFornecedor(id, fornecedor) {
+    deleteProduto(id, produto) {
       this.$swal({
         icon: "warning",
         title: "Atenção!",
-        text: `Excluir o fornecedor '${fornecedor}'?`,
+        text: `Excluir o produto '${produto}'?`,
         footer: "*Está ação não poderá ser desfeita.",
         showCancelButton: true,
         cancelButtonText: "Cancelar",
@@ -126,7 +145,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           api
-            .delete(`/fornecedor/delete/${id}`)
+            .delete(`/produto/delete/${id}`)
             .then((response) => {
               this.$swal({
                 icon: "success",
@@ -134,7 +153,7 @@ export default {
                 text: response.data.data,
               });
 
-              this.getFornecedores();
+              this.getProdutos();
             })
             .catch((response) => {
               this.$swal({
@@ -146,12 +165,12 @@ export default {
         }
       });
     },
-    viewFornecedor(id) {
-      const fornecedor = this.fornecedores.filter((fornecedor) => {
-        return fornecedor.id == id;
+    viewProduto(id) {
+      const produto = this.produtos.filter((produto) => {
+        return produto.id == id;
       });
 
-      this.fornecedorSelecionado = fornecedor[0];
+      this.produtoSelecionado = produto[0];
     },
   },
 };
