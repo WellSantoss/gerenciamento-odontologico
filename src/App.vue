@@ -95,6 +95,10 @@ h3 {
   font-weight: 600;
 }
 
+p.message {
+  margin-top: 50px;
+}
+
 label,
 .label {
   display: block;

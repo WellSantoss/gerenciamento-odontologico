@@ -45,7 +45,7 @@
           </tbody>
         </table>
       </div>
-      <p v-else-if="erro">{{ erro }}</p>
+      <p class="message" v-else-if="erro">{{ erro }}</p>
       <Loading v-else />
     </transition>
     <transition>

@@ -76,7 +76,7 @@ export default {
         .then((response) => {
           this.$swal({
             icon: "success",
-            title: "Atualizado!",
+            title: "Cadastrado!",
             text: response.data.data,
             onClose: this.closeModal(),
           }).then((result) => {

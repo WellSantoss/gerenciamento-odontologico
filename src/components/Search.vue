@@ -1,14 +1,23 @@
 <template>
-  <div class="search">
-    <div class="input">
-      <input type="text" v-model="busca" />
-      <button @click.prevent="buscar">
-        <img src="@/assets/search.svg" alt="Pesquisar" />
+  <div class="div">
+    <div class="search">
+      <div class="input">
+        <input type="text" v-model="busca" />
+        <button @click.prevent="buscar">
+          <img src="@/assets/search.svg" alt="Pesquisar" />
+        </button>
+      </div>
+
+      <button @click="$emit('cadastrar')">
+        <img src="@/assets/add.svg" alt="Cadastrar" /><span>Cadastrar</span>
       </button>
     </div>
-    <button @click="$emit('cadastrar')">
-      <img src="@/assets/add.svg" alt="Cadastrar" /><span>Cadastrar</span>
-    </button>
+    <p class="pesquisa" v-if="query">
+      <img @click="resetQuery" src="@/assets/close.svg" alt="Cancelar" />
+      <span
+        >Pesquisando por: <strong>{{ query }}</strong></span
+      >
+    </p>
   </div>
 </template>
 
@@ -39,8 +48,11 @@ export default {
           },
         });
       } else {
-        this.$router.replace({ name: this.$route.name });
+        this.resetQuery();
       }
+    },
+    resetQuery() {
+      this.$router.replace({ name: this.$route.name });
     },
   },
 };
@@ -53,7 +65,23 @@ export default {
   display: grid;
   grid-template-columns: 1.5fr minmax(150px, 0.5fr);
   gap: 16px;
+  margin-bottom: 8px;
+}
+
+.div {
   margin-bottom: 16px;
+}
+
+.pesquisa {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.875rem;
+
+  img {
+    width: 10px;
+    cursor: pointer;
+  }
 }
 
 input {
