@@ -2,7 +2,8 @@
   <div class="modal" @click="verificaCloseModal">
     <div>
       <div class="title">
-        <h2>{{ usuario.nome }}</h2>
+        <h2>Editar Usuário</h2>
+        <p>{{ usuario.nome }}</p>
       </div>
       <form @submit.prevent="updateUsuario">
         <div>

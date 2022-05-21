@@ -2,7 +2,8 @@
   <div class="modal" @click="verificaCloseModal">
     <div>
       <div class="title">
-        <h2>{{ produto.nome }}</h2>
+        <h2>Editar Produto</h2>
+        <p>{{ produto.nome }}</p>
       </div>
       <form @submit.prevent="updateProduto">
         <div class="full">

@@ -46,6 +46,12 @@
             </router-link>
           </li>
           <li>
+            <router-link to="/especialidades">
+              <img src="@/assets/new-job.svg" alt="Especialidades" />
+              <span>Especialidades</span>
+            </router-link>
+          </li>
+          <li>
             <router-link to="/procedimentos">
               <img src="@/assets/procedure.svg" alt="Procedimentos" />
               <span>Procedimentos</span>
