@@ -25,6 +25,11 @@ export const routes = [
     component: () => import("@/views/Especialidades.vue"),
   },
   {
+    name: "procedimentos",
+    path: "/procedimentos",
+    component: () => import("@/views/Procedimentos.vue"),
+  },
+  {
     name: "paciente",
     path: "/pacientes/:id",
     props: true,
