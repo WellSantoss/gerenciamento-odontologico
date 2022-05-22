@@ -322,6 +322,7 @@ main {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
+    margin-bottom: 16px;
     justify-items: end;
     align-items: end;
 

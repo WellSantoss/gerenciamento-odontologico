@@ -30,6 +30,11 @@ export const routes = [
     component: () => import("@/views/Procedimentos.vue"),
   },
   {
+    name: "convenios",
+    path: "/convenios",
+    component: () => import("@/views/Convenios.vue"),
+  },
+  {
     name: "paciente",
     path: "/pacientes/:id",
     props: true,
