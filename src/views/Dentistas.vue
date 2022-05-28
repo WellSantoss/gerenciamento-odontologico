@@ -1,71 +1,79 @@
 <template>
   <div class="content">
-    <Search />
-    <div v-if="dentistas" class="table">
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th>Ativo?</th>
-            <th>Nome</th>
-            <th>Usuário</th>
-            <th>Telefone</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="dentista in dentistas" :key="dentista.id">
-            <td class="icon">
-              <img
-                @click="modalSpecialty = true"
-                src="@/assets/new-job.svg"
-                title="Especialidades"
-                alt="Especialidades"
-              />
-            </td>
-            <td class="icon">
-              <img
-                @click="modalOpeningHours = true"
-                src="@/assets/meeting-time.svg"
-                title="Horários de Atendimento"
-                alt="Horários de Atendimento"
-              />
-            </td>
-            <td class="icon">
-              <img
-                @click="editDentista(dentista.id)"
-                src="@/assets/edit.svg"
-                title="Editar"
-                alt="Editar"
-              />
-            </td>
-            <td class="icon">
-              <img
-                @click="deleteDentista(dentista.id)"
-                src="@/assets/trash.svg"
-                title="Excluir"
-                alt="Excluir"
-              />
-            </td>
-            <td>{{ dentista.ativo ? "Sim" : "Não" }}</td>
-            <td class="profile">
-              <img
-                :style="`box-shadow: 0px 0px 0px 3px ${dentista.cor};`"
-                :src="`http://localhost/gerenciamento-odontologico-api/upload/${dentista.foto}`"
-                :alt="dentista.nome"
-              />
-              <p>{{ dentista.nome }}</p>
-            </td>
-            <td>{{ dentista.usuario }}</td>
-            <td>{{ dentista.telefone }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p v-else-if="erro">{{ erro }}</p>
-    <Loading v-else />
+    <Search @cadastrar="modalCadastrar = !modalCadastrar" />
+    <transition mode="out-in">
+      <div v-if="dentistas" class="table">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th>Ativo?</th>
+              <th>Nome</th>
+              <th>Usuário</th>
+              <th>Telefone</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="dentista in dentistas" :key="dentista.id">
+              <td class="icon">
+                <img
+                  @click="modalSpecialty = true"
+                  src="@/assets/new-job.svg"
+                  title="Especialidades"
+                  alt="Especialidades"
+                />
+              </td>
+              <td class="icon">
+                <img
+                  @click="modalOpeningHours = true"
+                  src="@/assets/meeting-time.svg"
+                  title="Horários de Atendimento"
+                  alt="Horários de Atendimento"
+                />
+              </td>
+              <td class="icon">
+                <img
+                  @click="editDentista(dentista.id)"
+                  src="@/assets/edit.svg"
+                  title="Editar"
+                  alt="Editar"
+                />
+              </td>
+              <td class="icon">
+                <img
+                  @click="deleteDentista(dentista.id)"
+                  src="@/assets/trash.svg"
+                  title="Excluir"
+                  alt="Excluir"
+                />
+              </td>
+              <td>{{ dentista.ativo ? "Sim" : "Não" }}</td>
+              <td class="profile">
+                <img
+                  :style="`box-shadow: 0px 0px 0px 3px ${dentista.cor};`"
+                  :src="`http://localhost/gerenciamento-odontologico-api/upload/${dentista.foto}`"
+                  :alt="dentista.nome"
+                />
+                <p>{{ dentista.nome }}</p>
+              </td>
+              <td>{{ dentista.usuario }}</td>
+              <td>{{ dentista.telefone }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p v-else-if="erro">{{ erro }}</p>
+      <Loading v-else />
+    </transition>
+    <transition>
+      <CadastrarDentista
+        v-if="modalCadastrar"
+        @close-modal="closeModalCadastrar"
+      />
+    </transition>
     <transition>
       <div class="modal" @click="closeModal" v-if="modalView">
         <div>
@@ -233,6 +241,7 @@
 <script>
 import Search from "@/components/Search.vue";
 import Loading from "@/components/Loading.vue";
+import CadastrarDentista from "@/components/dentistas/Cadastrar.vue";
 import api from "@/api.js";
 
 export default {
@@ -240,10 +249,13 @@ export default {
   components: {
     Search,
     Loading,
+    CadastrarDentista,
   },
   data() {
     return {
       erro: null,
+      dentistas: null,
+      modalCadastrar: false,
       modalView: false,
       modalSpecialty: false,
       modalOpeningHours: false,
@@ -321,13 +333,16 @@ export default {
           },
         ],
       },
-      dentistas: null,
     };
   },
   created() {
     this.getDentistas();
   },
   methods: {
+    closeModalCadastrar() {
+      this.modalCadastrar = !this.modalCadastrar;
+      this.getDentistas();
+    },
     getDentistas() {
       this.dentistas = null;
 
@@ -394,10 +409,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-form {
-  grid-template-columns: repeat(4, 1fr);
-  justify-items: stretch;
-}
-</style>
