@@ -6,7 +6,7 @@
       </div>
       <form @submit.prevent="sendConvenio">
         <div class="full">
-          <label for="nome">Nome</label>
+          <label for="nome">Nome*</label>
           <input
             required
             type="text"
@@ -16,7 +16,7 @@
           />
         </div>
         <div class="full">
-          <label for="telefone">Telefone</label>
+          <label for="telefone">Telefone*</label>
           <input
             required
             type="text"
@@ -26,7 +26,7 @@
           />
         </div>
         <div class="full">
-          <label for="endereco">Endereço</label>
+          <label for="endereco">Endereço*</label>
           <input
             required
             type="text"

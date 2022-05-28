@@ -7,8 +7,9 @@
       </div>
       <form @submit.prevent="updateUsuario">
         <div>
-          <span class="label">Ativo?</span>
+          <span class="label">Ativo?*</span>
           <input
+            required
             type="radio"
             value="1"
             :disabled="!editar"
@@ -18,6 +19,7 @@
           />
           <label class="radio" for="ativo-sim">Sim</label>
           <input
+            required
             type="radio"
             value="0"
             :disabled="!editar"
@@ -28,8 +30,9 @@
           <label class="radio" for="ativo-nao">Não</label>
         </div>
         <div>
-          <span class="label">Administrador?</span>
+          <span class="label">Administrador?*</span>
           <input
+            required
             type="radio"
             value="1"
             :disabled="!editar"
@@ -39,6 +42,7 @@
           />
           <label class="radio" for="administrador-sim">Sim</label>
           <input
+            required
             type="radio"
             value="0"
             :disabled="!editar"
@@ -48,7 +52,7 @@
           />
           <label class="radio" for="administrador-nao">Não</label>
         </div>
-        <div class="full">
+        <div class="img-full full">
           <img
             :src="`http://localhost/gerenciamento-odontologico-api/upload/${usuario.foto}`"
             alt=""
@@ -58,9 +62,10 @@
             <input type="file" name="foto" id="foto" :disabled="!editar" />
           </div>
         </div>
-        <div>
-          <label for="nome">Nome</label>
+        <div class="full">
+          <label for="nome">Nome*</label>
           <input
+            required
             type="text"
             name="nome"
             id="nome"
@@ -69,9 +74,10 @@
             :v-model="usuario.nome"
           />
         </div>
-        <div>
-          <label for="usuario">Usuário</label>
+        <div class="full">
+          <label for="usuario">Usuário*</label>
           <input
+            required
             type="text"
             name="usuario"
             id="usuario"
@@ -154,7 +160,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.full {
+.img-full {
   display: flex;
   gap: 16px;
 

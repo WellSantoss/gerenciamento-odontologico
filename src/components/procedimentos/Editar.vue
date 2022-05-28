@@ -7,7 +7,7 @@
       </div>
       <form @submit.prevent="updateProcedimento">
         <div class="full">
-          <span class="label">Ativo?</span>
+          <span class="label">Ativo?*</span>
           <input
             type="radio"
             value="1"
@@ -30,7 +30,6 @@
         <div v-if="especialidades" class="full">
           <label for="especialidade">Especialidade</label>
           <select
-            required
             v-model="procedimento.id_especialidade"
             :disabled="!editar"
             name="especialidade"
@@ -46,7 +45,7 @@
           </select>
         </div>
         <div class="full">
-          <label for="procedimento">Procedimento</label>
+          <label for="procedimento">Procedimento*</label>
           <input
             required
             type="text"
@@ -57,7 +56,7 @@
           />
         </div>
         <div>
-          <label for="tempo">Tempo</label>
+          <label for="tempo">Tempo*</label>
           <input
             required
             type="time"
@@ -68,7 +67,7 @@
           />
         </div>
         <div>
-          <label for="valor">Valor</label>
+          <label for="valor">Valor*</label>
           <input
             required
             type="number"

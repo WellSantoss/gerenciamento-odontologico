@@ -47,7 +47,7 @@
           ></textarea>
         </div>
         <div>
-          <label for="tipo_sangramento">Tipo de Sangramento</label>
+          <label for="tipo_sangramento">Tipo de Sangramento*</label>
           <select
             required
             v-model="obs.tipo_sangramento"
@@ -59,7 +59,7 @@
           </select>
         </div>
         <div>
-          <label for="tipo_cicatrizacao">Tipo de Cicatrização</label>
+          <label for="tipo_cicatrizacao">Tipo de Cicatrização*</label>
           <select
             required
             v-model="obs.tipo_cicatrizacao"
@@ -71,7 +71,7 @@
           </select>
         </div>
         <div>
-          <label for="falta_de_ar">Sente Falta de Ar?</label>
+          <label for="falta_de_ar">Sente Falta de Ar?*</label>
           <select
             required
             v-model="obs.falta_de_ar"
@@ -85,7 +85,6 @@
         <div>
           <label for="gestante">Gestante?</label>
           <input
-            required
             type="text"
             name="gestante"
             id="gestante"

@@ -2,7 +2,12 @@
   <div class="div">
     <div class="search">
       <div class="input">
-        <input type="text" @keyup.enter="buscar" v-model="busca" />
+        <input
+          type="text"
+          @keyup.enter="buscar"
+          v-model="busca"
+          placeholder="Pesquisar..."
+        />
         <button @click.prevent="buscar">
           <img src="@/assets/search.svg" alt="Pesquisar" />
         </button>

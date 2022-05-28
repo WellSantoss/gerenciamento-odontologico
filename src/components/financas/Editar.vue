@@ -6,7 +6,7 @@
       </div>
       <form @submit.prevent="updateUsuario">
         <div class="full">
-          <span class="label">Operação</span>
+          <span class="label">Operação*</span>
           <input
             required
             :disabled="!editar"
@@ -29,7 +29,7 @@
           <label class="radio" for="despesa">Despesa</label>
         </div>
         <div>
-          <label for="data">Data</label>
+          <label for="data">Data*</label>
           <input
             required
             :disabled="!editar"
@@ -40,7 +40,7 @@
           />
         </div>
         <div>
-          <label for="valor">Valor</label>
+          <label for="valor">Valor*</label>
           <input
             required
             :disabled="!editar"
@@ -52,7 +52,7 @@
           />
         </div>
         <div class="full">
-          <label for="nome">Tipo</label>
+          <label for="nome">Tipo*</label>
           <select
             v-if="sTransacao.operacao == 'Receita'"
             :disabled="!editar"

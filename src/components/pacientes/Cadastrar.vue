@@ -6,7 +6,7 @@
       </div>
       <form @submit.prevent="sendPaciente">
         <div class="full">
-          <label for="nome">Nome</label>
+          <label for="nome">Nome*</label>
           <input
             required
             type="text"
@@ -16,7 +16,7 @@
           />
         </div>
         <div>
-          <label for="cpf">CPF</label>
+          <label for="cpf">CPF*</label>
           <input
             required
             type="text"
@@ -26,7 +26,7 @@
           />
         </div>
         <div>
-          <label for="data_nascimento">Data de Nascimento</label>
+          <label for="data_nascimento">Data de Nascimento*</label>
           <input
             required
             type="date"
@@ -36,7 +36,7 @@
           />
         </div>
         <div>
-          <label for="telefone">Telefone</label>
+          <label for="telefone">Telefone*</label>
           <input
             required
             type="text"
@@ -46,7 +46,7 @@
           />
         </div>
         <div>
-          <label for="cep">CEP</label>
+          <label for="cep">CEP*</label>
           <input
             required
             @blur="consultaCEP"
@@ -59,7 +59,7 @@
           />
         </div>
         <div class="full">
-          <label for="rua">Rua</label>
+          <label for="rua">Rua*</label>
           <input
             required
             type="text"
@@ -69,7 +69,7 @@
           />
         </div>
         <div>
-          <label for="numero">Número</label>
+          <label for="numero">Número*</label>
           <input
             required
             type="text"
@@ -79,7 +79,7 @@
           />
         </div>
         <div>
-          <label for="bairro">Bairro</label>
+          <label for="bairro">Bairro*</label>
           <input
             required
             type="text"
@@ -89,7 +89,7 @@
           />
         </div>
         <div>
-          <label for="cidade">Cidade</label>
+          <label for="cidade">Cidade*</label>
           <input
             required
             type="text"
@@ -99,7 +99,7 @@
           />
         </div>
         <div>
-          <label for="estado">Estado</label>
+          <label for="estado">Estado*</label>
           <input
             required
             type="text"

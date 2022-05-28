@@ -6,7 +6,7 @@
       </div>
       <form @submit.prevent="sendTransacao">
         <div class="full">
-          <span class="label">Operação</span>
+          <span class="label">Operação*</span>
           <input
             required
             v-model="transacao.operacao"
@@ -27,7 +27,7 @@
           <label class="radio" for="despesa">Despesa</label>
         </div>
         <div>
-          <label for="data">Data</label>
+          <label for="data">Data*</label>
           <input
             required
             v-model="transacao.data"
@@ -37,7 +37,7 @@
           />
         </div>
         <div>
-          <label for="valor">Valor</label>
+          <label for="valor">Valor*</label>
           <input
             required
             v-model="transacao.valor"
@@ -48,7 +48,7 @@
           />
         </div>
         <div class="full">
-          <label for="nome">Tipo</label>
+          <label for="nome">Tipo*</label>
           <select
             v-if="transacao.operacao == 'Receita'"
             required

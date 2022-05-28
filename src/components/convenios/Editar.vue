@@ -7,7 +7,7 @@
       </div>
       <form @submit.prevent="updateConvenio">
         <div class="full">
-          <label for="nome">Nome</label>
+          <label for="nome">Nome*</label>
           <input
             type="text"
             name="nome"
@@ -18,7 +18,7 @@
           />
         </div>
         <div class="full">
-          <label for="telefone">Telefone</label>
+          <label for="telefone">Telefone*</label>
           <input
             type="text"
             name="telefone"
@@ -29,7 +29,7 @@
           />
         </div>
         <div class="full">
-          <label for="endereco">Endereço</label>
+          <label for="endereco">Endereço*</label>
           <input
             type="text"
             name="endereco"

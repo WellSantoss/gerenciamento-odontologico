@@ -6,7 +6,7 @@
       </div>
       <form @submit.prevent="sendProcedimento">
         <div class="full">
-          <span class="label">Ativo?</span>
+          <span class="label">Ativo?*</span>
           <input
             required
             type="radio"
@@ -29,7 +29,6 @@
         <div v-if="especialidades" class="full">
           <label for="especialidade">Especialidade</label>
           <select
-            required
             v-model="procedimento.especialidade"
             name="especialidade"
             id="especialidade"
@@ -44,7 +43,7 @@
           </select>
         </div>
         <div class="full">
-          <label for="procedimento">Procedimento</label>
+          <label for="procedimento">Procedimento*</label>
           <input
             required
             type="text"
@@ -54,7 +53,7 @@
           />
         </div>
         <div>
-          <label for="tempo">Tempo</label>
+          <label for="tempo">Tempo*</label>
           <input
             required
             type="time"
@@ -64,7 +63,7 @@
           />
         </div>
         <div>
-          <label for="valor">Valor</label>
+          <label for="valor">Valor*</label>
           <input
             required
             type="number"

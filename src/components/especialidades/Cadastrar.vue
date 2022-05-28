@@ -6,7 +6,7 @@
       </div>
       <form @submit.prevent="sendEspecialidade">
         <div class="full">
-          <label for="nome">Nome</label>
+          <label for="nome">Nome*</label>
           <input
             required
             type="text"

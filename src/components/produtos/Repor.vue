@@ -7,7 +7,7 @@
       </div>
       <form @submit.prevent="reporProduto">
         <div class="full">
-          <label for="estoque">Quantidade</label>
+          <label for="estoque">Quantidade*</label>
           <input
             required
             type="number"

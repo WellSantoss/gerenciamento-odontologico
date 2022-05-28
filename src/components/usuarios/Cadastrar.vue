@@ -6,14 +6,14 @@
       </div>
       <form @submit.prevent="sendUsuario">
         <div>
-          <span class="label">Ativo?</span>
+          <span class="label">Ativo?*</span>
           <input required type="radio" value="1" name="ativo" id="ativo-sim" />
           <label class="radio" for="ativo-sim">Sim</label>
           <input required type="radio" value="0" name="ativo" id="ativo-nao" />
           <label class="radio" for="ativo-nao">Não</label>
         </div>
         <div>
-          <span class="label">Administrador?</span>
+          <span class="label">Administrador?*</span>
           <input
             required
             type="radio"
@@ -33,20 +33,20 @@
         </div>
         <div class="full">
           <div>
-            <label for="foto">Foto</label>
+            <label for="foto">Foto*</label>
             <input required type="file" name="foto" id="foto" />
           </div>
         </div>
         <div class="full">
-          <label for="nome">Nome</label>
+          <label for="nome">Nome*</label>
           <input required type="text" name="nome" id="nome" />
         </div>
         <div class="full">
-          <label for="usuario">Usuário</label>
+          <label for="usuario">Usuário*</label>
           <input required type="text" name="usuario" id="usuario" />
         </div>
         <div class="full">
-          <label for="senha">Senha</label>
+          <label for="senha">Senha*</label>
           <input required type="password" name="senha" id="senha" />
         </div>
         <div class="buttons">

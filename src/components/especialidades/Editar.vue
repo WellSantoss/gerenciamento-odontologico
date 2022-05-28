@@ -7,7 +7,7 @@
       </div>
       <form @submit.prevent="updateEspecialidade">
         <div class="full">
-          <label for="nome">Nome</label>
+          <label for="nome">Nome*</label>
           <input
             type="text"
             name="nome"

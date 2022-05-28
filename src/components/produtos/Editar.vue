@@ -7,7 +7,7 @@
       </div>
       <form @submit.prevent="updateProduto">
         <div class="full">
-          <label for="nome">Nome</label>
+          <label for="nome">Nome*</label>
           <input
             required
             type="text"
@@ -17,15 +17,15 @@
             id="nome"
           />
         </div>
-        <div v-if="fornecedores" class="full">
+        <div class="full">
           <label for="fornecedor">Fornecedor</label>
           <select
-            required
             v-model="produto.id_fornecedor"
             :disabled="!editar"
             name="id_fornecedor"
             id="id_fornecedor"
           >
+            <option value="">Nenhum</option>
             <option
               v-for="fornecedor in fornecedores"
               :key="fornecedor.id"
@@ -36,7 +36,7 @@
           </select>
         </div>
         <div>
-          <label for="estoque">Estoque</label>
+          <label for="estoque">Estoque*</label>
           <input
             required
             type="number"
@@ -49,7 +49,7 @@
           />
         </div>
         <div>
-          <label for="valor">Valor Unitário</label>
+          <label for="valor">Valor Unitário*</label>
           <input
             required
             type="number"

@@ -6,7 +6,7 @@
       </div>
       <form @submit.prevent="sendCobertura">
         <div>
-          <label for="procedimento">Procedimento</label>
+          <label for="procedimento">Procedimento*</label>
           <select
             name="procedimento"
             id="procedimento"
@@ -23,7 +23,7 @@
           </select>
         </div>
         <div>
-          <label for="porcentagem">Porcentagem</label>
+          <label for="porcentagem">Porcentagem*</label>
           <input
             type="number"
             step="1"
