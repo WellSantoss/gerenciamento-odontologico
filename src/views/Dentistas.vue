@@ -20,7 +20,9 @@
             <tr v-for="dentista in dentistas" :key="dentista.id">
               <td class="icon">
                 <img
-                  @click="modalSpecialty = true"
+                  @click="
+                    especialidades = { id: dentista.id, nome: dentista.nome }
+                  "
                   src="@/assets/new-job.svg"
                   title="Especialidades"
                   alt="Especialidades"
@@ -28,7 +30,7 @@
               </td>
               <td class="icon">
                 <img
-                  @click="modalOpeningHours = true"
+                  @click="horarios = { id: dentista.id, nome: dentista.nome }"
                   src="@/assets/meeting-time.svg"
                   title="Horários de Atendimento"
                   alt="Horários de Atendimento"
@@ -78,9 +80,19 @@
         v-if="dentistaSelecionado"
         @close-modal="closeModalEditar"
       />
+      <Especialidades
+        :dentista="especialidades"
+        v-if="especialidades"
+        @close-modal="closeModalEspecialidades"
+      />
+      <Horarios
+        :dentista="horarios"
+        v-if="horarios"
+        @close-modal="closeModalHorarios"
+      />
     </transition>
-    <transition>
-      <div class="modal" @click="closeModalSpecialty" v-if="modalSpecialty">
+    <!-- <transition>
+      <div class="modal" v-if="modalSpecialty">
         <div>
           <div class="title">
             <h2>Especialidades</h2>
@@ -120,65 +132,7 @@
           </div>
         </div>
       </div>
-    </transition>
-    <transition>
-      <div
-        class="modal"
-        @click="closeModalOpeningHours"
-        v-if="modalOpeningHours"
-      >
-        <div>
-          <div class="title">
-            <h2>Horários de Atendimento</h2>
-            <p>{{ currentDentista.nome }}</p>
-          </div>
-          <form action="/usuarios">
-            <div>
-              <label for="dia">Dia</label>
-              <input type="text" nome="dia" id="dia" />
-            </div>
-            <div>
-              <label for="inicio">Início</label>
-              <input type="text" nome="inicio" id="inicio" />
-            </div>
-            <div>
-              <label for="final">Final</label>
-              <input type="text" nome="final" id="final" />
-            </div>
-            <button @click.prevent>Adicionar</button>
-          </form>
-          <div class="table">
-            <table>
-              <thead>
-                <tr>
-                  <th>Dia</th>
-                  <th>Início</th>
-                  <th>Final</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  v-for="openingHour in currentDentista.openingHours"
-                  :key="openingHour.id"
-                >
-                  <td>{{ openingHour.day }}</td>
-                  <td>{{ openingHour.start }}</td>
-                  <td>{{ openingHour.end }}</td>
-                  <td class="icon">
-                    <img
-                      @click="deleteDentista(openingHour.id)"
-                      src="@/assets/trash.svg"
-                      alt="Excluir"
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </transition>
+    </transition> -->
   </div>
 </template>
 
@@ -187,6 +141,8 @@ import Search from "@/components/Search.vue";
 import Loading from "@/components/Loading.vue";
 import CadastrarDentista from "@/components/dentistas/Cadastrar.vue";
 import EditarDentista from "@/components/dentistas/Editar.vue";
+import Especialidades from "@/components/dentistas/Especialidades.vue";
+import Horarios from "@/components/dentistas/Horarios.vue";
 import api from "@/api.js";
 
 export default {
@@ -196,6 +152,8 @@ export default {
     Loading,
     CadastrarDentista,
     EditarDentista,
+    Especialidades,
+    Horarios,
   },
   data() {
     return {
@@ -203,10 +161,8 @@ export default {
       dentistas: null,
       modalCadastrar: false,
       dentistaSelecionado: null,
-      modalView: false,
-      modalSpecialty: false,
-      modalOpeningHours: false,
-      edit: false,
+      especialidades: null,
+      horarios: null,
     };
   },
   computed: {
@@ -229,6 +185,14 @@ export default {
     },
     closeModalEditar() {
       this.dentistaSelecionado = null;
+      this.getDentistas();
+    },
+    closeModalEspecialidades() {
+      this.especialidades = null;
+      this.getDentistas();
+    },
+    closeModalHorarios() {
+      this.horarios = null;
       this.getDentistas();
     },
     getDentistas() {

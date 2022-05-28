@@ -297,8 +297,8 @@ main {
   justify-content: center;
   position: fixed;
 
-  p {
-    margin-bottom: 32px;
+  p.erro {
+    margin-top: 32px;
   }
 
   & > div {
