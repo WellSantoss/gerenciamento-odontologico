@@ -9,8 +9,8 @@
               <th></th>
               <th></th>
               <th>Ativo?</th>
-              <th>Especialidade</th>
               <th>Procedimento</th>
+              <th>Especialidade</th>
               <th>Tempo</th>
               <th>Valor</th>
             </tr>
@@ -39,8 +39,8 @@
                 />
               </td>
               <td>{{ procedimento.ativo ? "Sim" : "Não" }}</td>
-              <td>{{ procedimento.especialidade }}</td>
               <td>{{ procedimento.procedimento }}</td>
+              <td>{{ procedimento.especialidade }}</td>
               <td>{{ procedimento.tempo }}</td>
               <td>{{ procedimento.valor | formatCurrency }}</td>
             </tr>
