@@ -109,9 +109,10 @@
             maxlength="2"
           />
         </div>
-        <div v-if="convenios" class="full">
+        <div class="full">
           <label for="convenio">Convênio</label>
           <select v-model="paciente.id_convenio" name="convenio" id="convenio">
+            <option value="">Nenhum</option>
             <option
               v-for="convenio in convenios"
               :key="convenio.id"

@@ -26,13 +26,14 @@
           />
           <label class="radio" for="ativo-nao">Não</label>
         </div>
-        <div v-if="especialidades" class="full">
+        <div class="full">
           <label for="especialidade">Especialidade</label>
           <select
             v-model="procedimento.especialidade"
             name="especialidade"
             id="especialidade"
           >
+            <option value="">Nenhuma</option>
             <option
               v-for="especialidade in especialidades"
               :key="especialidade.id"

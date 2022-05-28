@@ -8,6 +8,7 @@
         <div>
           <label for="procedimento">Procedimento*</label>
           <select
+            v-if="procedimentos"
             name="procedimento"
             id="procedimento"
             required
@@ -21,6 +22,12 @@
               {{ procedimento.procedimento }}
             </option>
           </select>
+          <input
+            v-else
+            type="text"
+            :disabled="!procedimentos"
+            placeholder="Nenhum disponível"
+          />
         </div>
         <div>
           <label for="porcentagem">Porcentagem*</label>
@@ -30,12 +37,13 @@
             min="1"
             max="100"
             required
+            :disabled="!procedimentos"
             v-model="cobertura.porcentagem"
             name="porcentagem"
             id="porcentagem"
           />
         </div>
-        <button>Adicionar</button>
+        <button :disabled="!procedimentos">Adicionar</button>
       </form>
       <div v-if="coberturas" class="table">
         <table>
