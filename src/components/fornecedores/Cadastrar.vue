@@ -19,7 +19,8 @@
           <label for="telefone">Telefone*</label>
           <input
             required
-            type="text"
+            type="tel"
+            v-mask="['(##) ####-####', '(##) #####-####']"
             v-model="fornecedor.telefone"
             name="telefone"
             id="telefone"

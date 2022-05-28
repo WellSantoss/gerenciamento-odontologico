@@ -18,8 +18,9 @@
         <div class="full">
           <label for="telefone">Telefone*</label>
           <input
+            type="tel"
+            v-mask="['(##) ####-####', '(##) #####-####']"
             required
-            type="text"
             v-model="convenio.telefone"
             name="telefone"
             id="telefone"

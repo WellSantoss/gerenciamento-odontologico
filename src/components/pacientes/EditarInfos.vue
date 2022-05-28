@@ -21,7 +21,8 @@
           <label for="cpf">CPF*</label>
           <input
             required
-            type="text"
+            type="tel"
+            v-mask="'###.###.###-##'"
             :disabled="!editar"
             v-model="paciente.cpf"
             name="cpf"
@@ -43,7 +44,8 @@
           <label for="telefone">Telefone*</label>
           <input
             required
-            type="text"
+            type="tel"
+            v-mask="['(##) ####-####', '(##) #####-####']"
             name="telefone"
             id="telefone"
             :disabled="!editar"
@@ -54,7 +56,8 @@
           <label for="cep">CEP*</label>
           <input
             required
-            type="text"
+            type="tel"
+            v-mask="'#####-###'"
             @blur="consultaCEP"
             name="cep"
             id="cep"

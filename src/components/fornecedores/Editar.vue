@@ -20,7 +20,8 @@
         <div class="full">
           <label for="telefone">Telefone*</label>
           <input
-            type="text"
+            type="tel"
+            v-mask="['(##) ####-####', '(##) #####-####']"
             name="telefone"
             id="telefone"
             :disabled="!editar"
