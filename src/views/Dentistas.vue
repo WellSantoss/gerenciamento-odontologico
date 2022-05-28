@@ -1,11 +1,10 @@
 <template>
   <div class="content">
     <Search />
-    <div class="table">
+    <div v-if="dentistas" class="table">
       <table>
         <thead>
           <tr>
-            <th></th>
             <th></th>
             <th></th>
             <th></th>
@@ -17,7 +16,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="dentist in dentists" :key="dentist.id">
+          <tr v-for="dentista in dentistas" :key="dentista.id">
             <td class="icon">
               <img
                 @click="modalSpecialty = true"
@@ -36,7 +35,7 @@
             </td>
             <td class="icon">
               <img
-                @click="editDentist(dentist.id)"
+                @click="editDentista(dentista.id)"
                 src="@/assets/edit.svg"
                 title="Editar"
                 alt="Editar"
@@ -44,33 +43,34 @@
             </td>
             <td class="icon">
               <img
-                @click="deleteDentist(dentist.id)"
+                @click="deleteDentista(dentista.id)"
                 src="@/assets/trash.svg"
                 title="Excluir"
                 alt="Excluir"
               />
             </td>
-
-            <td>{{ dentist.active ? "Sim" : "Não" }}</td>
+            <td>{{ dentista.ativo ? "Sim" : "Não" }}</td>
             <td class="profile">
               <img
-                :style="`box-shadow: 0px 0px 0px 3px ${dentist.color};`"
-                :src="require(`@/assets/${dentist.image}`)"
-                alt="Editar"
+                :style="`box-shadow: 0px 0px 0px 3px ${dentista.cor};`"
+                :src="`http://localhost/gerenciamento-odontologico-api/upload/${dentista.foto}`"
+                :alt="dentista.nome"
               />
-              <p>{{ dentist.name }}</p>
+              <p>{{ dentista.nome }}</p>
             </td>
-            <td>{{ dentist.user }}</td>
-            <td>{{ dentist.phone }}</td>
+            <td>{{ dentista.usuario }}</td>
+            <td>{{ dentista.telefone }}</td>
           </tr>
         </tbody>
       </table>
     </div>
+    <p v-else-if="erro">{{ erro }}</p>
+    <Loading v-else />
     <transition>
       <div class="modal" @click="closeModal" v-if="modalView">
         <div>
           <div class="title">
-            <h2>{{ currentDentist.name }}</h2>
+            <h2>{{ currentDentista.nome }}</h2>
           </div>
           <form action="/usuarios">
             <span class="label">Ativo?</span>
@@ -78,8 +78,8 @@
               type="radio"
               value="1"
               :disabled="!edit"
-              v-model="currentDentist.active"
-              name="ativo"
+              v-model="currentDentista.ativo"
+              nome="ativo"
               id="sim"
             />
             <label class="radio" for="sim">Sim</label>
@@ -87,8 +87,8 @@
               type="radio"
               value="0"
               :disabled="!edit"
-              v-model="currentDentist.active"
-              name="ativo"
+              v-model="currentDentista.ativo"
+              nome="ativo"
               id="nao"
             />
             <label class="radio" for="nao">Não</label>
@@ -101,23 +101,23 @@
             <label for="nome">Nome</label>
             <input
               type="text"
-              name="nome"
+              nome="nome"
               id="nome"
               :disabled="!edit"
-              :value="currentDentist.name"
-              :v-model="currentDentist.name"
+              :value="currentDentista.nome"
+              :v-model="currentDentista.nome"
             />
-            <label for="user">Usuário</label>
+            <label for="usuario">Usuário</label>
             <input
               type="text"
-              name="user"
-              id="user"
+              nome="usuario"
+              id="usuario"
               :disabled="!edit"
-              :value="currentDentist.user"
-              :v-model="currentDentist.user"
+              :value="currentDentista.usuario"
+              :v-model="currentDentista.usuario"
             />
             <div class="buttons">
-              <button v-if="edit" @click.prevent="saveDentist">Salvar</button>
+              <button v-if="edit" @click.prevent="saveDentista">Salvar</button>
               <button v-else @click.prevent="edit = true">Editar</button>
               <button @click.prevent="modalView = !modalView" class="close">
                 Cancelar
@@ -132,12 +132,12 @@
         <div>
           <div class="title">
             <h2>Especialidades</h2>
-            <p>{{ currentDentist.name }}</p>
+            <p>{{ currentDentista.nome }}</p>
           </div>
           <form action="/usuarios">
             <div>
               <label for="nome">Especialidade</label>
-              <input type="text" name="especialidade" id="especialidade" />
+              <input type="text" nome="especialidade" id="especialidade" />
             </div>
             <button @click.prevent>Adicionar</button>
           </form>
@@ -151,13 +151,13 @@
               </thead>
               <tbody>
                 <tr
-                  v-for="specialty in currentDentist.specialties"
+                  v-for="specialty in currentDentista.specialties"
                   :key="specialty.id"
                 >
                   <td>{{ specialty.specialty }}</td>
                   <td class="icon">
                     <img
-                      @click="deleteDentist(specialty.id)"
+                      @click="deleteDentista(specialty.id)"
                       src="@/assets/trash.svg"
                       alt="Excluir"
                     />
@@ -178,20 +178,20 @@
         <div>
           <div class="title">
             <h2>Horários de Atendimento</h2>
-            <p>{{ currentDentist.name }}</p>
+            <p>{{ currentDentista.nome }}</p>
           </div>
           <form action="/usuarios">
             <div>
               <label for="dia">Dia</label>
-              <input type="text" name="dia" id="dia" />
+              <input type="text" nome="dia" id="dia" />
             </div>
             <div>
               <label for="inicio">Início</label>
-              <input type="text" name="inicio" id="inicio" />
+              <input type="text" nome="inicio" id="inicio" />
             </div>
             <div>
               <label for="final">Final</label>
-              <input type="text" name="final" id="final" />
+              <input type="text" nome="final" id="final" />
             </div>
             <button @click.prevent>Adicionar</button>
           </form>
@@ -207,7 +207,7 @@
               </thead>
               <tbody>
                 <tr
-                  v-for="openingHour in currentDentist.openingHours"
+                  v-for="openingHour in currentDentista.openingHours"
                   :key="openingHour.id"
                 >
                   <td>{{ openingHour.day }}</td>
@@ -215,7 +215,7 @@
                   <td>{{ openingHour.end }}</td>
                   <td class="icon">
                     <img
-                      @click="deleteDentist(openingHour.id)"
+                      @click="deleteDentista(openingHour.id)"
                       src="@/assets/trash.svg"
                       alt="Excluir"
                     />
@@ -232,28 +232,32 @@
 
 <script>
 import Search from "@/components/Search.vue";
+import Loading from "@/components/Loading.vue";
+import api from "@/api.js";
 
 export default {
-  name: "Dentists",
+  nome: "Dentistas",
   components: {
     Search,
+    Loading,
   },
   data() {
     return {
+      erro: null,
       modalView: false,
       modalSpecialty: false,
       modalOpeningHours: false,
       edit: false,
-      currentDentist: {
+      currentDentista: {
         id: 1,
-        active: true,
-        name: "Mariana Ribeiro",
-        color: "#a55eea",
-        user: "mariana_ribeiro@dentalweb.com",
+        ativo: true,
+        nome: "Mariana Ribeiro",
+        cor: "#a55eea",
+        usuario: "mariana_ribeiro@dentalweb.com",
         registration: "123SP",
         cpf: "123.456.789.00",
         birth: "27/02/1998",
-        phone: "(18) 99999-9999",
+        telefone: "(18) 99999-9999",
         zipCode: "16000-000",
         address: "Rua Azul",
         number: "999",
@@ -317,43 +321,30 @@ export default {
           },
         ],
       },
-      dentists: [
-        {
-          id: 1,
-          active: true,
-          name: "Mariana Ribeiro",
-          image: "profile.jpg",
-          color: "#a55eea",
-          user: "mariana_ribeiro@dentalweb.com",
-          phone: "(18) 99999-9999",
-        },
-        {
-          id: 2,
-          active: false,
-          name: "Mariana Ribeiro",
-          image: "profile.jpg",
-          color: "#fed330",
-          user: "mariana_ribeiro@dentalweb.com",
-          phone: "(18) 99999-9999",
-        },
-        {
-          id: 3,
-          active: true,
-          name: "Mariana Ribeiro",
-          image: "profile.jpg",
-          color: "#fc5c65",
-          user: "mariana_ribeiro@dentalweb.com",
-          phone: "(18) 99999-9999",
-        },
-      ],
+      dentistas: null,
     };
   },
+  created() {
+    this.getDentistas();
+  },
   methods: {
-    deleteDentist(dentist) {
+    getDentistas() {
+      this.dentistas = null;
+
+      api
+        .get(`/dentista/getall`)
+        .then((response) => {
+          this.dentistas = response.data.data;
+        })
+        .catch((response) => {
+          this.erro = response.response.data.data;
+        });
+    },
+    deleteDentista(dentista) {
       this.$swal({
         icon: "warning",
         title: "Atenção!",
-        text: `Excluir o usuário "${dentist}"?`,
+        text: `Excluir o usuário "${dentista}"?`,
         footer: "*Está ação não poderá ser desfeita.",
         showCancelButton: true,
         cancelButtonText: "Cancelar",
@@ -368,15 +359,15 @@ export default {
         }
       });
     },
-    viewDentist() {
+    viewDentista() {
       this.modalView = !this.modalView;
       this.edit = false;
     },
-    editDentist() {
+    editDentista() {
       this.modalView = !this.modalView;
       this.edit = true;
     },
-    saveDentist() {
+    saveDentista() {
       this.modalView = !this.modalView;
 
       this.$swal({
