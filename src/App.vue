@@ -122,7 +122,6 @@ textarea {
   border: 1px solid $gray-200;
   color: $gray;
   width: 100%;
-  margin-bottom: 16px;
   border-radius: 8px;
   padding: 8px 16px;
   outline: none;
@@ -170,6 +169,8 @@ button {
 }
 
 .buttons {
+  margin-top: 16px;
+
   button {
     display: inline-block;
 
@@ -322,7 +323,6 @@ main {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
-    margin-bottom: 16px;
     justify-items: end;
     align-items: end;
 

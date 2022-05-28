@@ -2,14 +2,16 @@
   <div class="modal" @click="verificaCloseModal">
     <div>
       <div class="title">
-        <h2>Cadastrar Paciente</h2>
+        <h2>Editar Paciente</h2>
+        <p>{{ paciente.nome }}</p>
       </div>
-      <form @submit.prevent="sendPaciente">
+      <form @submit.prevent="updatePaciente">
         <div class="full">
           <label for="nome">Nome</label>
           <input
             required
             type="text"
+            :disabled="!editar"
             v-model="paciente.nome"
             name="nome"
             id="nome"
@@ -20,6 +22,7 @@
           <input
             required
             type="text"
+            :disabled="!editar"
             v-model="paciente.cpf"
             name="cpf"
             id="cpf"
@@ -30,6 +33,7 @@
           <input
             required
             type="date"
+            :disabled="!editar"
             v-model="paciente.data_nascimento"
             name="data_nascimento"
             id="data_nascimento"
@@ -40,20 +44,22 @@
           <input
             required
             type="text"
-            v-model="paciente.telefone"
             name="telefone"
             id="telefone"
+            :disabled="!editar"
+            v-model="paciente.telefone"
           />
         </div>
         <div>
           <label for="cep">CEP</label>
           <input
             required
-            @blur="consultaCEP"
             type="text"
-            v-model="paciente.cep"
+            @blur="consultaCEP"
             name="cep"
             id="cep"
+            :disabled="!editar"
+            v-model="paciente.cep"
             maxlength="9"
             minlength="8"
           />
@@ -63,6 +69,7 @@
           <input
             required
             type="text"
+            :disabled="!editar"
             v-model="paciente.rua"
             name="rua"
             id="rua"
@@ -73,9 +80,10 @@
           <input
             required
             type="text"
-            v-model="paciente.numero"
             name="numero"
             id="numero"
+            :disabled="!editar"
+            v-model="paciente.numero"
           />
         </div>
         <div>
@@ -83,9 +91,10 @@
           <input
             required
             type="text"
-            v-model="paciente.bairro"
             name="bairro"
             id="bairro"
+            :disabled="!editar"
+            v-model="paciente.bairro"
           />
         </div>
         <div>
@@ -93,9 +102,10 @@
           <input
             required
             type="text"
-            v-model="paciente.cidade"
             name="cidade"
             id="cidade"
+            :disabled="!editar"
+            v-model="paciente.cidade"
           />
         </div>
         <div>
@@ -103,15 +113,21 @@
           <input
             required
             type="text"
-            v-model="paciente.estado"
             name="estado"
             id="estado"
+            :disabled="!editar"
+            v-model="paciente.estado"
             maxlength="2"
           />
         </div>
         <div v-if="convenios" class="full">
           <label for="convenio">Convênio</label>
-          <select v-model="paciente.id_convenio" name="convenio" id="convenio">
+          <select
+            :disabled="!editar"
+            v-model="paciente.id_convenio"
+            name="convenio"
+            id="convenio"
+          >
             <option
               v-for="convenio in convenios"
               :key="convenio.id"
@@ -122,7 +138,8 @@
           </select>
         </div>
         <div class="buttons">
-          <button>Cadastrar</button>
+          <button v-if="editar">Salvar</button>
+          <button v-else @click.prevent="editar = !editar">Editar</button>
           <button @click.prevent="closeModal" class="close">Cancelar</button>
         </div>
       </form>
@@ -134,23 +151,17 @@
 import api from "@/api.js";
 
 export default {
-  name: "CadastrarPaciente",
+  name: "EditarInfos",
+  props: {
+    paciente: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
+      editar: false,
       convenios: null,
-      paciente: {
-        id_convenio: null,
-        nome: null,
-        cpf: null,
-        data_nascimento: null,
-        telefone: null,
-        cep: null,
-        rua: null,
-        numero: null,
-        bairro: null,
-        cidade: null,
-        estado: null,
-      },
     };
   },
   created() {
@@ -198,33 +209,24 @@ export default {
         });
       }
     },
-    sendPaciente() {
+    updatePaciente() {
       api
-        .post("/paciente/send", this.paciente, {
+        .post(`/paciente/update/${this.paciente.id}`, this.paciente, {
           headers: {
             "Content-Type": "application/json",
           },
         })
         .then((response) => {
-          const data = response.data.data;
-
-          if (data.id) {
-            this.$swal({
-              icon: "success",
-              title: "Cadastrado!",
-              text: data.msg,
-              onClose: this.$router.push(`/paciente/${data.id}`),
-            });
-          } else {
-            this.$swal({
-              icon: "success",
-              title: "Cadastrado!",
-              text: data,
-              onClose: () => {
-                this.closeModal();
-              },
-            });
-          }
+          this.$swal({
+            icon: "success",
+            title: "Atualizado!",
+            text: response.data.data,
+            onClose: this.closeModal(),
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.closeModal();
+            }
+          });
         })
         .catch((response) => {
           this.$swal({
@@ -232,6 +234,10 @@ export default {
             title: "Erro!",
             text: response.response.data.data,
             onClose: this.closeModal(),
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.closeModal();
+            }
           });
         });
     },

@@ -30,7 +30,7 @@
       <Loading v-else />
     </transition>
     <transition>
-      <CadastrarFornecedor
+      <CadastrarPaciente
         v-if="modalCadastrar"
         @close-modal="closeModalCadastrar"
       />
@@ -41,16 +41,15 @@
 <script>
 import Search from "@/components/Search.vue";
 import Loading from "@/components/Loading.vue";
-import CadastrarFornecedor from "@/components/pacientes/Cadastrar.vue";
+import CadastrarPaciente from "@/components/pacientes/Cadastrar.vue";
 import api from "@/api.js";
-// import router from "router";
 
 export default {
   name: "Pacientes",
   components: {
     Search,
     Loading,
-    CadastrarFornecedor,
+    CadastrarPaciente,
   },
   data() {
     return {
@@ -83,7 +82,7 @@ export default {
       this.pacientes = null;
 
       api
-        .get(`/paciente/get${this.query}`)
+        .get(`/paciente/getall${this.query}`)
         .then((response) => {
           this.pacientes = response.data.data;
         })
