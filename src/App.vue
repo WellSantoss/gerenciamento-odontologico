@@ -191,6 +191,10 @@ form {
     accent-color: $primary;
   }
 
+  input[type="color"] {
+    padding: 0px 5px;
+  }
+
   label.radio {
     display: inline-block;
     color: $gray;

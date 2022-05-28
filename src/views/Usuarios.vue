@@ -117,7 +117,7 @@ export default {
       this.usuarios = null;
 
       api
-        .get(`/usuario/get${this.query}`)
+        .get(`/usuario/getall${this.query}`)
         .then((response) => {
           this.usuarios = response.data.data;
         })

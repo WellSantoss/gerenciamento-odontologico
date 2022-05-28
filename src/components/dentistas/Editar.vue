@@ -2,15 +2,17 @@
   <div class="modal" @click="verificaCloseModal">
     <div>
       <div class="title">
-        <h2>Cadastrar Dentista</h2>
+        <h2>Editar Dentista</h2>
+        <p>{{ dentista.nome }}</p>
       </div>
-      <form @submit.prevent="sendDentista">
+      <form @submit.prevent="updateDentista">
         <div>
           <span class="label">Ativo?*</span>
           <input
             required
             v-model="dentista.ativo"
             type="radio"
+            :disabled="!editar"
             value="1"
             name="ativo"
             id="ativo-sim"
@@ -20,6 +22,7 @@
             required
             v-model="dentista.ativo"
             type="radio"
+            :disabled="!editar"
             value="0"
             name="ativo"
             id="ativo-nao"
@@ -31,6 +34,7 @@
           <input
             required
             type="color"
+            :disabled="!editar"
             v-model="dentista.cor"
             name="cor"
             id="cor"
@@ -41,6 +45,7 @@
           <select
             required
             v-if="usuarios"
+            :disabled="!editar"
             v-model="dentista.id_usuario"
             name="usuario"
             id="usuario"
@@ -66,6 +71,7 @@
           <input
             required
             type="text"
+            :disabled="!editar"
             v-model="dentista.nome"
             name="nome"
             id="nome"
@@ -76,6 +82,7 @@
           <input
             required
             type="text"
+            :disabled="!editar"
             v-model="dentista.inscricao"
             name="inscricao"
             id="inscricao"
@@ -87,6 +94,7 @@
             required
             type="tel"
             v-mask="'###.###.###-##'"
+            :disabled="!editar"
             v-model="dentista.cpf"
             name="cpf"
             id="cpf"
@@ -97,6 +105,7 @@
           <input
             required
             type="date"
+            :disabled="!editar"
             v-model="dentista.data_nascimento"
             name="data_nascimento"
             id="data_nascimento"
@@ -108,21 +117,25 @@
             required
             type="tel"
             v-mask="['(##) ####-####', '(##) #####-####']"
-            v-model="dentista.telefone"
             name="telefone"
             id="telefone"
+            :disabled="!editar"
+            v-model="dentista.telefone"
           />
         </div>
         <div>
           <label for="cep">CEP*</label>
           <input
             required
-            @blur="consultaCEP"
             type="tel"
             v-mask="'#####-###'"
-            v-model="dentista.cep"
+            @blur="consultaCEP"
             name="cep"
             id="cep"
+            :disabled="!editar"
+            v-model="dentista.cep"
+            maxlength="9"
+            minlength="8"
           />
         </div>
         <div>
@@ -130,9 +143,10 @@
           <input
             required
             type="text"
-            v-model="dentista.numero"
             name="numero"
             id="numero"
+            :disabled="!editar"
+            v-model="dentista.numero"
           />
         </div>
         <div class="full">
@@ -140,6 +154,7 @@
           <input
             required
             type="text"
+            :disabled="!editar"
             v-model="dentista.rua"
             name="rua"
             id="rua"
@@ -150,9 +165,10 @@
           <input
             required
             type="text"
-            v-model="dentista.bairro"
             name="bairro"
             id="bairro"
+            :disabled="!editar"
+            v-model="dentista.bairro"
           />
         </div>
         <div>
@@ -160,9 +176,10 @@
           <input
             required
             type="text"
-            v-model="dentista.cidade"
             name="cidade"
             id="cidade"
+            :disabled="!editar"
+            v-model="dentista.cidade"
           />
         </div>
         <div>
@@ -170,14 +187,23 @@
           <input
             required
             type="text"
-            v-model="dentista.estado"
             name="estado"
             id="estado"
+            :disabled="!editar"
+            v-model="dentista.estado"
             maxlength="2"
           />
         </div>
+
         <div class="buttons">
-          <button :disabled="!usuarios">Cadastrar</button>
+          <button v-if="editar" :disabled="!usuarios">Salvar</button>
+          <button
+            v-else
+            @click.prevent="editar = !editar"
+            :disabled="!usuarios"
+          >
+            Editar
+          </button>
           <button @click.prevent="closeModal" class="close">Cancelar</button>
         </div>
       </form>
@@ -189,31 +215,21 @@
 import api from "@/api.js";
 
 export default {
-  name: "CadastrarDentista",
+  name: "EditarDentista",
+  props: {
+    dentista: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
+      editar: false,
       usuarios: null,
-      dentista: {
-        ativo: null,
-        cor: null,
-        id_usuario: null,
-        nome: null,
-        inscricao: null,
-        cpf: null,
-        data_nascimento: null,
-        telefone: null,
-        cep: null,
-        rua: null,
-        numero: null,
-        bairro: null,
-        cidade: null,
-        estado: null,
-      },
     };
   },
   created() {
-    api.get(`/usuario/disponiveis`).then((response) => {
-      console.log(response);
+    api.get(`/usuario/disponiveis/${this.dentista.id}`).then((response) => {
       this.usuarios = response.data.data;
     });
   },
@@ -257,9 +273,9 @@ export default {
         });
       }
     },
-    sendDentista() {
+    updateDentista() {
       api
-        .post("/dentista/send", this.dentista, {
+        .post(`/dentista/update/${this.dentista.id}`, this.dentista, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -267,9 +283,13 @@ export default {
         .then((response) => {
           this.$swal({
             icon: "success",
-            title: "Cadastrado!",
+            title: "Atualizado!",
             text: response.data.data,
             onClose: this.closeModal(),
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.closeModal();
+            }
           });
         })
         .catch((response) => {
@@ -278,6 +298,10 @@ export default {
             title: "Erro!",
             text: response.response.data.data,
             onClose: this.closeModal(),
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.closeModal();
+            }
           });
         });
     },

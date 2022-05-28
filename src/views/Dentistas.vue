@@ -44,7 +44,7 @@
               </td>
               <td class="icon">
                 <img
-                  @click="deleteDentista(dentista.id)"
+                  @click="deleteDentista(dentista.id, dentista.nome)"
                   src="@/assets/trash.svg"
                   title="Excluir"
                   alt="Excluir"
@@ -73,67 +73,11 @@
         v-if="modalCadastrar"
         @close-modal="closeModalCadastrar"
       />
-    </transition>
-    <transition>
-      <div class="modal" @click="closeModal" v-if="modalView">
-        <div>
-          <div class="title">
-            <h2>{{ currentDentista.nome }}</h2>
-          </div>
-          <form action="/usuarios">
-            <span class="label">Ativo?</span>
-            <input
-              type="radio"
-              value="1"
-              :disabled="!edit"
-              v-model="currentDentista.ativo"
-              nome="ativo"
-              id="sim"
-            />
-            <label class="radio" for="sim">Sim</label>
-            <input
-              type="radio"
-              value="0"
-              :disabled="!edit"
-              v-model="currentDentista.ativo"
-              nome="ativo"
-              id="nao"
-            />
-            <label class="radio" for="nao">Não</label>
-            <span class="label">Foto</span>
-            <img
-              style="margin-bottom: 16px"
-              src="@/assets/profile.jpg"
-              alt=""
-            />
-            <label for="nome">Nome</label>
-            <input
-              type="text"
-              nome="nome"
-              id="nome"
-              :disabled="!edit"
-              :value="currentDentista.nome"
-              :v-model="currentDentista.nome"
-            />
-            <label for="usuario">Usuário</label>
-            <input
-              type="text"
-              nome="usuario"
-              id="usuario"
-              :disabled="!edit"
-              :value="currentDentista.usuario"
-              :v-model="currentDentista.usuario"
-            />
-            <div class="buttons">
-              <button v-if="edit" @click.prevent="saveDentista">Salvar</button>
-              <button v-else @click.prevent="edit = true">Editar</button>
-              <button @click.prevent="modalView = !modalView" class="close">
-                Cancelar
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
+      <EditarDentista
+        :dentista="dentistaSelecionado"
+        v-if="dentistaSelecionado"
+        @close-modal="closeModalEditar"
+      />
     </transition>
     <transition>
       <div class="modal" @click="closeModalSpecialty" v-if="modalSpecialty">
@@ -242,6 +186,7 @@
 import Search from "@/components/Search.vue";
 import Loading from "@/components/Loading.vue";
 import CadastrarDentista from "@/components/dentistas/Cadastrar.vue";
+import EditarDentista from "@/components/dentistas/Editar.vue";
 import api from "@/api.js";
 
 export default {
@@ -250,90 +195,29 @@ export default {
     Search,
     Loading,
     CadastrarDentista,
+    EditarDentista,
   },
   data() {
     return {
       erro: null,
       dentistas: null,
       modalCadastrar: false,
+      dentistaSelecionado: null,
       modalView: false,
       modalSpecialty: false,
       modalOpeningHours: false,
       edit: false,
-      currentDentista: {
-        id: 1,
-        ativo: true,
-        nome: "Mariana Ribeiro",
-        cor: "#a55eea",
-        usuario: "mariana_ribeiro@dentalweb.com",
-        registration: "123SP",
-        cpf: "123.456.789.00",
-        birth: "27/02/1998",
-        telefone: "(18) 99999-9999",
-        zipCode: "16000-000",
-        address: "Rua Azul",
-        number: "999",
-        district: "Bairro Alto",
-        city: "Birigui",
-        state: "SP",
-        specialties: [
-          {
-            id: 1,
-            specialty: "Ortodontia",
-          },
-          {
-            id: 1,
-            specialty: "Endodontia",
-          },
-          {
-            id: 1,
-            specialty: "Implantodontia",
-          },
-          {
-            id: 1,
-            specialty: "Odontogeriatria",
-          },
-        ],
-        openingHours: [
-          {
-            id: 1,
-            day: "Segunda-feira",
-            start: "08:30",
-            end: "12:00",
-          },
-          {
-            id: 1,
-            day: "Segunda-feira",
-            start: "14:00",
-            end: "18:00",
-          },
-          {
-            id: 1,
-            day: "Terça-feira",
-            start: "08:30",
-            end: "12:00",
-          },
-          {
-            id: 1,
-            day: "Terça-feira",
-            start: "14:00",
-            end: "18:00",
-          },
-          {
-            id: 1,
-            day: "Sexta-feira",
-            start: "08:30",
-            end: "12:00",
-          },
-          {
-            id: 1,
-            day: "Sexta-feira",
-            start: "14:00",
-            end: "18:00",
-          },
-        ],
-      },
     };
+  },
+  computed: {
+    query() {
+      return this.$route.query.q ? `/${this.$route.query.q}` : "";
+    },
+  },
+  watch: {
+    query() {
+      this.getDentistas();
+    },
   },
   created() {
     this.getDentistas();
@@ -343,11 +227,15 @@ export default {
       this.modalCadastrar = !this.modalCadastrar;
       this.getDentistas();
     },
+    closeModalEditar() {
+      this.dentistaSelecionado = null;
+      this.getDentistas();
+    },
     getDentistas() {
       this.dentistas = null;
 
       api
-        .get(`/dentista/getall`)
+        .get(`/dentista/getall${this.query}`)
         .then((response) => {
           this.dentistas = response.data.data;
         })
@@ -355,56 +243,44 @@ export default {
           this.erro = response.response.data.data;
         });
     },
-    deleteDentista(dentista) {
+    deleteDentista(id, dentista) {
       this.$swal({
         icon: "warning",
         title: "Atenção!",
-        text: `Excluir o usuário "${dentista}"?`,
+        text: `Excluir o dentista '${dentista}'?`,
         footer: "*Está ação não poderá ser desfeita.",
         showCancelButton: true,
         cancelButtonText: "Cancelar",
         confirmButtonText: "Excluir",
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$swal({
-            icon: "success",
-            title: "Excluído!",
-            text: "Usuário excluído com sucesso!",
-          });
+          api
+            .delete(`/dentista/delete/${id}`)
+            .then((response) => {
+              this.$swal({
+                icon: "success",
+                title: "Excluído!",
+                text: response.data.data,
+              });
+
+              this.getDentistas();
+            })
+            .catch((response) => {
+              this.$swal({
+                icon: "error",
+                title: "Erro!",
+                text: response.data.data,
+              });
+            });
         }
       });
     },
-    viewDentista() {
-      this.modalView = !this.modalView;
-      this.edit = false;
-    },
-    editDentista() {
-      this.modalView = !this.modalView;
-      this.edit = true;
-    },
-    saveDentista() {
-      this.modalView = !this.modalView;
-
-      this.$swal({
-        icon: "success",
-        title: "Alterado!",
-        text: "Usuário alterado com sucesso!",
+    editDentista(id) {
+      const dentista = this.dentistas.filter((dentista) => {
+        return dentista.id == id;
       });
-    },
-    closeModal(e) {
-      if (e.target === e.currentTarget) {
-        this.modalView = !this.modalView;
-      }
-    },
-    closeModalSpecialty(e) {
-      if (e.target === e.currentTarget) {
-        this.modalSpecialty = !this.modalSpecialty;
-      }
-    },
-    closeModalOpeningHours(e) {
-      if (e.target === e.currentTarget) {
-        this.modalOpeningHours = !this.modalOpeningHours;
-      }
+
+      this.dentistaSelecionado = dentista[0];
     },
   },
 };
