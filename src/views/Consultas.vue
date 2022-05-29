@@ -1,16 +1,17 @@
 <template>
   <div class="content">
     <Search @cadastrar="modalCadastrar = !modalCadastrar" />
-    <transition>
+    <transition mode="out-in">
       <div v-if="consultas" class="cards">
         <div
-          v-for="(consulta, index) in consultas"
-          @click="viewUser(index)"
+          v-for="consulta in consultas"
+          @click="editarConsulta(consulta.id)"
           :key="consulta.id"
           class="card"
         >
           <h3>
-            {{ consulta.data }} {{ consulta.hora }} - {{ consulta.status }}
+            {{ consulta.data.split(" ")[0] | formatDate }}
+            {{ consulta.data.split(" ")[1] }} - {{ consulta.status }}
           </h3>
           <span class="label">Dentista</span>
           <p>{{ consulta.dentista }}</p>
@@ -26,235 +27,79 @@
         v-if="modalCadastrar"
         @close-modal="closeModalCadastrar"
       />
-    </transition>
-    <transition>
-      <div class="modal" @click="closeModal" v-if="modalView">
-        <div>
-          <div class="title">
-            <h2>{{ consultaSelecionada.status }}</h2>
-            <p>{{ consultaSelecionada.paciente }}</p>
-          </div>
-          <form action="/usuarios">
-            <div>
-              <label for="nome">Dentista</label>
-              <input
-                :disabled="!edit"
-                type="text"
-                name="nome"
-                id="nome"
-                :value="consultaSelecionada.dentista"
-                :v-model="consultaSelecionada.dentista"
-              />
-            </div>
-            <div>
-              <label for="nome">Paciente</label>
-              <input
-                :disabled="!edit"
-                type="text"
-                name="nome"
-                id="nome"
-                :value="consultaSelecionada.paciente"
-                :v-model="consultaSelecionada.paciente"
-              />
-            </div>
-            <div>
-              <label for="nome">Data</label>
-              <input
-                :disabled="!edit"
-                type="text"
-                name="nome"
-                id="nome"
-                :value="consultaSelecionada.data"
-                :v-model="consultaSelecionada.data"
-              />
-            </div>
-            <div>
-              <label for="nome">Hora</label>
-              <input
-                :disabled="!edit"
-                type="text"
-                name="nome"
-                id="nome"
-                :value="consultaSelecionada.hora"
-                :v-model="consultaSelecionada.hora"
-              />
-            </div>
-            <div>
-              <label for="nome">Valor</label>
-              <input
-                :disabled="!edit"
-                type="text"
-                name="nome"
-                id="nome"
-                :value="consultaSelecionada.valor"
-                :v-model="consultaSelecionada.valor"
-              />
-            </div>
-            <div>
-              <label for="nome">Pago?</label>
-              <select v-model="consultaSelecionada.pago" name="pago" id="pago">
-                <option value="false">Não</option>
-                <option value="true">Sim</option>
-              </select>
-            </div>
-            <div>
-              <label for="nome">Status</label>
-              <input
-                :disabled="!edit"
-                type="text"
-                name="nome"
-                id="nome"
-                :value="consultaSelecionada.status"
-                :v-model="consultaSelecionada.status"
-              />
-            </div>
-            <div class="title full">
-              <h2>Procedimentos</h2>
-            </div>
-            <div class="full">
-              <div
-                v-for="procedimento in consultaSelecionada.procedimentos"
-                :key="procedimento.id"
-                class="procedimento"
-              >
-                <h3 class="full">{{ procedimento.procedimento }}</h3>
-                <div>
-                  <label for="nome">Finalizado?</label>
-                  <select
-                    v-model="procedimento.finalizado"
-                    name="pago"
-                    id="pago"
-                  >
-                    <option value="false">Não</option>
-                    <option value="true">Sim</option>
-                  </select>
-                </div>
-                <div>
-                  <label for="nome">Dente</label>
-                  <input
-                    :disabled="!edit"
-                    type="text"
-                    name="nome"
-                    id="nome"
-                    :value="procedimento.dente"
-                    :v-model="procedimento.dente"
-                  />
-                </div>
-                <div class="full">
-                  <label for="nome">Observações</label>
-                  <textarea
-                    name="observacoes"
-                    id="observacoes"
-                    :value="procedimento.observacoes"
-                    :v-model="procedimento.observacoes"
-                  ></textarea>
-                </div>
-              </div>
-            </div>
-            <div class="buttons full">
-              <button v-if="edit" @click.prevent="saveUser">Salvar</button>
-              <button v-else @click.prevent="edit = true">Editar</button>
-              <button @click.prevent="modalView = !modalView" class="close">
-                Cancelar
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
+      <EditarConsulta
+        v-if="consultaSelecionada"
+        :consultaSelecionada="consultaSelecionada"
+        @close-modal="closeModalEditar"
+      />
     </transition>
   </div>
 </template>
 
 <script>
 import Search from "@/components/Search.vue";
+import Loading from "@/components/Loading.vue";
 import AgendarConsulta from "@/components/consultas/Agendar.vue";
+import EditarConsulta from "@/components/consultas/Editar.vue";
+import api from "@/api.js";
 
 export default {
   name: "Consultas",
   components: {
     Search,
+    Loading,
     AgendarConsulta,
+    EditarConsulta,
   },
   data() {
     return {
       erro: null,
       modalCadastrar: false,
-      modalView: false,
-      edit: false,
       consultaSelecionada: null,
-      consultas: [
-        {
-          id: 1,
-          status: "Confirmado",
-          data: "10/05/2022",
-          hora: "14:00",
-          dentista: "Mariana Ribeiro",
-          paciente: "José Carlos",
-          valor: 90.8,
-          pago: true,
-          procedimentos: [
-            {
-              finalizado: true,
-              procedimento: "Restauração",
-              dente: "Incisivo Central Decíduo Superior Direito",
-              observacoes: "teste",
-            },
-            {
-              finalizado: true,
-              procedimento: "Manutenção",
-              dente: "-",
-              observacoes: "",
-            },
-          ],
-        },
-        {
-          id: 2,
-          status: "Confirmado",
-          data: "11/05/2022",
-          hora: "14:00",
-          dentista: "Mariana Ribeiro",
-          paciente: "José Carlos",
-          valor: 90.8,
-          pago: true,
-          procedimentos: [
-            {
-              finalizado: true,
-              procedimento: "Restauração",
-              dente: "Incisivo Central Decíduo Superior Direito",
-              observacoes: "",
-            },
-          ],
-        },
-        {
-          id: 3,
-          status: "Confirmado",
-          data: "12/05/2022",
-          hora: "14:00",
-          dentista: "Mariana Ribeiro",
-          paciente: "José Carlos",
-          valor: 90.8,
-          pago: true,
-          procedimentos: [
-            {
-              finalizado: true,
-              procedimento: "Restauração",
-              dente: "Incisivo Central Decíduo Superior Direito",
-              observacoes: "",
-            },
-          ],
-        },
-      ],
+      consultas: null,
     };
   },
+  created() {
+    this.getConsultas();
+  },
+  computed: {
+    query() {
+      return this.$route.query.q ? `/${this.$route.query.q}` : "";
+    },
+  },
+  watch: {
+    query() {
+      this.getConsultas();
+    },
+  },
   methods: {
+    getConsultas() {
+      this.consultas = null;
+
+      api
+        .get(`/consulta/getall${this.query}`)
+        .then((response) => {
+          console.log(response);
+          this.consultas = response.data.data;
+        })
+        .catch((response) => {
+          this.erro = response.response.data.data;
+        });
+    },
     closeModalCadastrar() {
       this.modalCadastrar = !this.modalCadastrar;
+      this.getConsultas();
     },
-    viewUser(index) {
-      this.consultaSelecionada = this.consultas[index];
+    closeModalEditar() {
+      this.consultaSelecionada = null;
+      this.getConsultas();
+    },
+    editarConsulta(id) {
+      const consulta = this.consultas.filter((consulta) => {
+        return consulta.id == id;
+      });
 
-      this.modalView = !this.modalView;
-      this.edit = false;
+      this.consultaSelecionada = consulta[0];
     },
     closeModal(e) {
       this.consultaSelecionada = null;
