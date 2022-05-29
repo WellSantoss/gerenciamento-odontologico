@@ -113,7 +113,7 @@ export default {
       this.procedimentos = null;
 
       api
-        .get(`/procedimento/get${this.query}`)
+        .get(`/procedimento/getall${this.query}`)
         .then((response) => {
           this.procedimentos = response.data.data;
         })

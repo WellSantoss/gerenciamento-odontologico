@@ -1,20 +1,32 @@
 <template>
   <div class="content">
-    <Search />
-    <div class="cards">
-      <div
-        v-for="(consulta, index) in consultas"
-        @click="viewUser(index)"
-        :key="consulta.id"
-        class="card"
-      >
-        <h3>{{ consulta.data }} {{ consulta.hora }} - {{ consulta.status }}</h3>
-        <span class="label">Dentista</span>
-        <p>{{ consulta.dentista }}</p>
-        <span class="label">Paciente</span>
-        <p>{{ consulta.paciente }}</p>
+    <Search @cadastrar="modalCadastrar = !modalCadastrar" />
+    <transition>
+      <div v-if="consultas" class="cards">
+        <div
+          v-for="(consulta, index) in consultas"
+          @click="viewUser(index)"
+          :key="consulta.id"
+          class="card"
+        >
+          <h3>
+            {{ consulta.data }} {{ consulta.hora }} - {{ consulta.status }}
+          </h3>
+          <span class="label">Dentista</span>
+          <p>{{ consulta.dentista }}</p>
+          <span class="label">Paciente</span>
+          <p>{{ consulta.paciente }}</p>
+        </div>
       </div>
-    </div>
+      <p v-else-if="erro">{{ erro }}</p>
+      <Loading v-else />
+    </transition>
+    <transition>
+      <AgendarConsulta
+        v-if="modalCadastrar"
+        @close-modal="closeModalCadastrar"
+      />
+    </transition>
     <transition>
       <div class="modal" @click="closeModal" v-if="modalView">
         <div>
@@ -74,7 +86,7 @@
                 type="text"
                 name="nome"
                 id="nome"
-                :value="valorFormatado"
+                :value="consultaSelecionada.valor"
                 :v-model="consultaSelecionada.valor"
               />
             </div>
@@ -155,14 +167,18 @@
 
 <script>
 import Search from "@/components/Search.vue";
+import AgendarConsulta from "@/components/consultas/Agendar.vue";
 
 export default {
   name: "Consultas",
   components: {
     Search,
+    AgendarConsulta,
   },
   data() {
     return {
+      erro: null,
+      modalCadastrar: false,
       modalView: false,
       edit: false,
       consultaSelecionada: null,
@@ -227,109 +243,18 @@ export default {
             },
           ],
         },
-        {
-          id: 4,
-          status: "Confirmado",
-          data: "13/05/2022",
-          hora: "14:00",
-          dentista: "Mariana Ribeiro",
-          paciente: "José Carlos",
-          valor: 90.8,
-          pago: true,
-          procedimentos: [
-            {
-              finalizado: true,
-              procedimento: "Restauração",
-              dente: "Incisivo Central Decíduo Superior Direito",
-              observacoes: "",
-            },
-          ],
-        },
-        {
-          id: 5,
-          status: "Confirmado",
-          data: "14/05/2022",
-          hora: "14:00",
-          dentista: "Mariana Ribeiro",
-          paciente: "José Carlos",
-          valor: 90.8,
-          pago: true,
-          procedimentos: [
-            {
-              finalizado: true,
-              procedimento: "Restauração",
-              dente: "Incisivo Central Decíduo Superior Direito",
-              observacoes: "",
-            },
-          ],
-        },
-        {
-          id: 6,
-          status: "Confirmado",
-          data: "15/05/2022",
-          hora: "14:00",
-          dentista: "Mariana Ribeiro",
-          paciente: "José Carlos",
-          valor: 90.8,
-          pago: true,
-          procedimentos: [
-            {
-              finalizado: true,
-              procedimento: "Restauração",
-              dente: "Incisivo Central Decíduo Superior Direito",
-              observacoes: "",
-            },
-          ],
-        },
-        {
-          id: 7,
-          status: "Confirmado",
-          data: "16/05/2022",
-          hora: "14:00",
-          dentista: "Mariana Ribeiro",
-          paciente: "José Carlos",
-          valor: 90.8,
-          pago: true,
-          procedimentos: [
-            {
-              finalizado: true,
-              procedimento: "Restauração",
-              dente: "Incisivo Central Decíduo Superior Direito",
-              observacoes: "",
-            },
-          ],
-        },
-        {
-          id: 8,
-          status: "Confirmado",
-          data: "17/05/2022",
-          hora: "14:00",
-          dentista: "Mariana Ribeiro",
-          paciente: "José Carlos",
-          valor: 90.8,
-          pago: true,
-          procedimentos: [
-            {
-              finalizado: true,
-              procedimento: "Restauração",
-              dente: "Incisivo Central Decíduo Superior Direito",
-              observacoes: "",
-            },
-          ],
-        },
       ],
     };
   },
   methods: {
+    closeModalCadastrar() {
+      this.modalCadastrar = !this.modalCadastrar;
+    },
     viewUser(index) {
       this.consultaSelecionada = this.consultas[index];
 
       this.modalView = !this.modalView;
       this.edit = false;
-    },
-    editUser() {
-      this.modalView = !this.modalView;
-      this.edit = true;
     },
     closeModal(e) {
       this.consultaSelecionada = null;
@@ -339,15 +264,5 @@ export default {
       }
     },
   },
-  computed: {
-    valorFormatado() {
-      return Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(this.consultaSelecionada.valor);
-    },
-  },
 };
 </script>
-
-<style></style>
