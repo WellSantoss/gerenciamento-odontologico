@@ -1,6 +1,9 @@
 <template>
   <div class="content">
-    <Search @cadastrar="modalCadastrar = !modalCadastrar" />
+    <SearchDentista
+      @busca="handle"
+      @cadastrar="modalCadastrar = !modalCadastrar"
+    />
     <transition mode="out-in">
       <div v-if="consultas" class="cards">
         <div
@@ -37,7 +40,7 @@
 </template>
 
 <script>
-import Search from "@/components/Search.vue";
+import SearchDentista from "@/components/SearchDentista.vue";
 import Loading from "@/components/Loading.vue";
 import AgendarConsulta from "@/components/consultas/Agendar.vue";
 import EditarConsulta from "@/components/consultas/Editar.vue";
@@ -46,7 +49,7 @@ import api from "@/api.js";
 export default {
   name: "Consultas",
   components: {
-    Search,
+    SearchDentista,
     Loading,
     AgendarConsulta,
     EditarConsulta,
@@ -57,27 +60,27 @@ export default {
       modalCadastrar: false,
       consultaSelecionada: null,
       consultas: null,
+      dentista: "",
     };
   },
   created() {
     this.getConsultas();
   },
-  computed: {
-    query() {
-      return this.$route.query.q ? `/${this.$route.query.q}` : "";
-    },
-  },
-  watch: {
-    query() {
+  methods: {
+    handle(e) {
+      this.dentista = e;
       this.getConsultas();
     },
-  },
-  methods: {
     getConsultas() {
       this.consultas = null;
+      let url = `/consulta/getall`;
+
+      if (this.dentista) {
+        url = `/consulta/getdentista/${this.dentista}`;
+      }
 
       api
-        .get(`/consulta/getall${this.query}`)
+        .get(url)
         .then((response) => {
           console.log(response);
           this.consultas = response.data.data;
