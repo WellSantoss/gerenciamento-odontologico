@@ -70,7 +70,7 @@
           </tbody>
         </table>
       </div>
-      <p v-else-if="erro">{{ erro }}</p>
+      <p class="erro" v-else-if="erro">{{ erro }}</p>
       <Loading v-else />
     </div>
   </div>
@@ -96,7 +96,7 @@ export default {
       cobertura: {
         convenio: this.convenio.id,
         procedimento: null,
-        porcentagem: 1,
+        porcentagem: 0,
       },
       erro: null,
       coberturas: null,
@@ -104,10 +104,13 @@ export default {
     };
   },
   created() {
-    this.getCoberturas();
-    this.getProcedimentos();
+    this.get();
   },
   methods: {
+    get() {
+      this.getCoberturas();
+      this.getProcedimentos();
+    },
     sendCobertura() {
       api
         .post("/cobertura/send", this.cobertura, {
@@ -116,19 +119,13 @@ export default {
           },
         })
         .then((response) => {
+          this.cobertura.porcentagem = 1;
+
           this.$swal({
             icon: "success",
             title: "Cadastrado!",
             text: response.data.data,
-            onClose: () => {
-              this.getCoberturas();
-              this.getProcedimentos();
-            },
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.getCoberturas();
-              this.getProcedimentos();
-            }
+            onClose: this.get(),
           });
         })
         .catch((response) => {
@@ -136,15 +133,7 @@ export default {
             icon: "error",
             title: "Erro!",
             text: response.response.data.data,
-            onClose: () => {
-              this.getCoberturas();
-              this.getProcedimentos();
-            },
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.getCoberturas();
-              this.getProcedimentos();
-            }
+            onClose: this.get(),
           });
         });
     },
@@ -166,15 +155,7 @@ export default {
                 icon: "success",
                 title: "Excluído!",
                 text: response.data.data,
-                onClose: () => {
-                  this.getCoberturas();
-                  this.getProcedimentos();
-                },
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  this.getCoberturas();
-                  this.getProcedimentos();
-                }
+                onClose: this.get(),
               });
 
               this.getConvenios();
@@ -184,15 +165,7 @@ export default {
                 icon: "error",
                 title: "Erro!",
                 text: response.data.data,
-                onClose: () => {
-                  this.getCoberturas();
-                  this.getProcedimentos();
-                },
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  this.getCoberturas();
-                  this.getProcedimentos();
-                }
+                onClose: this.get(),
               });
             });
         }

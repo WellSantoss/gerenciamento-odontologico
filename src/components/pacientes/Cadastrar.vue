@@ -224,9 +224,7 @@ export default {
               icon: "success",
               title: "Cadastrado!",
               text: data,
-              onClose: () => {
-                this.closeModal();
-              },
+              onClose: this.closeModal(),
             });
           }
         })

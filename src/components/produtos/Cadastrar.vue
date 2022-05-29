@@ -95,10 +95,6 @@ export default {
             title: "Cadastrado!",
             text: response.data.data,
             onClose: this.closeModal(),
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.closeModal();
-            }
           });
         })
         .catch((response) => {
@@ -108,10 +104,6 @@ export default {
             title: "Erro!",
             text: response.response.data.data,
             onClose: this.closeModal(),
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.closeModal();
-            }
           });
         });
     },

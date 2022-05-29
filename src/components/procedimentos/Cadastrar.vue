@@ -69,7 +69,7 @@
             required
             type="number"
             step="0.01"
-            min="0.01"
+            min="0.00"
             v-model="procedimento.valor"
             name="valor"
             id="valor"
@@ -124,10 +124,6 @@ export default {
             title: "Cadastrado!",
             text: response.data.data,
             onClose: this.closeModal(),
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.closeModal();
-            }
           });
         })
         .catch((response) => {
@@ -137,10 +133,6 @@ export default {
             title: "Erro!",
             text: response.response.data.data,
             onClose: this.closeModal(),
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.closeModal();
-            }
           });
         });
     },

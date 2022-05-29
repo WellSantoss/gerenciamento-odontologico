@@ -73,7 +73,7 @@
             required
             type="number"
             step="0.01"
-            min="0.01"
+            min="0.00"
             v-model="procedimento.valor"
             :disabled="!editar"
             name="valor"
@@ -132,10 +132,6 @@ export default {
             title: "Atualizado!",
             text: response.data.data,
             onClose: this.closeModal(),
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.closeModal();
-            }
           });
         })
         .catch((response) => {
@@ -145,10 +141,6 @@ export default {
             title: "Erro!",
             text: response.response.data.data,
             onClose: this.closeModal(),
-          }).then((result) => {
-            if (result.isConfirmed) {
-              this.closeModal();
-            }
           });
         });
     },
