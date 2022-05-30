@@ -11,6 +11,7 @@
             alt="Editar"
           />
           <img
+            v-if="cargo == 'Administrador'"
             src="@/assets/trash.svg"
             @click="deletePaciente"
             title="Excluir"
@@ -88,6 +89,7 @@
       <div class="title">
         <h2>Informações Clínicas</h2>
         <img
+          v-if="cargo != 'Atendente'"
           src="@/assets/edit.svg"
           @click="editarObs = !editarObs"
           title="Editar"
@@ -197,6 +199,11 @@ export default {
   created() {
     this.getPaciente();
     this.getConsultas();
+  },
+  computed: {
+    cargo() {
+      return this.$store.state.cargo;
+    },
   },
   methods: {
     getConsultas() {

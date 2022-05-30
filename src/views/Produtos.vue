@@ -1,15 +1,18 @@
 <template>
   <div class="content">
-    <Search @cadastrar="modalCadastrar = !modalCadastrar" />
+    <Search
+      :cadastrar="cargo == 'Administrador'"
+      @cadastrar="modalCadastrar = !modalCadastrar"
+    />
     <transition mode="out-in">
       <div v-if="produtos" class="table">
         <table>
           <thead>
             <tr>
               <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
+              <th v-if="cargo == 'Administrador'"></th>
+              <th v-if="cargo == 'Administrador'"></th>
+              <th v-if="cargo == 'Administrador'"></th>
               <th>Nome</th>
               <th>Fornecedor</th>
               <th>Estoque</th>
@@ -28,7 +31,7 @@
                   alt="Retirar Estoque"
                 />
               </td>
-              <td class="icon">
+              <td v-if="cargo == 'Administrador'" class="icon">
                 <img
                   @click="reporProduto = { id: produto.id, nome: produto.nome }"
                   src="@/assets/refund.svg"
@@ -36,7 +39,7 @@
                   alt="Repor Estoque"
                 />
               </td>
-              <td class="icon">
+              <td v-if="cargo == 'Administrador'" class="icon">
                 <img
                   @click="viewProduto(produto.id)"
                   src="@/assets/edit.svg"
@@ -44,7 +47,7 @@
                   alt="Editar"
                 />
               </td>
-              <td class="icon">
+              <td v-if="cargo == 'Administrador'" class="icon">
                 <img
                   @click="deleteProduto(produto.id, produto.nome)"
                   src="@/assets/trash.svg"
@@ -121,6 +124,9 @@ export default {
     this.getProdutos();
   },
   computed: {
+    cargo() {
+      return this.$store.state.cargo;
+    },
     query() {
       return this.$route.query.q ? `/${this.$route.query.q}` : "";
     },

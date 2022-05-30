@@ -18,13 +18,13 @@
         </ul>
         <ul>
           <p class="label">Pessoas</p>
-          <li>
+          <li v-if="cargo == 'Administrador'">
             <router-link to="/usuarios">
               <img src="@/assets/people.svg" alt="Usuários" />
               <span>Usuários</span>
             </router-link>
           </li>
-          <li>
+          <li v-if="cargo == 'Administrador'">
             <router-link to="/dentistas">
               <img src="@/assets/dentist-female.svg" alt="Dentistas" />
               <span>Dentistas</span>
@@ -45,19 +45,19 @@
               <span>Consultas</span>
             </router-link>
           </li>
-          <li>
+          <li v-if="cargo == 'Administrador'">
             <router-link to="/especialidades">
               <img src="@/assets/new-job.svg" alt="Especialidades" />
               <span>Especialidades</span>
             </router-link>
           </li>
-          <li>
+          <li v-if="cargo == 'Administrador'">
             <router-link to="/procedimentos">
               <img src="@/assets/procedure.svg" alt="Procedimentos" />
               <span>Procedimentos</span>
             </router-link>
           </li>
-          <li>
+          <li v-if="cargo == 'Administrador'">
             <router-link to="/convenios">
               <img src="@/assets/agent.svg" alt="Convênios" />
               <span>Convênios</span>
@@ -66,7 +66,7 @@
         </ul>
         <ul>
           <p class="label">Produtos</p>
-          <li>
+          <li v-if="cargo == 'Administrador'">
             <router-link to="/fornecedores">
               <img src="@/assets/provider.svg" alt="Fornecedores" />
               <span>Fornecedores</span>
@@ -78,14 +78,14 @@
               <span>Produtos</span>
             </router-link>
           </li>
-          <li>
+          <li v-if="cargo == 'Administrador'">
             <router-link to="/produtos-utilizados">
               <img src="@/assets/used-product.svg" alt="Produtos Utilizados" />
               <span>Produtos Utilizados</span>
             </router-link>
           </li>
         </ul>
-        <ul>
+        <ul v-if="cargo == 'Administrador'">
           <p class="label">Finanças</p>
           <li>
             <router-link to="/financas">
@@ -106,6 +106,11 @@ export default {
     return {
       isActive: false,
     };
+  },
+  computed: {
+    cargo() {
+      return this.$store.state.cargo;
+    },
   },
   methods: {
     removeActive() {

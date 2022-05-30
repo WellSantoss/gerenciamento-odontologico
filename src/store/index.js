@@ -8,6 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     login: false,
+    cargo: "",
     usuario: {
       id: "",
       nome: "",
@@ -20,6 +21,9 @@ export default new Vuex.Store({
     UPDADE_LOGIN(state, payload) {
       state.login = payload;
     },
+    UPDADE_CARGO(state, payload) {
+      state.cargo = payload;
+    },
     UPDATE_USUARIO(state, payload) {
       state.usuario = payload;
     },
@@ -29,15 +33,35 @@ export default new Vuex.Store({
       api
         .get("/auth/autentica")
         .then((response) => {
-          context.commit("UPDATE_USUARIO", response.data.data);
+          const data = response.data.data;
+          context.commit("UPDATE_USUARIO", data);
           context.commit("UPDADE_LOGIN", true);
+
+          let cargo = "Atendente";
+
+          if (data.administrador) {
+            cargo = "Administrador";
+          } else if (data.dentista) {
+            cargo = "Dentista";
+          }
+
+          context.commit("UPDADE_CARGO", cargo);
         })
         .catch(() => {
           router.push({ name: "login" });
         });
     },
     setUsuario(context, payload) {
+      let cargo = "Atendente";
+
+      if (payload.administrador) {
+        cargo = "Administrador";
+      } else if (payload.dentista) {
+        cargo = "Dentista";
+      }
+
       context.commit("UPDATE_USUARIO", payload);
+      context.commit("UPDADE_CARGO", cargo);
       context.commit("UPDADE_LOGIN", true);
     },
     logout(context) {

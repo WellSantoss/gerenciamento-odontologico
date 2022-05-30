@@ -27,7 +27,7 @@
           <p>{{ cargo }}</p>
         </div>
         <ul>
-          <li>
+          <!-- <li>
             <router-link to="/editar">
               <img src="@/assets/edit-gray.svg" alt="Editar Dados" />
               <span>Editar Dados</span>
@@ -38,7 +38,7 @@
               <img src="@/assets/password.svg" alt="Trocar Senha" />
               <span>Trocar Senha</span>
             </router-link>
-          </li>
+          </li> -->
           <li>
             <a @click="logout">
               <img src="@/assets/logout.svg" alt="Sair" />
@@ -85,13 +85,7 @@ export default {
       return this.$store.state.usuario.foto;
     },
     cargo() {
-      const usuario = this.$store.state.usuario;
-
-      if (usuario.administrador) {
-        return "Administrador";
-      } else {
-        return usuario.dentista ? "Dentista" : "Atendente";
-      }
+      return this.$store.state.cargo;
     },
   },
   directives: {

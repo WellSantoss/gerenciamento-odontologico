@@ -13,7 +13,7 @@
         </button>
       </div>
 
-      <button @click="$emit('cadastrar')">
+      <button v-if="cadastrar" @click="$emit('cadastrar')">
         <img src="@/assets/add.svg" alt="Cadastrar" /><span>Cadastrar</span>
       </button>
     </div>
@@ -29,6 +29,12 @@
 <script>
 export default {
   name: "Search",
+  props: {
+    cadastrar: {
+      type: Boolean,
+      default: true,
+    },
+  },
   data() {
     return {
       busca: this.query,
