@@ -125,7 +125,7 @@
             <div>
               <label for="finalizado">Finalizado?</label>
               <select
-                :disabled="!cargo != 'Atendente'"
+                :disabled="!(cargo != 'Atendente')"
                 v-model="procedimento.finalizado"
                 name="finalizado"
                 id="finalizado"
@@ -137,7 +137,7 @@
             <div>
               <label for="dente">Local</label>
               <input
-                :disabled="!cargo != 'Atendente'"
+                :disabled="!(cargo != 'Atendente')"
                 type="text"
                 name="dente"
                 id="dente"
@@ -147,7 +147,7 @@
             <div class="full">
               <label for="observacoes">Observações</label>
               <textarea
-                :disabled="!cargo != 'Atendente'"
+                :disabled="!(cargo != 'Atendente')"
                 name="observacoes"
                 id="observacoes"
                 v-model="procedimento.observacoes"

@@ -22,7 +22,37 @@ export default {
   },
   computed: {
     routeName() {
-      return this.$route.name;
+      let titulo = "DentalWeb";
+
+      if (this.$route.name == "inicio") {
+        titulo = "Início";
+      } else if (this.$route.name == "usuarios") {
+        titulo = "Usuários";
+      } else if (this.$route.name == "dentistas") {
+        titulo = "Dentistas";
+      } else if (this.$route.name == "consultas") {
+        titulo = "Consultas";
+      } else if (this.$route.name == "especialidades") {
+        titulo = "Especialidades";
+      } else if (this.$route.name == "procedimentos") {
+        titulo = "Procedimentos";
+      } else if (this.$route.name == "convenios") {
+        titulo = "Convênios";
+      } else if (this.$route.name == "pacientes") {
+        titulo = "Pacientes";
+      } else if (this.$route.name == "paciente") {
+        titulo = "Paciente";
+      } else if (this.$route.name == "fornecedores") {
+        titulo = "Fornecedores";
+      } else if (this.$route.name == "produtos") {
+        titulo = "Produtos";
+      } else if (this.$route.name == "produtos-utilizados") {
+        titulo = "Produtos Utilizados";
+      } else if (this.$route.name == "financas") {
+        titulo = "Finanças";
+      }
+
+      return titulo;
     },
   },
   created() {
