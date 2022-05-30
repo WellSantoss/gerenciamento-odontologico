@@ -61,13 +61,19 @@
         </div>
       </div>
     </div>
-    <div v-if="consultas" class="card consultas">
+    <div v-if="consultas" class="card">
       <div class="title">
         <h2>Últimas Consultas</h2>
-        <img src="@/assets/arrow-right.svg" alt="editar" />
+        <router-link :to="`/consultas?paciente=${id}`">
+          <img src="@/assets/arrow-right.svg" alt="editar" />
+        </router-link>
       </div>
       <div class="cards">
-        <div v-for="consulta in consultas" :key="consulta.id" class="card">
+        <div
+          v-for="consulta in consultas.slice(0, 3)"
+          :key="consulta.id"
+          class="card"
+        >
           <h3>
             {{ consulta.data }} {{ consulta.hora }} - {{ consulta.status }}
           </h3>
@@ -75,24 +81,6 @@
           <p>{{ consulta.dentista }}</p>
           <span class="label">Paciente</span>
           <p>{{ consulta.paciente }}</p>
-        </div>
-      </div>
-    </div>
-    <div v-if="procedimentos" class="card">
-      <div class="title">
-        <h2>Procedimentos a Realizar</h2>
-        <img src="@/assets/arrow-right.svg" alt="editar" />
-      </div>
-      <div class="cards">
-        <div
-          v-for="procedimento in procedimentos"
-          :key="procedimento.id"
-          class="card"
-        >
-          <span class="label">Procedimento</span>
-          <p>{{ procedimento.procedimento }}</p>
-          <span class="label">Dente</span>
-          <p>{{ procedimento.dente }}</p>
         </div>
       </div>
     </div>
@@ -208,8 +196,16 @@ export default {
   },
   created() {
     this.getPaciente();
+    this.getConsultas();
   },
   methods: {
+    getConsultas() {
+      this.consultas = null;
+
+      api.get(`/consulta/getpaciente/${this.id}`).then((response) => {
+        this.consultas = response.data.data;
+      });
+    },
     closeModalInfos() {
       this.editarInfos = !this.editarInfos;
       this.getPaciente();
@@ -302,9 +298,5 @@ export default {
 
 .cards {
   padding-top: 0;
-}
-
-.consultas {
-  margin: 32px 0px;
 }
 </style>

@@ -66,6 +66,11 @@ export default {
   created() {
     this.getConsultas();
   },
+  computed: {
+    query() {
+      return this.$route.query.paciente ? this.$route.query.paciente : null;
+    },
+  },
   methods: {
     handle(e) {
       this.dentista = e;
@@ -77,12 +82,14 @@ export default {
 
       if (this.dentista) {
         url = `/consulta/getdentista/${this.dentista}`;
+        this.$router.replace({ name: this.$route.name });
+      } else if (this.query) {
+        url = `/consulta/getpaciente/${this.query}`;
       }
 
       api
         .get(url)
         .then((response) => {
-          console.log(response);
           this.consultas = response.data.data;
         })
         .catch((response) => {
