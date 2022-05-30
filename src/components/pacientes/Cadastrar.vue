@@ -20,6 +20,7 @@
           <input
             required
             type="tel"
+            @blur="verifica"
             v-mask="'###.###.###-##'"
             v-model="paciente.cpf"
             name="cpf"
@@ -126,7 +127,7 @@
           </select>
         </div>
         <div class="buttons">
-          <button>Cadastrar</button>
+          <button :disabled="!existe">Cadastrar</button>
           <button @click.prevent="closeModal" class="close">Cancelar</button>
         </div>
       </form>
@@ -142,6 +143,7 @@ export default {
   data() {
     return {
       convenios: null,
+      existe: false,
       paciente: {
         id_convenio: null,
         nome: null,
@@ -235,6 +237,31 @@ export default {
             text: response.response.data.data,
             onClose: this.closeModal(),
           });
+        });
+    },
+    verifica() {
+      api
+        .post(
+          "/paciente/verifica",
+          { cpf: this.paciente.cpf },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response, response.data.data);
+          const data = response.data.data;
+          this.existe = data;
+
+          if (!data) {
+            this.$swal({
+              icon: "error",
+              title: "Atenção!",
+              text: "CPF já cadastrado!",
+            });
+          }
         });
     },
     verificaCloseModal(e) {
