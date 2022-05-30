@@ -362,4 +362,10 @@ h3.full {
     width: 100%;
   }
 }
+
+@media screen and (max-width: 575px) {
+  .add {
+    grid-template-columns: 1fr;
+  }
+}
 </style>

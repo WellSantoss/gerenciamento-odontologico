@@ -168,3 +168,17 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@media screen and (max-width: 768px) {
+  .cards {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

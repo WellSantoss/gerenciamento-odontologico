@@ -432,4 +432,40 @@ main {
     display: block;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .fc .fc-toolbar {
+    flex-direction: column;
+  }
+
+  .modal {
+    & > div {
+      width: 90%;
+      padding: 32px 16px;
+    }
+
+    form {
+      grid-template-columns: 1fr;
+
+      & > div {
+        grid-column: span 2;
+      }
+
+      .procedimento {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+}
 </style>

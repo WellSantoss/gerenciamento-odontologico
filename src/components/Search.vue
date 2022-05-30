@@ -149,4 +149,14 @@ input {
     }
   }
 }
+
+@media screen and (max-width: 575px) {
+  .search {
+    grid-template-columns: 1fr;
+  }
+
+  input {
+    max-width: none;
+  }
+}
 </style>

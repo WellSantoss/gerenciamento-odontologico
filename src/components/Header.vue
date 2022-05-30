@@ -23,7 +23,7 @@
         @mouseleave="modalInfo = !modalInfo"
       >
         <div class="name">
-          <span class="subtitle">Olá, Mariana!</span><br />
+          <span class="subtitle">Olá, {{ nome }}!</span><br />
           <p>{{ cargo }}</p>
         </div>
         <ul>

@@ -223,4 +223,14 @@ form {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   justify-items: stretch;
 }
+
+@media screen and (max-width: 575px) {
+  form {
+    grid-template-columns: 1fr;
+
+    & > div {
+      grid-column: span 1;
+    }
+  }
+}
 </style>

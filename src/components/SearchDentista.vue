@@ -83,4 +83,14 @@ select {
     }
   }
 }
+
+@media screen and (max-width: 575px) {
+  .search {
+    grid-template-columns: 1fr;
+  }
+
+  select {
+    max-width: none;
+  }
+}
 </style>

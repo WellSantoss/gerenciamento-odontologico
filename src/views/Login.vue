@@ -93,4 +93,13 @@ main {
     margin-left: 32px;
   }
 }
+
+form {
+  input {
+    margin-bottom: 16px;
+  }
+  button {
+    margin-top: 16px;
+  }
+}
 </style>
